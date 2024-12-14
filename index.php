@@ -48,7 +48,7 @@ $rifaActiva = $rifaRepo->findActiveRifa();
 
   <!-- New Image Section -->
   <section class="relative rounded-xl overflow-hidden mb-6">
-    <img src="<?php echo HOST_ADMIN.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
+    <img src="<?php echo HOST_ADMIN.'assets/'.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
   </section>
 
   <!-- Progress Bar -->
