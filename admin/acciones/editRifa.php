@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $boletosMaximos = (int)$_POST['total_boletos'];
         if ($boletosMaximos < 1000 || $boletosMaximos > 9999) {
-            throw new Exception(" número de boletos debe estar entre 1000 y 9999.");
+            throw new Exception("El número de boletos debe estar entre 1000 y 9999.");
         }
 
         // Verificar y procesar la fecha de inicio

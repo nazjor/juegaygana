@@ -51,16 +51,21 @@ class RifaRepository extends BaseRepository {
     }
 
     /**
-     * Busca rifas activas.
+     * Busca una rifa activa.
      *
-     * @return array Retorna una lista de rifas activas.
+     * @return array|null Retorna los datos de la rifa activa o null si no existe ninguna.
      */
-    public function findActiveRifas(): array {
+    public function findActiveRifa(): ?array {
         $db = Database::getConnection();
-        $query = "SELECT * FROM {$this->tableName} WHERE estado = 'activo'";
+        $query = "SELECT * FROM {$this->tableName} WHERE estado = 'activa' LIMIT 1";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Obtener solo una fila
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Retornar null si no se encontró ninguna rifa activa
+        return $result ?: null;
     }
 
     /**

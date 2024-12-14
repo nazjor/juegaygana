@@ -1,6 +1,10 @@
 <?php
 $title = 'Inicio - Juega y Gana';
 include_once 'components/header.php';
+include_once 'admin/components/init.php';
+require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
+$rifaRepo = new RifaRepository();
+$rifaActiva = $rifaRepo->findActiveRifa();
 ?>
 
 <!-- Main -->
@@ -14,22 +18,37 @@ include_once 'components/header.php';
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
         </svg>
-        <span class="font-medium text-gray-800">Sorteo: 26 de Noviembre, 2024</span>
+
+        <?php
+          $meses = [
+              1 => 'Enero', '2' => 'Febrero', '3' => 'Marzo', '4' => 'Abril', '5' => 'Mayo', '6' => 'Junio',
+              '7' => 'Julio', '8' => 'Agosto', '9' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
+          ];
+          ?>
+
+          <span class="font-medium text-gray-800">Sorteo: <?php 
+              // Suponiendo que 'fecha_inicio' es un string con formato YYYY-MM-DD
+              $fecha = new DateTime($rifaActiva['fecha_inicio']);
+              $dia = $fecha->format('d');
+              $mes = $meses[(int)$fecha->format('m')];
+              $año = $fecha->format('Y');
+              echo "$dia de $mes, $año";
+          ?></span>
       </div>
 
       <!-- Precio del Boleto -->
       <div class="text-center sm:text-right mt-4 sm:mt-0">
         <p class="text-sm text-gray-600">Precio del boleto</p>
-        <p class="text-xl font-bold">Bs. 280,0</p>
+        <p class="text-xl font-bold">Bs. <?php echo($rifaActiva['precio_boleto'])?></p>
       </div>
     </div>
 
-    <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900">¡Gana un <strong>CHEVROLET AVEO 2025</strong>!</h2>
+    <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900">¡Gana un <strong> <?php echo($rifaActiva['titulo'])?> </strong>!</h2>
   </section>
 
   <!-- New Image Section -->
   <section class="relative rounded-xl overflow-hidden mb-6">
-    <img src="https://es.abc-aluminum.com/wp-content/uploads/2021/02/DSC1194-2048x1271.jpeg" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
+    <img src="<?php echo HOST.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
   </section>
 
   <!-- Progress Bar -->
