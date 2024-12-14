@@ -87,14 +87,41 @@ try {
         'monto' => $monto,
         'imagen_pago' => "images/payments/".basename($uploadedFilePath)
     ];
+    $imagen_pago = DIRPAGE_ADMIN."assets/images/payments/".basename($uploadedFilePath);
     $pagoId = $pagosRepo->insert($pagoData);
 
     // Llamada a la clase estática para enviar un correo
+    $logoUrl = HOST.'assets/images/logo.png';
+    $correoHTML = "
+        <html>
+        <body>
+            <h2>Nuevo pago recibido</h2>
+            <p>Se ha realizado una nueva compra. Aquí están los detalles:</p>
+            <ul>
+                <li><strong>Nombre:</strong> $firstName $lastName</li>
+                <li><strong>Email:</strong> $email</li>
+                <li><strong>Monto:</strong> $$monto</li>
+                <li><strong>Cantidad de boletos:</strong> $tiques</li>
+                <li><strong>Dirección:</strong> $address</li>
+                <li><strong>Teléfono:</strong> $phone</li>
+            </ul>
+            <p><strong>Imagen del pago:</strong></p>
+            <img src='$imagen_pago' alt='Imagen de pago' style='width: 300px; height: auto;' />
+            <p><img src='$logoUrl' alt='Logo del sistema' style='width: 100px; height: auto;' /></p>
+        </body>
+        </html>
+    ";
+
+    // Asunto del correo
+    $asunto = 'Nuevo pago recibido - ' . $firstName . ' ' . $lastName;
+
+    // Llamada a la función para enviar el correo
     $result = Mailer::send(
         'jrvazquezantelo@gmail.com', // Dirección del destinatario
-        'Asunto del correo',         // Asunto
-        '<p>Este es el <b>contenido HTML</b> del correo.</p>' // Cuerpo del correo en HTML
+        $asunto,                     // Asunto
+        $correoHTML                  // Cuerpo del correo en HTML
     );
+
 
     // Verifica si el correo fue enviado correctamente o si hubo un error
     if ($result !== true) {
