@@ -42,11 +42,11 @@
                             <p class="text-gray-400 mb-9">Por favor, ingresa tu correo electrónico y contraseña para continuar.</p>
                         </div>
 
-                        <form id="login-form" method="POST">
+                        <form id="login-form" data-url="<?php echo HOST_ADMIN; ?>acciones/login.php">
 
                             <div class="mb-6 space-y-2">
-                                <label for="emailaddress" class="font-semibold text-gray-500">Dirección de correo electrónico</label>
-                                <input class="form-input" type="email" id="emailaddress" name="email" required="" placeholder="Introduce tu correo electrónico">
+                                <label for="email" class="font-semibold text-gray-500">Dirección de correo electrónico</label>
+                                <input class="form-input" type="email" id="email" name="email" required="" placeholder="Introduce tu correo electrónico">
                             </div>
 
                             <div class="mb-6 space-y-2">
