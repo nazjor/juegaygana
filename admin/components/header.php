@@ -16,21 +16,23 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo HOST;?>/assets/images/logo.ico">
     <!-- App css -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>"" rel="stylesheet" type="text/css">
 
     <!-- Icons css -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>"" rel="stylesheet" type="text/css">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>"" rel="stylesheet">
+
     <!-- JS de SweetAlert -->
-    <script src="<?php echo HOST_ADMIN;?>/assets/js/swal.js"></script>
+    <script src="<?php echo HOST_ADMIN;?>/assets/js/swal.js?v=<?php echo VERSION_JS;?>"></script>
 
     <!-- jQuery -->
-    <script src="<?php echo HOST_ADMIN;?>/assets/js/jquery.js"></script>
+    <script src="<?php echo HOST_ADMIN;?>/assets/js/jquery.js?v=<?php echo VERSION_JS;?>"></script>
 
     <!-- Theme Config Js -->
-    <script src="<?php echo HOST_ADMIN;?>/assets/js/config.js"></script>
+    <script src="<?php echo HOST_ADMIN;?>/assets/js/config.js?v=<?php echo VERSION_JS;?>"></script>
 </head>
 
 <body>

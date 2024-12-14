@@ -1,8 +1,6 @@
 <?php
-require_once __DIR__ . '../../../conf/config.php';
-require_once __DIR__ . '../../config/Database.php';
-require_once __DIR__ . '../../repositories/BaseRepository.php';
-require_once __DIR__ . '../../repositories/RifaRepository.php';
+    require_once __DIR__ . '../../components/init.php';
+    require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 
 $rifaRepo = new RifaRepository();
 
