@@ -31,8 +31,8 @@
 
                     <!-- Logo -->
                     <div class="p-9 bg-primary">
-                        <a href="index.html" class="flex justify-center">
-                            <img src="../assets/images/logo.png" alt="logo" class="w-32 block">
+                        <a href="<?php echo HOST;?>" class="flex justify-center">
+                            <img src="<?php echo HOST_ADMIN;?>/assets/images/logo.png" alt="logo" class="w-32 block">
                         </a>
                     </div>
 
@@ -88,42 +88,55 @@
         $(document).ready(function () {
             // Al enviar el formulario
             $('#login-form').submit(function (e) {
-                e.preventDefault(); // Prevenir recarga de la página
+            e.preventDefault();
 
-                // Obtener los datos del formulario
-                var email = $('#emailaddress').val();
-                var password = $('#password').val();
+            // Obtener los datos del formulario
+            var email = $('#emailaddress').val().trim();
+            var password = $('#password').val().trim();
 
-                // Enviar la solicitud AJAX
-                $.ajax({
-                    url: '<?php echo HOST_ADMIN;?>acciones/login.php',  // Ruta del script que maneja la autenticación
-                    type: 'POST',
-                    data: { email: email, password: password },
-                    success: function (response) {
-                        if (response === 'success') {
-                            // Redirigir a la página de administración si es exitoso
-                            window.location.href = `<?php echo HOST_ADMIN;?>`;
-                        } else {
-                            // Mostrar un mensaje de error con SweetAlert si la autenticación falla
-                            Swal.fire({
-                                icon: 'error',
-                                title: '¡Error!',
-                                text: 'Correo electrónico o contraseña incorrectos',
-                                confirmButtonText: 'Aceptar'
-                            });
-                        }
-                    },
-                    error: function () {
-                        // En caso de error en la solicitud AJAX
+            // Validar campos antes de enviar la solicitud
+            if (email === '' || password === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¡Campos vacíos!',
+                    text: 'Por favor, complete todos los campos.',
+                    confirmButtonText: 'Aceptar'
+                });
+                return; // Detener ejecución si hay campos vacíos
+            }
+
+            // Enviar la solicitud AJAX
+            $.ajax({
+                url: '<?php echo HOST_ADMIN;?>acciones/login.php', // Ruta del script que maneja la autenticación
+                type: 'POST',
+                data: { email: email, password: password },
+                success: function (response) {
+                    try {
+                        console.log(response);
+                        window.location.href = `<?php echo HOST_ADMIN;?>`;
+                    } catch (err) {
+                        console.log(err);
                         Swal.fire({
                             icon: 'error',
-                            title: '¡Error!',
-                            text: 'Hubo un problema con la solicitud. Intenta de nuevo.',
+                            title: '¡Error inesperado!',
+                            text: 'La respuesta del servidor no es válida.',
                             confirmButtonText: 'Aceptar'
                         });
                     }
-                });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Mostrar detalles del error si es posible
+                    Swal.fire({
+                        icon: 'error',
+                        title: '¡Error de red!',
+                        text: `Hubo un problema con la solicitud: ${textStatus}. Intenta de nuevo.`,
+                        footer: `Detalles del error: ${errorThrown}`,
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
             });
+        });
+
         });
     </script>
 </body>
