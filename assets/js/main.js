@@ -70,6 +70,8 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   event.preventDefault();  // Evitar que se recargue la página
 
   const formData = new FormData(this);  // Obtener los datos del formulario
+  formData.append("tiques", ticketCount);
+  formData.append("monto", (ticketCount * pricePerTicket).toFixed(2));
   const photoInput = document.getElementById('photo');
   const allowedFormats = ['image/jpeg', 'image/png'];  // Formatos permitidos
 

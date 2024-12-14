@@ -16,6 +16,9 @@
 
   <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
 
+  <!-- JS de SweetAlert -->
+  <script src="<?php echo HOST_ADMIN;?>/assets/js/swal.js?v=<?php echo VERSION_JS;?>"></script>
+
 </head>
 
 <body class="bg-gray-100 text-gray-800">

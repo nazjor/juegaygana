@@ -11,14 +11,16 @@ class PagosRepository extends BaseRepository {
 
         // Crear la consulta SQL para insertar
         $query = "INSERT INTO {$this->tableName} 
-            (cliente_id, rifa_id, metodo_pago, imagen_pago, creado_en)
-            VALUES (:cliente_id, :rifa_id, :metodo_pago, :imagen_pago, NOW())";
+            (cliente_id, rifa_id, metodo_pago, imagen_pago, monto, tiques, creado_en)
+            VALUES (:cliente_id, :rifa_id, :metodo_pago, :imagen_pago, :monto, :tiques, NOW())";
 
         $stmt = $db->prepare($query);
 
         // Vincular los valores al statement
         $stmt->bindValue(':cliente_id', $data['cliente_id'], PDO::PARAM_INT);
         $stmt->bindValue(':rifa_id', $data['rifa_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':tiques', $data['tiques'], PDO::PARAM_INT);
+        $stmt->bindValue(':monto', $data['monto'], PDO::PARAM_STR);
         $stmt->bindValue(':metodo_pago', $data['metodo_pago'], PDO::PARAM_STR);
         $stmt->bindValue(':imagen_pago', $data['imagen_pago'], PDO::PARAM_STR);
 

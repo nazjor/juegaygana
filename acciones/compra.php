@@ -9,7 +9,7 @@ try {
     require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 
     // Validar campos obligatorios
-    $requiredFields = ['email', 'first-name', 'last-name', 'cedula', 'phone', 'address'];
+    $requiredFields = ['tiques', 'monto', 'email', 'first-name', 'last-name', 'cedula', 'phone', 'address'];
     foreach ($requiredFields as $field) {
         if ((!isset($_FILES['photo']) && $field === 'photo') || !isset($_POST[$field])) {
             throw new Exception("El campo '$field' es obligatorio", 400);
@@ -29,6 +29,8 @@ try {
     $cedula = htmlspecialchars($_POST['cedula']);
     $phone = htmlspecialchars($_POST['phone']);
     $address = htmlspecialchars($_POST['address']);
+    $monto = htmlspecialchars($_POST['monto']);
+    $tiques = htmlspecialchars($_POST['tiques']);
 
     // Subir archivo de imagen
     $uploadDir = DIRPAGE_ADMIN . 'assets/images/payments/';
@@ -66,6 +68,8 @@ try {
         'cliente_id' => $clienteId,
         'rifa_id' => $rifaActiva['id'],
         'metodo_pago' => 'pago_movil',
+        'tiques' => $tiques,
+        'monto' => $monto,
         'imagen_pago' => "images/payments/".basename($uploadedFilePath)
     ];
     $pagoId = $pagosRepo->insert($pagoData);
@@ -75,7 +79,7 @@ try {
 
 } catch (Exception $e) {
     // Manejo de excepciones y errores
-    $statusCode = $e->getCode() ?: 500; // Por defecto, error 500
+    $statusCode = $e->getCode() == 200 ? 500 : $e->getCode(); // Por defecto, error 500
     http_response_code($statusCode);
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
     error_log("Error en la compra: " . $e->getMessage());
