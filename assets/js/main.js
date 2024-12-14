@@ -74,21 +74,32 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   const photoInput = document.getElementById('photo');
   if (!photoInput.files.length) {
     event.preventDefault();
-    alert('Debe seleccionar una imagen.');
+    Swal.fire({
+      icon: 'error',
+      title: '¡Error!',
+      text: 'Debe seleccionar una imagen.',
+      confirmButtonText: 'Aceptar',
+    });
     return;
   }
 
   // Usar fetch para enviar los datos
   fetch('acciones/compra.php', {
     method: 'POST',
-    body: formData  // Los datos del formulario se pasan directamente en el cuerpo
+    body: formData
   })
-  .then(response => response.json())  // Asumiendo que el servidor retorna una respuesta JSON
+  .then(response => response.json())
   .then(data => {
     closeFinalModal();
     successModal.classList.remove('hidden');
   })
   .catch(error => {
-    alert('Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.');
+    Swal.fire({
+      icon: 'error',
+      title: '¡Error!',
+      text: 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
+      footer: `Detalles del error: ${error.message}`,
+      confirmButtonText: 'Aceptar',
+    });
   });
 });

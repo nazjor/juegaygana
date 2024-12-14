@@ -65,7 +65,7 @@ try {
     $pagoData = [
         'cliente_id' => $clienteId,
         'rifa_id' => $rifaActiva['id'],
-        'metodo_pago' => 'pago_movil', // Cambiar según sea necesario
+        'metodo_pago' => 'pago_movil',
         'imagen_pago' => "images/payments/".basename($uploadedFilePath)
     ];
     $pagoId = $pagosRepo->insert($pagoData);
