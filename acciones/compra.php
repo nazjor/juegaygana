@@ -32,13 +32,6 @@ try {
     $monto = htmlspecialchars($_POST['monto']);
     $tiques = htmlspecialchars($_POST['tiques']);
 
-    // Subir archivo de imagen
-    $uploadDir = DIRPAGE_ADMIN . 'assets/images/payments/';
-    $uploadedFilePath = subirArchivo($photo, $uploadDir);
-    if (!$uploadedFilePath) {
-        throw new Exception("Hubo un error al subir la imagen.", 500);
-    }
-
     // Crear instancias de repositorios
     $clientesRepo = new ClientesRepository();
     $pagosRepo = new PagosRepository();
@@ -46,6 +39,21 @@ try {
     $rifaActiva = $rifaRepo->findActiveRifa();
     if (!$rifaActiva) {
         throw new Exception("No hay una rifa activa disponible.", 404);
+    }
+    // Obtener el total de boletos disponibles y el total de boletos comprados
+    $totalBoletos = $rifaActiva['total_boletos'];
+    $totalComprados = $pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']);
+
+    // Validar que el total de boletos a comprar no supere el total disponible
+    if (($totalComprados + $tiques) > $totalBoletos) {
+        throw new Exception("No hay suficientes boletos disponibles. Solo quedan " . ($totalComprados - $totalBoletos) . " boletos.", 400);
+    }
+
+    // Subir archivo de imagen
+    $uploadDir = DIRPAGE_ADMIN . 'assets/images/payments/';
+    $uploadedFilePath = subirArchivo($photo, $uploadDir);
+    if (!$uploadedFilePath) {
+        throw new Exception("Hubo un error al subir la imagen.", 500);
     }
 
     // Buscar o insertar cliente

@@ -98,33 +98,39 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
     return;
   }
 
-  // Usar fetch para enviar los datos
   fetch('acciones/compra.php', {
     method: 'POST',
     body: formData  // Los datos del formulario se pasan directamente en el cuerpo
   })
-  .then(response => response.json())  // Asumiendo que el servidor retorna una respuesta JSON
+  .then(response => {
+    if (!response.ok) {
+      // Si la respuesta no es 200 OK, se lanza un error
+      return response.text().then(text => {
+        throw new Error(text || 'Hubo un error al procesar la solicitud.');
+      });
+    }
+    return response.json(); // Si la respuesta es correcta, se parsea como JSON
+  })
   .then(data => {
     if (data.success) {
       closeFinalModal();
       successModal.classList.remove('hidden');
     } else {
+      // Solo mostramos el mensaje que llega del backend
       Swal.fire({
         icon: 'error',
         title: '¡Error!',
         text: data.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-        footer: `Detalles del error: ${data.message}`,
         confirmButtonText: 'Aceptar',
       });
     }
   })
   .catch(error => {
-    console.log(error);
+    // Mostrar mensaje de error en Swal
     Swal.fire({
       icon: 'error',
       title: '¡Error!',
-      text: 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-      footer: `Detalles del error: `,
+      text: error.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
       confirmButtonText: 'Aceptar',
     });
   });

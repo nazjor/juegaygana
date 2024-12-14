@@ -31,4 +31,26 @@ class PagosRepository extends BaseRepository {
             throw new Exception("Error al insertar el pago: " . implode(", ", $stmt->errorInfo()));
         }
     }
+
+    // Método para obtener el total de boletos comprados por rifa_id
+    public function getTotalBoletosByRifaId(int $rifa_id): int {
+        $db = Database::getConnection();
+
+        // Crear la consulta SQL para obtener el total de boletos
+        $query = "SELECT SUM(tiques) AS total_boletos 
+                  FROM {$this->tableName} 
+                  WHERE rifa_id = :rifa_id";
+
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':rifa_id', $rifa_id, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Retornar el total de boletos, si no hay resultados, retornar 0
+        return $result['total_boletos'] ?? 0;
+    }
 }
