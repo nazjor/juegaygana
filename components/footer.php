@@ -55,23 +55,6 @@
 
     <!-- Formulario para recoger datos -->
     <form id="purchase-form" method="POST" enctype="multipart/form-data" class="space-y-5">
-      <!-- Foto -->
-      <div class="mb-4">
-        <label for="photo" class="block text-sm font-semibold text-gray-700 mb-2 hidden">Sube una foto:</label>
-        <div class="flex items-center space-x-2">
-          <i class="ri-camera-line text-gray-500 w-6 h-6"></i> <!-- Icono de cámara -->
-          <input type="file" id="photo" name="photo" class="w-full border border-gray-300 rounded-lg p-2" required />
-        </div>
-      </div>
-
-      <!-- Email -->
-      <div class="mb-4">
-        <div class="flex items-center space-x-2">
-          <i class="ri-mail-line text-gray-500 w-6 h-6"></i> <!-- Icono de correo -->
-          <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Correo Electrónico" required />
-        </div>
-      </div>
-
       <!-- Nombre y Apellido en 6 columnas -->
       <div class="grid grid-cols-6 gap-4 mb-4">
         <div class="col-span-3">
@@ -85,6 +68,14 @@
             <i class="ri-user-line text-gray-500 w-6 h-6"></i> <!-- Icono de usuario -->
             <input type="text" id="last-name" name="last-name" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Apellido" required />
           </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <div class="flex items-center space-x-2">
+          <i class="ri-mail-line text-gray-500 w-6 h-6"></i> <!-- Icono de correo -->
+          <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Correo Electrónico" required />
         </div>
       </div>
 
@@ -108,7 +99,16 @@
       <div class="mb-4">
         <div class="flex items-center space-x-2">
           <i class="ri-map-pin-line text-gray-500 w-6 h-6"></i> <!-- Icono de ubicación -->
-          <input type="text" id="address" name="address" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Dirección" required />
+          <input type="text" id="address" name="address" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Barquisimeto" required />
+        </div>
+      </div>
+
+      <!-- Foto -->
+      <div class="mb-4">
+        <label for="photo" class="block text-sm font-semibold text-gray-700 mb-2">Sube la imagen del pago (Solo JPG, JPEG y PNG):</label>
+        <div class="flex items-center space-x-2">
+          <i class="ri-camera-line text-gray-500 w-6 h-6"></i> <!-- Icono de cámara -->
+          <input type="file" id="photo" name="photo" class="w-full border border-gray-300 rounded-lg p-2" accept=".jpg, .jpeg, .png" required />
         </div>
       </div>
 

@@ -70,10 +70,11 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   event.preventDefault();  // Evitar que se recargue la página
 
   const formData = new FormData(this);  // Obtener los datos del formulario
-  
   const photoInput = document.getElementById('photo');
+  const allowedFormats = ['image/jpeg', 'image/png'];  // Formatos permitidos
+
+  // Verificar si se ha seleccionado una imagen
   if (!photoInput.files.length) {
-    event.preventDefault();
     Swal.fire({
       icon: 'error',
       title: '¡Error!',
@@ -83,22 +84,45 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
     return;
   }
 
+  // Verificar el formato de la imagen
+  const file = photoInput.files[0];
+  if (!allowedFormats.includes(file.type)) {
+    Swal.fire({
+      icon: 'error',
+      title: '¡Error!',
+      text: 'Formato de archivo no permitido. Solo se aceptan JPG, JPEG y PNG.',
+      confirmButtonText: 'Aceptar',
+    });
+    return;
+  }
+
   // Usar fetch para enviar los datos
   fetch('acciones/compra.php', {
     method: 'POST',
-    body: formData
+    body: formData  // Los datos del formulario se pasan directamente en el cuerpo
   })
-  .then(response => response.json())
+  .then(response => response.json())  // Asumiendo que el servidor retorna una respuesta JSON
   .then(data => {
-    closeFinalModal();
-    successModal.classList.remove('hidden');
+    if (data.success) {
+      closeFinalModal();
+      successModal.classList.remove('hidden');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: data.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
+        footer: `Detalles del error: ${data.message}`,
+        confirmButtonText: 'Aceptar',
+      });
+    }
   })
   .catch(error => {
+    console.log(error);
     Swal.fire({
       icon: 'error',
       title: '¡Error!',
       text: 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-      footer: `Detalles del error: ${error.message}`,
+      footer: `Detalles del error: `,
       confirmButtonText: 'Aceptar',
     });
   });
