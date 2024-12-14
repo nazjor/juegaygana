@@ -7,6 +7,7 @@ const modalTicketCount = document.getElementById('modalTicketCount');
 const modalTotalPrice = document.getElementById('modalTotalPrice');
 const purchaseBtn = document.getElementById('purchaseBtn');
 const finalModal = document.getElementById('final-modal');
+const successModal = document.getElementById('success-modal');
 
 // Decrease ticket count
 decreaseBtn.addEventListener('click', () => {
@@ -59,11 +60,23 @@ function proceedWithPurchase() {
 function closeFinalModal() {
   finalModal.classList.add('hidden');
 }
+
+// Close success modal
+function closeSuccessModal() {
+  successModal.classList.add('hidden');
+}
 // Evento de submit del formulario
 document.getElementById('purchase-form').addEventListener('submit', function(event) {
   event.preventDefault();  // Evitar que se recargue la página
 
   const formData = new FormData(this);  // Obtener los datos del formulario
+  
+  const photoInput = document.getElementById('photo');
+  if (!photoInput.files.length) {
+    event.preventDefault();
+    alert('Debe seleccionar una imagen.');
+    return;
+  }
 
   // Usar fetch para enviar los datos
   fetch('acciones/compra.php', {
@@ -72,20 +85,10 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   })
   .then(response => response.json())  // Asumiendo que el servidor retorna una respuesta JSON
   .then(data => {
-    // Maneja la respuesta del servidor
-    console.log(data);  // Puedes mostrar la respuesta en la consola o hacer algo más
-
-    if (data.success) {
-      // Mostrar modal de éxito
-      alert('Compra realizada con éxito. Tus boletos serán enviados una vez confirmado el pago.');
-      // Aquí puedes mostrar un modal o realizar alguna acción adicional
-    } else {
-      // Mostrar mensaje de error
-      alert('Hubo un error al procesar tu compra. Intenta nuevamente.');
-    }
+    closeFinalModal();
+    successModal.classList.remove('hidden');
   })
   .catch(error => {
-    console.error('Error al realizar la compra:', error);
     alert('Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.');
   });
 });

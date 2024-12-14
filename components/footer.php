@@ -54,8 +54,7 @@
     <p class="text-gray-700 mb-4 text-center">Por favor, completa los detalles para procesar tu compra.</p>
 
     <!-- Formulario para recoger datos -->
-    <form id="purchase-form" enctype="multipart/form-data" class="space-y-5">
-
+    <form id="purchase-form" method="POST" enctype="multipart/form-data" class="space-y-5">
       <!-- Foto -->
       <div class="mb-4">
         <label for="photo" class="block text-sm font-semibold text-gray-700 mb-2 hidden">Sube una foto:</label>
