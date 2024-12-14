@@ -41,13 +41,7 @@ function updateTicketCount(count) {
 
 // Show modal when clicking "¡Compra tu boleto ahora!"
 purchaseBtn.addEventListener('click', () => {
-  // Mostrar mensaje de confirmación
-  const totalPrice = (ticketCount * pricePerTicket).toFixed(2);
-  const confirmationMessage = `Has seleccionado ${ticketCount} boletos. El precio total es: Bs. ${totalPrice}. ¿Estás seguro de proceder con la compra?`;
-
-  if (confirm(confirmationMessage)) {
-    modal.classList.remove('hidden');
-  }
+  modal.classList.remove('hidden');
 });
 
 // Close modal
