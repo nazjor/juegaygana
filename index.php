@@ -1,7 +1,7 @@
 <?php
 $title = 'Inicio - Juega y Gana';
-include_once 'components/header.php';
 include_once 'admin/components/init.php';
+include_once 'components/header.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 $rifaRepo = new RifaRepository();
 $rifaActiva = $rifaRepo->findActiveRifa();

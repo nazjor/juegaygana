@@ -6,9 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $title ?? 'Juega y Gana'; ?></title>
   <link rel="icon" href="assets/images/logo.ico" type="image/x-icon">
+    <!-- App css -->
+  <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+
+    <!-- Icons css -->
+  <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
 
 </head>
 

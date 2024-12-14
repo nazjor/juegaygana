@@ -16,14 +16,14 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo HOST;?>/assets/images/logo.ico">
     <!-- App css -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>"" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <!-- Icons css -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>"" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>"" rel="stylesheet">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
 
     <!-- JS de SweetAlert -->
     <script src="<?php echo HOST_ADMIN;?>/assets/js/swal.js?v=<?php echo VERSION_JS;?>"></script>
