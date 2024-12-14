@@ -14,7 +14,7 @@ decreaseBtn.addEventListener('click', () => {
     ticketCount--;
     ticketCountElement.textContent = ticketCount;
     modalTicketCount.textContent = ticketCount;
-    modalTotalPrice.textContent = (ticketCount * 280).toFixed(2);
+    modalTotalPrice.textContent = (ticketCount * pricePerTicket).toFixed(2);
     increaseBtn.disabled = false;
   }
   if (ticketCount === 2) {
@@ -27,7 +27,7 @@ increaseBtn.addEventListener('click', () => {
   ticketCount++;
   ticketCountElement.textContent = ticketCount;
   modalTicketCount.textContent = ticketCount;
-  modalTotalPrice.textContent = (ticketCount * 280).toFixed(2);
+  modalTotalPrice.textContent = (ticketCount * pricePerTicket).toFixed(2);
   decreaseBtn.disabled = false;
 });
 
@@ -36,12 +36,18 @@ function updateTicketCount(count) {
   ticketCount = count;
   ticketCountElement.textContent = ticketCount;
   modalTicketCount.textContent = ticketCount;
-  modalTotalPrice.textContent = (ticketCount * 280).toFixed(2);
+  modalTotalPrice.textContent = (ticketCount * pricePerTicket).toFixed(2);
 }
 
 // Show modal when clicking "¡Compra tu boleto ahora!"
 purchaseBtn.addEventListener('click', () => {
-  modal.classList.remove('hidden');
+  // Mostrar mensaje de confirmación
+  const totalPrice = (ticketCount * pricePerTicket).toFixed(2);
+  const confirmationMessage = `Has seleccionado ${ticketCount} boletos. El precio total es: Bs. ${totalPrice}. ¿Estás seguro de proceder con la compra?`;
+
+  if (confirm(confirmationMessage)) {
+    modal.classList.remove('hidden');
+  }
 });
 
 // Close modal

@@ -23,15 +23,22 @@
 
 <!-- Modal for Confirmation -->
 <div id="static-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75">
-  <div class="relative p-6 w-full max-w-md bg-white rounded-lg shadow-lg">
-    <button type="button" class="absolute top-2 right-2 text-gray-400 hover:bg-gray-200 rounded-full p-2" onclick="closeModal()">
+  <div class="relative p-6 w-full max-w-md bg-white rounded-lg shadow-xl transition-transform transform scale-95 hover:scale-100">
+    <!-- Close Button -->
+    <button type="button" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 rounded-full p-2 transition duration-200" onclick="closeModal()">
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    <h3 class="text-xl font-semibold text-gray-900 mb-4">¡Gracias por tu compra!</h3>
-    <p class="text-gray-700">Has seleccionado <span id="modalTicketCount">2</span> boletos. El precio total es: <span id="modalTotalPrice">Bs. 560.0</span></p>
-    <button class="mt-4 w-full bg-green-600 text-white py-3 rounded-lg" onclick="proceedWithPurchase()">Continuar</button>
+    
+    <!-- Modal Header -->
+    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">¡Estás a punto de hacer tu compra!</h3>
+    
+    <!-- Modal Body -->
+    <p class="text-gray-700 text-center text-lg mb-6">Has seleccionado <span id="modalTicketCount" class="font-bold text-green-600">2</span> boletos. <br> El precio total es: <span id="modalTotalPrice" class="font-bold text-green-600">Bs. 560.0</span></p>
+
+    <!-- Modal Footer -->
+    <button class="mt-4 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200" onclick="proceedWithPurchase()">¡Comprar ahora!</button>
   </div>
 </div>
 
@@ -49,7 +56,7 @@
   </div>
 </div>
 
-<script src="<?php echo HOST;?>assets/js/main.js"></script>
+<script src="<?php echo HOST;?>assets/js/main.js?v1=<?php echo VERSION_JS;?>"></script>
 </body>
 
 </html>

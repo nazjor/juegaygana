@@ -86,4 +86,9 @@ $rifaActiva = $rifaRepo->findActiveRifa();
   </section>
 </main>
 
+<script>
+   // Obtener el precio del boleto desde PHP
+   const pricePerTicket = <?php echo $rifaActiva['precio_boleto']; ?>;
+</script>
+
 <?php include_once 'components/footer.php'; ?>
