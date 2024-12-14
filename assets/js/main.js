@@ -59,3 +59,33 @@ function proceedWithPurchase() {
 function closeFinalModal() {
   finalModal.classList.add('hidden');
 }
+// Evento de submit del formulario
+document.getElementById('purchase-form').addEventListener('submit', function(event) {
+  event.preventDefault();  // Evitar que se recargue la página
+
+  const formData = new FormData(this);  // Obtener los datos del formulario
+
+  // Usar fetch para enviar los datos
+  fetch('acciones/compra.php', {
+    method: 'POST',
+    body: formData  // Los datos del formulario se pasan directamente en el cuerpo
+  })
+  .then(response => response.json())  // Asumiendo que el servidor retorna una respuesta JSON
+  .then(data => {
+    // Maneja la respuesta del servidor
+    console.log(data);  // Puedes mostrar la respuesta en la consola o hacer algo más
+
+    if (data.success) {
+      // Mostrar modal de éxito
+      alert('Compra realizada con éxito. Tus boletos serán enviados una vez confirmado el pago.');
+      // Aquí puedes mostrar un modal o realizar alguna acción adicional
+    } else {
+      // Mostrar mensaje de error
+      alert('Hubo un error al procesar tu compra. Intenta nuevamente.');
+    }
+  })
+  .catch(error => {
+    console.error('Error al realizar la compra:', error);
+    alert('Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.');
+  });
+});

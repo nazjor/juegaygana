@@ -54,7 +54,7 @@
     <p class="text-gray-700 mb-4 text-center">Por favor, completa los detalles para procesar tu compra.</p>
 
     <!-- Formulario para recoger datos -->
-    <form id="purchase-form" action="/path/to/your/server/endpoint" method="POST" enctype="multipart/form-data" class="space-y-5">
+    <form id="purchase-form" enctype="multipart/form-data" class="space-y-5">
 
       <!-- Foto -->
       <div class="mb-4">
@@ -127,6 +127,15 @@
       <!-- Botón de Enviar -->
       <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">Confirmar Compra</button>
     </form>
+  </div>
+</div>
+
+<!-- Modal de éxito -->
+<div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75">
+  <div class="relative p-6 w-full max-w-md bg-white rounded-lg shadow-lg overflow-auto max-h-[95vh]">
+    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Compra Realizada</h3>
+    <p class="text-gray-700 mb-4 text-center">¡Gracias por tu compra! Una vez confirmado el pago, se enviarán tus boletos.</p>
+    <button type="button" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200" onclick="closeSuccessModal()">Cerrar</button>
   </div>
 </div>
 
