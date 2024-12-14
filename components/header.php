@@ -7,6 +7,9 @@
   <title><?php echo $title ?? 'Juega y Gana'; ?></title>
   <link rel="icon" href="assets/images/logo.ico" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="bg-gray-100 text-gray-800">
