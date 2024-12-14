@@ -91,6 +91,7 @@ try {
     http_response_code($statusCode);
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
     error_log("Error en la compra: " . $e->getMessage());
+    exit;
 }
 
 /**

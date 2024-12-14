@@ -104,9 +104,10 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   })
   .then(response => {
     if (!response.ok) {
-      // Si la respuesta no es 200 OK, se lanza un error
-      return response.text().then(text => {
-        throw new Error(text || 'Hubo un error al procesar la solicitud.');
+      // Si la respuesta no es 200 OK, se maneja el error
+      return response.json().then(errorData => {
+        // Asegurarse de que el objeto tiene la propiedad 'message'
+        throw new Error(errorData.message || 'Hubo un error al procesar la solicitud.');
       });
     }
     return response.json(); // Si la respuesta es correcta, se parsea como JSON
@@ -116,7 +117,6 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
       closeFinalModal();
       successModal.classList.remove('hidden');
     } else {
-      // Solo mostramos el mensaje que llega del backend
       Swal.fire({
         icon: 'error',
         title: '¡Error!',
