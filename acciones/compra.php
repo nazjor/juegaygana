@@ -88,6 +88,13 @@ try {
     ];
     $pagoId = $pagosRepo->insert($pagoData);
 
+    // Uso de la función para enviar un correo
+    $to = 'jrvazquezantelo@gmail.com'; // Correo del administrador
+    $subject = 'Nueva compra realizada';
+    $message = '<h1>¡Nueva compra realizada!</h1><p>Un cliente ha realizado una compra. Por favor, confirme el pago en el siguiente enlace: <a href="http://tusitio.com/pago.php?id=123">Confirmar pago</a></p>';
+
+    enviarCorreo($to, $subject, $message);
+
     // Respuesta de éxito
     echo json_encode(["success" => true, "message" => "Compra realizada con éxito.", "pago_id" => $pagoId]);
 
