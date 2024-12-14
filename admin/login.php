@@ -11,13 +11,13 @@
     <link rel="icon" href="<?php echo HOST;?>assets/images/logo.ico" type="image/x-icon">
 
     <!-- CSS de la aplicación -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <!-- CSS de iconos -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <!-- SweetAlert CSS -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css" rel="stylesheet">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet">
 
 </head>
 
@@ -79,66 +79,13 @@
     </div>
 
     <!-- JS de SweetAlert -->
-    <script src="<?php echo HOST_ADMIN;?>assets/js/swal.js"></script>
+    <script src="<?php echo HOST_ADMIN;?>assets/js/swal.js?v1=<?php echo VERSION_JS;?>"></script>
 
     <!-- jQuery -->
-    <script src="<?php echo HOST_ADMIN;?>assets/js/jquery.js"></script>
+    <script src="<?php echo HOST_ADMIN;?>assets/js/jquery.js?v1=<?php echo VERSION_JS;?>"></script>
 
-    <script>
-        $(document).ready(function () {
-            // Al enviar el formulario
-            $('#login-form').submit(function (e) {
-            e.preventDefault();
+    <script src="<?php echo HOST_ADMIN;?>assets/js/login.js?v1=<?php echo VERSION_JS;?>"></script>
 
-            // Obtener los datos del formulario
-            var email = $('#emailaddress').val().trim();
-            var password = $('#password').val().trim();
-
-            // Validar campos antes de enviar la solicitud
-            if (email === '' || password === '') {
-                Swal.fire({
-                    icon: 'warning',
-                    title: '¡Campos vacíos!',
-                    text: 'Por favor, complete todos los campos.',
-                    confirmButtonText: 'Aceptar'
-                });
-                return; // Detener ejecución si hay campos vacíos
-            }
-
-            // Enviar la solicitud AJAX
-            $.ajax({
-                url: '<?php echo HOST_ADMIN;?>acciones/login.php', // Ruta del script que maneja la autenticación
-                type: 'POST',
-                data: { email: email, password: password },
-                success: function (response) {
-                    try {
-                        console.log(response);
-                        window.location.href = `<?php echo HOST_ADMIN;?>`;
-                    } catch (err) {
-                        console.log(err);
-                        Swal.fire({
-                            icon: 'error',
-                            title: '¡Error inesperado!',
-                            text: 'La respuesta del servidor no es válida.',
-                            confirmButtonText: 'Aceptar'
-                        });
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Mostrar detalles del error si es posible
-                    Swal.fire({
-                        icon: 'error',
-                        title: '¡Error de red!',
-                        text: `Hubo un problema con la solicitud: ${textStatus}. Intenta de nuevo.`,
-                        footer: `Detalles del error: ${errorThrown}`,
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            });
-        });
-
-        });
-    </script>
 </body>
 
 </html>
