@@ -1,11 +1,12 @@
 <?php
+
 session_start();
 
 try {
     require_once __DIR__ . '../../../conf/config.php';
-    require_once __DIR__ . '../../config/Database.php';
-    require_once __DIR__ . '../../repositories/BaseRepository.php';
-    require_once __DIR__ . '../../repositories/UsuariosRepository.php';
+    require_once DIRPAGE_ADMIN . 'config/Database.php';
+    require_once DIRPAGE_ADMIN . 'repositories/BaseRepository.php';
+    require_once DIRPAGE_ADMIN . 'repositories/UsuariosRepository.php';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Obtener los datos del formulario
         $email = $_POST['email'];
