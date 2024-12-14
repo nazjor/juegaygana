@@ -7,6 +7,7 @@ try {
     require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
     require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
     require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
+    require_once DIRPAGE.'util/Mail.php';
 
     // Validar campos obligatorios
     $requiredFields = ['tiques', 'monto', 'email', 'first-name', 'last-name', 'cedula', 'phone', 'address'];
@@ -88,16 +89,18 @@ try {
     ];
     $pagoId = $pagosRepo->insert($pagoData);
 
-    // Uso de la función para enviar un correo
-    $to = 'jrvazquezantelo@gmail.com'; // Correo del administrador
-    $subject = 'Nueva compra realizada';
-    $message = '<h1>¡Nueva compra realizada!</h1><p>Un cliente ha realizado una compra. Por favor, confirme el pago en el siguiente enlace: <a href="http://tusitio.com/pago.php?id=123">Confirmar pago</a></p>';
+    // Llamada a la clase estática para enviar un correo
+    $result = Mailer::send(
+        'jrvazquezantelo@gmail.com', // Dirección del destinatario
+        'Asunto del correo',         // Asunto
+        '<p>Este es el <b>contenido HTML</b> del correo.</p>' // Cuerpo del correo en HTML
+    );
 
-    enviarCorreo($to, $subject, $message);
-
-    // Respuesta de éxito
+    // Verifica si el correo fue enviado correctamente o si hubo un error
+    if ($result !== true) {
+        throw new Exception("Hubo un error al enviar el email.", 500);
+    }
     echo json_encode(["success" => true, "message" => "Compra realizada con éxito.", "pago_id" => $pagoId]);
-
 } catch (Exception $e) {
     // Manejo de excepciones y errores
     $statusCode = $e->getCode() == 200 ? 500 : $e->getCode(); // Por defecto, error 500
