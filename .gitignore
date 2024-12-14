@@ -6,6 +6,7 @@
 *.bmp
 *.svg
 *.webp
+*.ico
 
 # Ignorar carpeta conf
 /conf/
