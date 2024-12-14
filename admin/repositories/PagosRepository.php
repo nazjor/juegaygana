@@ -5,6 +5,41 @@ class PagosRepository extends BaseRepository {
         parent::__construct('pagos'); // Nombre de la tabla en la base de datos
     }
 
+    public function findPagosConPaginacion($limite, $offset) {
+        $db = Database::getConnection(); // Obtener la conexión a la base de datos
+    
+        // Realizamos el JOIN entre las tablas pagos, clientes y rifas
+        $query = "
+            SELECT 
+                p.*,
+                c.correo, 
+                r.titulo
+            FROM 
+                {$this->tableName} p 
+            LEFT JOIN 
+                clientes c ON p.cliente_id = c.id 
+            LEFT JOIN 
+                rifas r ON p.rifa_id = r.id 
+            ORDER BY 
+                p.id DESC 
+            LIMIT :limite OFFSET :offset
+        ";
+    
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function contarTotalPagos() {
+        $db = Database::getConnection(); // Obtener la conexión a la base de datos
+        $query = "SELECT COUNT(*) FROM {$this->tableName}";
+        $result = $db->query($query);
+        return $result->fetchColumn();
+    }    
+
     // Método para insertar un nuevo pago
     public function insert(array $data): int {
         $db = Database::getConnection();

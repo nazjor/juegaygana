@@ -2,6 +2,7 @@
 $title = 'Rifa - Juega y Gana';
 include_once 'components/header.php';
 ?>
+<title><?php echo $title?></title>
 <main>
     <div class="grid">
         <div class="col-span-1 w-full px-6">
