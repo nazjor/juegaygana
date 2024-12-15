@@ -62,6 +62,19 @@ $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 
 <script>
 $(document).ready(function() {
+
+    // Cerrar el modal cuando se hace clic en el botón de cerrar
+    $('[data-modal-toggle="modalEditar"]').click(function() {
+        $('#modalEditar').addClass('hidden');
+    });
+
+    // Cerrar el modal cuando se hace clic fuera del área del modal
+    $('#modalEditar').click(function(e) {
+        if ($(e.target).is('#modalEditar')) {
+            $(this).addClass('hidden');
+        }
+    });
+
     // Obtener la página inicial desde PHP
     const initialPage = <?php echo $pagina; ?>;
 
