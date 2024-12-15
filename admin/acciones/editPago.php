@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $fullname = $cliente['nombre']. " ". $cliente['apellido']; 
                 // Asunto del correo
-                $asunto = "¡Tu compra $fullname ha sido aprobada! 🎉";
+                $asunto = "Tu compra $fullname ha sido aprobada";
 
                 $codigoCompra = str_pad($pagoExistente['id'], 8, '0', STR_PAD_LEFT);
 
