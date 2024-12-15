@@ -100,38 +100,55 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
 
   fetch('acciones/compra.php', {
     method: 'POST',
-    body: formData  // Los datos del formulario se pasan directamente en el cuerpo
+    body: formData
   })
   .then(response => {
-    if (!response.ok) {
-      // Si la respuesta no es 200 OK, se maneja el error
-      return response.json().then(errorData => {
-        // Asegurarse de que el objeto tiene la propiedad 'message'
-        throw new Error(errorData.message || 'Hubo un error al procesar la solicitud.');
+      // Mostrar el estado de cargando con Swal
+      Swal.fire({
+          title: 'Procesando...',
+          text: 'Por favor, espere mientras procesamos su compra.',
+          allowOutsideClick: false,
+          didOpen: () => {
+              Swal.showLoading();
+          },
       });
-    }
-    return response.json(); // Si la respuesta es correcta, se parsea como JSON
+
+      if (!response.ok) {
+          // Si la respuesta no es 200 OK, se maneja el error
+          return response.json().then(errorData => {
+              throw new Error(errorData.message || 'Hubo un error al procesar la solicitud.');
+          });
+      }
+      return response.json(); // Si la respuesta es correcta, se parsea como JSON
   })
   .then(data => {
-    if (data.success) {
-      closeFinalModal();
-      successModal.classList.remove('hidden');
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
-        text: data.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-        confirmButtonText: 'Aceptar',
-      });
-    }
+      Swal.close(); // Cerrar el modal de cargando
+
+      if (data.success) {
+          closeFinalModal(); // Lógica adicional si existe
+          Swal.fire({
+              icon: 'success',
+              title: '¡Compra realizada!',
+              text: data.message || 'Su compra ha sido completada exitosamente.',
+              confirmButtonText: 'Aceptar',
+          });
+      } else {
+          Swal.fire({
+              icon: 'error',
+              title: '¡Error!',
+              text: data.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
+              confirmButtonText: 'Aceptar',
+          });
+      }
   })
   .catch(error => {
-    // Mostrar mensaje de error en Swal
-    Swal.fire({
-      icon: 'error',
-      title: '¡Error!',
-      text: error.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-      confirmButtonText: 'Aceptar',
-    });
+      Swal.close(); // Asegurarse de cerrar el modal de cargando en caso de error
+
+      Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: error.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
+          confirmButtonText: 'Aceptar',
+      });
   });
 });
