@@ -1,6 +1,8 @@
 <?php
 $title = 'Pagos - Juega y Gana';
 include_once 'components/header.php';
+// Obtener el parámetro 'pagina' con un valor predeterminado
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 ?>
 <title><?php echo $title?></title>
 <main>
@@ -60,16 +62,20 @@ include_once 'components/header.php';
 
 <script>
 $(document).ready(function() {
+    // Obtener la página inicial desde PHP
+    const initialPage = <?php echo $pagina; ?>;
+
     // Cargar pagos al inicio
-    loadPagos();
+    loadPagos(initialPage);
 
     // Función para cargar pagos
-    function loadPagos() {
+    function loadPagos(page = 1) {
         $.ajax({
-            url: 'load/getPagos.php',
+            url: `load/getPagos.php?pagina=${page}`, // Pasar la página como parámetro
             method: 'GET',
             success: function(response) {
-                $('#pagos-container').html(response);
+                $('#pagos-container').html(response); // Reemplazar el contenido del contenedor
+                updatePagination(page); // Actualizar la paginación activa
             },
             error: function(xhr, status, error) {
                 console.error("Error al cargar los pagos: ", error);
