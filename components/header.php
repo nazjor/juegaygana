@@ -28,8 +28,8 @@
     <!-- Header -->
     <header class="w-full bg-white shadow-lg mb-8">
       <nav class="container mx-auto flex justify-center items-center py-6">
-        <a href="/">
-        <img src="assets/images/logo.png" alt="Logo" class="w-40">
+        <a href="<?php echo HOST;?>">
+        <img src="<?php echo HOST;?>assets/images/logo.png" alt="Logo" class="w-40">
         </a>
       </nav>
     </header>

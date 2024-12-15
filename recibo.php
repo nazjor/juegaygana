@@ -15,10 +15,11 @@ if (isset($_GET['codigo'])) {
 
         // Simulación de los datos del cliente y sus boletos (esto puede venir de una base de datos)
         $cliente = [
-            'nombre' => 'Juan Pérez',
+            'nombre' => 'Greizmaryz Amaro',
+            'cedula' => '18431233',
             'numero_recibo' => $codigoDesencriptado, // Este es el número del recibo
             'boletos' => [
-                '1234', '5678', '9012', '3456'
+                '9010 5510', '1234 5678'
             ]
         ];
 
@@ -36,7 +37,7 @@ if (isset($_GET['codigo'])) {
 
   <!-- Recibo Section -->
   <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
-    
+
     <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-4">Detalles del Recibo</h2>
 
     <?php if (!$cliente): ?>
@@ -52,6 +53,12 @@ if (isset($_GET['codigo'])) {
               <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
             </svg>
             <span class="font-medium text-gray-800">Cliente: <strong><?= htmlspecialchars($cliente['nombre']) ?></strong></span>
+          </div>
+          <div class="flex items-center gap-3 mt-4">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M5 3h14c1.1 0 1.99.9 1.99 2L21 19c0 1.1-.9 2-1.99 2H5c-1.1 0-1.99-.9-1.99-2L3 5c0-1.1.9-2 1.99-2zM12 14l4-4-4-4v3H8v2h4v3z" />
+            </svg>
+            <span class="font-medium text-gray-800">Cédula: <strong><?= htmlspecialchars($cliente['cedula']) ?></strong></span>
           </div>
           <div class="flex items-center gap-3 mt-4">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
