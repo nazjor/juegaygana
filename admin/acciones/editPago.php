@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Preparar y enviar correo
-            $asunto = "Tu compra, {$fullname}, ha sido aprobada";
+            $asunto = "Tu compra ha sido aprobada";
             $codigoCompra = str_pad($pagoId, 8, '0', STR_PAD_LEFT);
             $codigoEncriptado = UtilEncriptacion::encriptar($codigoCompra);
             $enlace = HOST . 'recibo/' . $codigoEncriptado;
