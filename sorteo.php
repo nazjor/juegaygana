@@ -80,12 +80,14 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
       clearInterval(interval);
       numero = Math.floor(Math.random() * 9999) + 1;
       boletosElement.textContent = numero; // Aquí puedes poner el número ganador real si lo tienes
-      setTimeout(function() {
-        // location.reload();
-      }, 1000); // Recarga la página después de un segundo
+
+      // Cambiar el fondo del body a un gif
+      document.body.style.backgroundImage = "url('https://juegayganaconmanolo.com/assets/images/ganador.gif')";
+
     }, 5000); // 5 segundos
   });
 </script>
+
 </main>
 
 <?php include_once DIRPAGE.'components/footer.php'; ?>
