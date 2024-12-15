@@ -22,7 +22,7 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
 ?>
 
 <!-- Main -->
-<main class="flex-1 bg-gray-100 p-8">
+<main class="flex-1 max-w-4xl mx-auto px-4">
 
 <!-- Details Section -->
 <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
@@ -35,7 +35,7 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
   </section>
 
   <!-- Seleccionar Ganador Section -->
-  <section class="bg-white rounded-lg p-8 shadow-2xl">
+  <section class="bg-white rounded-lg p-8 shadow-2xl mb-8">
 
     <?php if ($ganador === null): ?>
       <div class="text-center mb-8">
