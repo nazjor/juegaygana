@@ -42,7 +42,7 @@
         <div class="app-menu">
 
             <!-- App Logo -->
-            <a href="/" class="logo-box">
+            <a href="<?php echo HOST_ADMIN;?>" class="logo-box">
                 <!-- Light Logo -->
                 <div class="logo-light">
                     <img src="<?php echo HOST;?>assets/images/logo.png" width="150px" alt="Light logo">
@@ -65,21 +65,21 @@
                 <ul class="menu" data-fc-type="accordion">
 
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="<?php echo HOST_ADMIN;?>" class="menu-link">
                             <span class="menu-icon"><i class="ri-pages-line"></i></span>
                             <span class="menu-text"> Rifas </span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="pagos" class="menu-link">
+                        <a href="<?php echo HOST_ADMIN;?>pagos" class="menu-link">
                             <span class="menu-icon"><i class="ri-share-line"></i></span>
                             <span class="menu-text"> Pagos </span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="logout" id="logout" class="menu-link">
+                        <a href="<?php echo HOST_ADMIN;?>logout" id="logout" class="menu-link">
                             <span class="menu-icon"><i class="ri-logout-circle-r-line"></i></span>
                             <span class="menu-text"> Logout </span>
                         </a>

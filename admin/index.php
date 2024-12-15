@@ -1,6 +1,8 @@
 <?php
 $title = 'Rifa - Juega y Gana';
 include_once 'components/header.php';
+// Obtener el parámetro 'pagina' con un valor predeterminado
+$pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 ?>
 <title><?php echo $title?></title>
 <main>
@@ -128,8 +130,12 @@ include_once 'components/header.php';
 
 <script>
 $(document).ready(function() {
+
+    // Obtener la página inicial desde PHP
+    const initialPage = <?php echo $pagina; ?>;
+
     // Cargar rifas al inicio
-    loadRifas();
+    loadRifas(initialPage);
 
     // Mostrar el modal al hacer clic en el botón "Agregar Nueva Rifa"
     $('#agregarRifaBtn').click(function() {
@@ -161,9 +167,9 @@ $(document).ready(function() {
     });
 
     // Función para cargar rifas
-    function loadRifas() {
+    function loadRifas(page = 1) {
         $.ajax({
-            url: 'load/getRifas.php',
+            url: `load/getRifas.php?pagina=${page}`,
             method: 'GET',
             success: function(response) {
                 $('#rifas-container').html(response);

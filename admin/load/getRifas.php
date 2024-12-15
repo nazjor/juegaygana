@@ -62,31 +62,51 @@ $totalPaginas = ceil($totalRifas / $rifasPorPagina);
         <?php endforeach; ?>
     </div>
 
-    <div class="flex justify-center mt-8">
-        <nav aria-label="Page navigation">
-            <ul class="flex list-style-none">
-                <?php if ($paginaActual > 1): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?pagina=<?php echo $paginaActual - 1; ?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+    <nav aria-label="Pagination" class="mt-8 flex justify-center mb-8">
+        <ul class="inline-flex items-center -space-x-px">
+            <!-- Botón de página anterior -->
+            <?php if ($paginaActual > 1): ?>
+                <li>
+                    <a href="?pagina=<?php echo $paginaActual - 1; ?>" 
+                    class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
+                        Anterior
+                    </a>
+                </li>
+            <?php else: ?>
+                <li>
+                    <span class="px-3 py-2 leading-tight text-gray-300 bg-gray-100 border border-gray-300 rounded-l-lg cursor-not-allowed">
+                        Anterior
+                    </span>
+                </li>
+            <?php endif; ?>
 
-                <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                    <li class="page-item <?php echo ($i == $paginaActual) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
-                    </li>
-                <?php endfor; ?>
+            <!-- Números de página -->
+            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                <li>
+                    <a href="?pagina=<?php echo $i; ?>"
+                    class="px-3 py-2 leading-tight border <?php echo ($i == $paginaActual) 
+                    ? 'bg-blue-50 text-blue-600 border-blue-300' 
+                    : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700'; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
 
-                <?php if ($paginaActual < $totalPaginas): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?pagina=<?php echo $paginaActual + 1; ?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </div>
+            <!-- Botón de página siguiente -->
+            <?php if ($paginaActual < $totalPaginas): ?>
+                <li>
+                    <a href="?pagina=<?php echo $paginaActual + 1; ?>" 
+                    class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
+                        Siguiente
+                    </a>
+                </li>
+            <?php else: ?>
+                <li>
+                    <span class="px-3 py-2 leading-tight text-gray-300 bg-gray-100 border border-gray-300 rounded-r-lg cursor-not-allowed">
+                        Siguiente
+                    </span>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
 <?php endif; ?>
