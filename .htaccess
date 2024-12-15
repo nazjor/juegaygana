@@ -1,6 +1,9 @@
 # Activar RewriteEngine
 RewriteEngine On
 
+# Asegurarse de que cualquier URL de la forma 'recibo/xyz' se redirija a recibo.php sin mostrar la extensión
+RewriteRule ^recibo/([a-zA-Z0-9\+\=]+)$ recibo.php?codigo=$1 [QSA,L]
+
 # Redirigir URLs sin .php (ocultar la extensión .php)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
