@@ -50,7 +50,7 @@ $totalPaginas = ceil($totalPagos / $pagosPorPagina);
                         </li>
                         <li class="flex items-center">
                             <i class="ri-price-tag-2-line text-lg text-primary me-2"></i>
-                            <span><?php echo $pago['tiques']; ?> Bs </span>
+                            <span><?php echo $pago['tiques']; ?> </span>
                         </li>
                         <li class="flex items-center">
                             <span class="px-2 py-1 text-xs font-medium rounded-full bg-<?php echo ($pago['estado'] == 'aprobado') ? 'green' : ($pago['estado'] == 'anulado' ? 'red' : 'yellow'); ?>-200 text-<?php echo ($pago['estado'] == 'aprobado') ? 'green' : ($pago['estado'] == 'anulado' ? 'red' : 'yellow'); ?>-800"><?php echo ucfirst($pago['estado']); ?></span>
