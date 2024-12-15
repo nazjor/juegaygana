@@ -103,7 +103,7 @@ $(document).ready(function() {
                     icon: 'success',
                     confirmButtonText: 'Aceptar'
                 });
-                loadPagos();
+                loadPagos(initialPage);
                 $('#modalEditar').addClass('hidden');
             },
             error: function(xhr, status, error) {

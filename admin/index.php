@@ -194,7 +194,7 @@ $(document).ready(function() {
             processData: false,  // No procesar los datos, ya que estamos enviando archivos
             contentType: false,  // No establecer un tipo de contenido, ya que estamos enviando un formulario con archivos
             success: function(response) {
-                loadRifas();
+                loadRifas(initialPage);
                 $('#rifaForm')[0].reset();
                 $('#agregar-rifa-modal').addClass('hidden');
                 Swal.fire({
@@ -236,7 +236,7 @@ $(document).ready(function() {
                     icon: 'success',
                     confirmButtonText: 'Aceptar'
                 });
-                loadRifas();
+                loadRifas(initialPage);
                 $('#modalEditar').addClass('hidden');
             },
             error: function(xhr, status, error) {
