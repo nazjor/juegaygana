@@ -30,12 +30,13 @@ class ClientesRepository extends BaseRepository {
         
         // Crear la consulta SQL para insertar
         $query = "INSERT INTO {$this->tableName} 
-            (nombre, apellido, telefono, correo, direccion, creado_en, actualizado_en)
-            VALUES (:nombre, :apellido, :telefono, :correo, :direccion, NOW(), NOW())";
+            (cedula, nombre, apellido, telefono, correo, direccion, creado_en, actualizado_en)
+            VALUES (:cedula, :nombre, :apellido, :telefono, :correo, :direccion, NOW(), NOW())";
 
         $stmt = $db->prepare($query);
 
         // Vincular los valores al statement
+        $stmt->bindValue(':cedula', $data['cedula'], PDO::PARAM_STR);
         $stmt->bindValue(':nombre', $data['nombre'], PDO::PARAM_STR);
         $stmt->bindValue(':apellido', $data['apellido'], PDO::PARAM_STR);
         $stmt->bindValue(':telefono', $data['telefono'] ?? null, PDO::PARAM_STR);

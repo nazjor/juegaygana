@@ -72,7 +72,8 @@ try {
             'apellido' => $lastName,
             'telefono' => $phone,
             'correo' => $email,
-            'direccion' => $address
+            'direccion' => $address,
+            'cedula' => $cedula,
         ];
         $clienteId = $clientesRepo->insert($clienteData);
     } else {
