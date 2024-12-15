@@ -103,7 +103,7 @@
 
                     <!-- Dark Logo -->
                     <div class="logo-dark">
-                        <img src="<?php echo HOST;?>images/logo.png" width="150px" alt="Light logo">
+                        <img src="<?php echo HOST;?>assets/images/logo.png" width="150px" alt="Light logo">
                     </div>
                 </a>
 
