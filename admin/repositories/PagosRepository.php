@@ -70,24 +70,31 @@ class PagosRepository extends BaseRepository {
     // Método para obtener el total de boletos comprados por rifa_id
     public function getTotalBoletosByRifaId(int $rifa_id): int {
         $db = Database::getConnection();
-
-        // Crear la consulta SQL para obtener el total de boletos
-        $query = "SELECT SUM(tiques) AS total_boletos 
-                  FROM {$this->tableName} 
-                  WHERE rifa_id = :rifa_id";
-
-        $stmt = $db->prepare($query);
-        $stmt->bindValue(':rifa_id', $rifa_id, PDO::PARAM_INT);
-
-        // Ejecutar la consulta
-        $stmt->execute();
-
-        // Obtener el resultado
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Retornar el total de boletos, si no hay resultados, retornar 0
-        return $result['total_boletos'] ?? 0;
-    }
+    
+        try {
+            // Crear la consulta SQL para obtener el total de boletos
+            $query = "SELECT SUM(tiques) AS total_boletos 
+                      FROM {$this->tableName} 
+                      WHERE rifa_id = :rifa_id AND estado <> :estado";
+    
+            $stmt = $db->prepare($query);
+            $stmt->bindValue(':rifa_id', $rifa_id, PDO::PARAM_INT);
+            $stmt->bindValue(':estado', 'anulado', PDO::PARAM_STR);
+    
+            // Ejecutar la consulta
+            $stmt->execute();
+    
+            // Obtener el resultado
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Retornar el total de boletos, si no hay resultados, retornar 0
+            return (int)($result['total_boletos'] ?? 0);
+        } catch (PDOException $e) {
+            // Manejo de errores, podrías registrar el error en un log o lanzar una excepción
+            error_log("Error al obtener el total de boletos: " . $e->getMessage());
+            return 0;
+        }
+    }    
 
     public function findPagoById(int $id): ?array {
         $db = Database::getConnection();
