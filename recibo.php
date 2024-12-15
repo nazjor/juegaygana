@@ -70,8 +70,4 @@ if (isset($_GET['codigo'])) {
   </section>
 </main>
 
-<script>
-   // Lógica para manipular el precio del boleto si es necesario
-</script>
-
 <?php include_once 'components/footer.php'; ?>
