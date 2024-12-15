@@ -88,4 +88,24 @@ class PagosRepository extends BaseRepository {
         // Retornar el total de boletos, si no hay resultados, retornar 0
         return $result['total_boletos'] ?? 0;
     }
+
+    public function findPagoById(int $id): ?array {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM {$this->tableName} WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public function updatePagoState(int $id, string $estado): bool {
+        $db = Database::getConnection();
+        $query = "UPDATE {$this->tableName} SET estado = :estado WHERE {$this->primaryKey} = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':estado', $estado, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+
 }

@@ -2,7 +2,7 @@
 
 session_start();
 
-header('Content-Type: application/json'); // Aseguramos que la respuesta sea JSON
+header('Content-Type: application/json');
 
 try {
     require_once __DIR__ . '../../components/init.php';

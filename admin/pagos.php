@@ -42,9 +42,9 @@ include_once 'components/header.php';
                     <div class="col-span-2">
                         <label for="estadoPago" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado del Pago</label>
                         <select id="estadoPago" name="estado_pago" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="pendiente">Pendiente</option>
-                            <option value="pagado">Pagado</option>
-                            <option value="cancelado">Cancelado</option>
+                            <option value="anulado">Anulado</option>
+                            <option value="aprobado">Aprobado</option>
+                            <option value="creado">Creado</option>
                         </select>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ $(document).ready(function() {
         var formData = new FormData(this); 
 
         $.ajax({
-            url: 'acciones/ediPago.php',  // URL donde se procesa el formulario
+            url: 'acciones/editPago.php',  // URL donde se procesa el formulario
             type: 'POST',
             data: formData,
             processData: false,  
