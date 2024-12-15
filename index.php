@@ -3,8 +3,19 @@ $title = 'Inicio - Juega y Gana';
 include_once 'admin/components/init.php';
 include_once 'components/header.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
 $rifaRepo = new RifaRepository();
+$pagosRepo = new PagosRepository();
 $rifaActiva = $rifaRepo->findActiveRifa();
+
+// Obtener el total de boletos disponibles y el total de boletos comprados
+$totalBoletos = (int)$rifaActiva['total_boletos'];
+$totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']);
+
+// Calcular porcentaje
+$porcentaje = ($totalComprados / $totalBoletos) * 100;
+$porcentaje = round($porcentaje, 2); // Redondear a dos decimales
+
 ?>
 
 <!-- Main -->
@@ -55,11 +66,12 @@ $rifaActiva = $rifaRepo->findActiveRifa();
   <section class="bg-white rounded-xl p-4 mb-6 shadow-lg">
     <div class="w-full bg-green-500 rounded-full h-4 relative">
       <div class="absolute inset-0 flex justify-center items-center">
-        <span class="text-xs font-medium text-white">Progreso: 45.50%</span>
+        <span class="text-xs font-medium text-white">Progreso: <?= $porcentaje ?>%</span>
       </div>
-      <div class="bg-green-800 h-4 rounded-full" style="width: 45.50%;"></div>
+      <div class="bg-green-800 h-4 rounded-full" style="width: <?= $porcentaje ?>%;"></div>
     </div>
   </section>
+
 
   <!-- Ticket Purchase Section -->
   <section class="bg-white rounded-xl p-6 mb-6 shadow-lg">
