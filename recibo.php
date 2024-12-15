@@ -103,7 +103,7 @@ if (isset($_GET['codigo'])) {
           <?php foreach ($cliente['boletos'] as $boleto): ?>
             <div class="text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110" style="background-color: rgb(51,181,249)">
               <p class="text-xl font-semibold">Boleto</p>
-              <p class="text-4xl font-bold"><?= htmlspecialchars($boleto) ?></p>
+              <p class="text-4xl font-bold"><?= htmlspecialchars(str_pad($boleto, 4, '0', STR_PAD_LEFT)) ?></p>
             </div>
           <?php endforeach; ?>
         </div>
