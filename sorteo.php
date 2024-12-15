@@ -26,10 +26,10 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
     <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900" id="resultado"><?php echo($existeGanador)?></h2>
   </section>
     
-    <!-- New Image Section -->
-    <section class="relative rounded-xl overflow-hidden mb-6">
-        <img src="<?php echo HOST_ADMIN.'assets/'.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
-    </section>
+  <!-- New Image Section -->
+  <section class="relative rounded-xl overflow-hidden mb-6">
+    <img src="<?php echo HOST_ADMIN.'assets/'.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
+  </section>
 
   <section class="bg-white rounded-lg p-8 shadow-2xl mb-8">
     <?php if ($ganador === null): ?>
@@ -48,8 +48,10 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
         <p class="text-xl font-semibold">Eligiendo ganador...</p>
       </div>
 
+      <div id="ganador" class="mt-2 text-center"></div>
+
     <?php else: ?>
-      <div id="ganador" class="mt-8 text-center">
+      <div id="ganador" class="mt-8 text-center hidden">
         <h3 class="text-2xl font-semibold">¡Nuestro ganador!</h3>
         <p class="text-lg">Ganador: <strong><?php echo $ganador['nombre']; ?></strong></p>
         <p class="text-lg">Cédula: <strong><?php echo $ganador['cedula']; ?></strong></p>
@@ -57,14 +59,22 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
         <p class="text-lg">Premio: <strong><?php echo $ganador['premio']; ?></strong></p>
       </div>
     <?php endif; ?>
-
   </section>
 </main>
 
 <script>
   document.getElementById('botonSeleccionar').addEventListener('click', function() {
+
+    const rifa = ` <?php echo $rifaActiva['titulo'] ?> `;
     const boletosElement = document.getElementById('boletos');
     const animacionElement = document.getElementById('animacion');
+    const botonSeleccionar = document.getElementById('botonSeleccionar');
+    const ganadorElement = document.getElementById('ganador');
+
+    // Ocultar el botón de sortear
+    botonSeleccionar.style.display = 'none';
+
+    // Mostrar la animación
     animacionElement.classList.remove('hidden');
 
     // Animación de rotación de números
@@ -84,11 +94,28 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
       // Cambiar el fondo del body a un gif
       document.body.style.backgroundImage = "url('https://juegayganaconmanolo.com/assets/images/ganador.gif')";
 
+      // Ocultar la animación
+      animacionElement.classList.add('hidden');
+
+      // Mostrar los datos del ganador (esto se puede hacer si tienes los datos disponibles)
+      ganadorElement.classList.remove('hidden');
+      
+      // Aquí puedes reemplazar estos datos con los datos reales obtenidos del backend
+      let nombreGanador = "Jose Vazquez"; // Simulando el ganador
+      let cedulaGanador = "21159302";
+      let boletoGanador = numero;
+      let premioGanador = rifa;
+
+      ganadorElement.innerHTML = `
+        <h3 class="text-2xl font-semibold mb-2">¡Nuestro ganador!</h3>
+        <p class="text-lg">Ganador: <strong>${nombreGanador}</strong></p>
+        <p class="text-lg">Cédula: <strong>${cedulaGanador}</strong></p>
+        <p class="text-lg">Boleto: <strong>${boletoGanador}</strong></p>
+        <p class="text-lg">Premio: <strong>${premioGanador}</strong></p>
+       `;
     }, 5000); // 5 segundos
   });
 </script>
-
-</main>
 
 <?php include_once DIRPAGE.'components/footer.php'; ?>
 
@@ -98,28 +125,11 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
   font-size: 2rem;
   font-family: monospace;
   font-weight: bold;
-  padding: 20px;
+  padding: 30px;
   background-color: #f3f3f3;
   border-radius: 10px;
-  width: 100px;
+  width: 150px;
   margin: 20px auto;
   text-align: center;
 }
-
-/* Animación de spinner */
-.spinner {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #3498db;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 </style>
