@@ -96,7 +96,7 @@ try {
     $correoHTML = CorreoHelper::generarCorreo($firstName, $lastName, $email, $monto, $tiques, $address, $phone, $imagen_pago);
 
     // Asunto del correo
-    $asunto = 'Nuevo pago recibido - ' . $firstName . ' ' . $lastName;
+    $asunto = 'Nuevo pago recibido';
 
     // Llamada a la función para enviar el correo
     $result = Mailer::send(

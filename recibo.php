@@ -101,7 +101,7 @@ if (isset($_GET['codigo'])) {
         <h3 class="text-2xl font-semibold text-center text-gray-900 mb-6">Boletos Comprados</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
           <?php foreach ($cliente['boletos'] as $boleto): ?>
-            <div class="bg-blue-600 text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110">
+            <div class="text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110" style="background-color: rgb(51,181,249)">
               <p class="text-xl font-semibold">Boleto</p>
               <p class="text-4xl font-bold"><?= htmlspecialchars($boleto) ?></p>
             </div>
