@@ -72,3 +72,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const eyeIcon = document.getElementById('eye-icon');
+    const passwordField = document.getElementById('password');
+
+    eyeIcon.addEventListener('click', function() {
+        // Alternar tipo de contraseña
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.innerHTML = '<i class="ri-eye-off-line text-lg"></i>'; // Ícono de ojo cerrado
+        } else {
+            passwordField.type = "password";
+            eyeIcon.innerHTML = '<i class="ri-eye-line text-lg"></i>'; // Ícono de ojo abierto
+        }
+    });
+});

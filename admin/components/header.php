@@ -81,7 +81,7 @@
                     <li class="menu-item">
                         <a href="<?php echo HOST_ADMIN;?>logout" id="logout" class="menu-link">
                             <span class="menu-icon"><i class="ri-logout-circle-r-line"></i></span>
-                            <span class="menu-text"> Logout </span>
+                            <span class="menu-text"> Salir </span>
                         </a>
                     </li>
                 </ul>

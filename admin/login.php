@@ -56,14 +56,7 @@
 
                                 <div class="flex items-center">
                                     <input type="password" id="password" name="password" class="form-input rounded-e-none" placeholder="Introduce tu contraseña">
-                                    <span class="px-3 py-1 border rounded-e-md -ms-px dark:border-white/10"><i class="ri-eye-line text-lg"></i></span>
-                                </div>
-                            </div>
-
-                            <div class="mb-6">
-                                <div class="flex items-center">
-                                    <input type="checkbox" class="form-checkbox rounded text-primary" id="checkbox-signin" checked>
-                                    <label class="ms-2" for="checkbox-signin">Recordarme</label>
+                                    <span id="eye-icon" class="px-3 py-1 border rounded-e-md -ms-px dark:border-white/10 cursor-pointer"><i class="ri-eye-line text-lg"></i></span>
                                 </div>
                             </div>
 

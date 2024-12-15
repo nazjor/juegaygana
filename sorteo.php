@@ -1,4 +1,5 @@
 <?php
+session_start();
 $title = 'Seleccionar Ganador - Juega y Gana';
 require_once 'admin/components/init.php';
 require_once DIRPAGE.'components/header.php';
