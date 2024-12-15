@@ -1,8 +1,13 @@
 <?php
     require_once __DIR__ . '../../components/init.php';
     require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
+    require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
+    require_once DIRPAGE_ADMIN.'util/Mail.php';
+    require_once DIRPAGE_ADMIN.'util/CorreoHelper.php';
+    require_once DIRPAGE_ADMIN.'util/UtilEncriptacion.php';
 
 $pagoRepo = new PagosRepository();
+$clienteRepo = new ClientesRepository();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -32,6 +37,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultado = $pagoRepo->updatePagoState($id, $_POST['estado_pago']);
 
         if ($resultado) {
+            if ($_POST['estado_pago'] == "aprobado") {
+
+                $cliente = $clienteRepo->findClienteById($pagoExistente['cliente_id']);
+
+                if (!$cliente) {
+                    throw new Exception("El cliente con ID {$id} no existe.");
+                }
+
+                $fullname = $cliente['nombre']. " ". $cliente['apellido']; 
+                // Asunto del correo
+                $asunto = "¡Tu compra $fullname ha sido aprobada! 🎉";
+
+                $codigoCompra = str_pad($pagoExistente['id'], 8, '0', STR_PAD_LEFT);
+
+                // Llamada a la clase estática para generar el correo
+                $codigoEncriptado = UtilEncriptacion::encriptar($codigoCompra);
+                $enlace = HOST.'recibo/'.$codigoEncriptado;
+                $correoHTML = CorreoHelper::generarCorreoCompraAprobada($fullname, $codigoCompra, $enlace);
+
+                // Llamada a la función para enviar el correo
+                $result = Mailer::send(
+                    $cliente['correo'],
+                    $asunto,
+                    $correoHTML
+                );
+
+                // Verifica si el correo fue enviado correctamente o si hubo un error
+                if ($result !== true) {
+                    throw new Exception("Hubo un error al enviar el email.", 500);
+                }
+            }
             echo json_encode(["success" => true, "message" => "Rifa actualizada correctamente."]);
         } else {
             throw new Exception("Error al actualizar el pago.");

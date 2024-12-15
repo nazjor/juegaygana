@@ -14,7 +14,16 @@ class ClientesRepository extends BaseRepository {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
-
+   
+    public function findClienteById(int $id): ?array {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM {$this->tableName} WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+    
     // Método para insertar un cliente
     public function insert(array $data): int {
         $db = Database::getConnection();

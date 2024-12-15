@@ -8,7 +8,7 @@ try {
     require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
     require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
     require_once DIRPAGE_ADMIN.'util/Mail.php';
-    require_once DIRPAGE_ADMIN.'util/CorreoHelper.php';  // Incluir la nueva clase
+    require_once DIRPAGE_ADMIN.'util/CorreoHelper.php';
 
     // Validar campos obligatorios
     $requiredFields = ['tiques', 'monto', 'email', 'first-name', 'last-name', 'cedula', 'phone', 'address'];
@@ -99,7 +99,7 @@ try {
 
     // Llamada a la función para enviar el correo
     $result = Mailer::send(
-        'jrvazquezantelo@gmail.com', // Dirección del destinatario
+        MAIL_SUPPORT, // Dirección del destinatario
         $asunto,                     // Asunto
         $correoHTML                  // Cuerpo del correo en HTML
     );
