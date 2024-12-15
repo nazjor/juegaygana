@@ -2,9 +2,10 @@
 $title = 'Recibo - Juega y Gana';
 require_once 'admin/components/init.php';
 require_once DIRPAGE.'components/header.php';
-require_once DIRPAGE_ADMIN.'util/UtilEncriptacion.php';
-require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/BoletosRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
+require_once DIRPAGE_ADMIN.'util/UtilEncriptacion.php';
 
 // Verificar si el parámetro 'codigo' está presente en la URL
 if (isset($_GET['codigo'])) {
@@ -17,12 +18,13 @@ if (isset($_GET['codigo'])) {
 
         $idPago = (int) $codigoDesencriptado;
 
-        $pagoRepo = new PagosRepository();
+        $boletosRepo = new BoletosRepository();
         $clienteRepo = new ClientesRepository();
+        $pagoRepo = new PagosRepository();
 
         $pagoExistente = $pagoRepo->findPagoById($idPago);
         if (!$pagoExistente) {
-          throw new Exception("El pago con ID {$id} no existe.");
+          throw new Exception("El pago no existe.");
         }
 
         $numeroRecibo = str_pad($pagoExistente['id'], 8, '0', STR_PAD_LEFT);
@@ -30,16 +32,20 @@ if (isset($_GET['codigo'])) {
         $clienteRecord = $clienteRepo->findClienteById($pagoExistente['cliente_id']);
 
         if (!$clienteRecord) {
-            throw new Exception("El cliente con ID {$id} no existe.");
+            throw new Exception("El cliente no existe.");
         }
 
+        $boletosRecord = $boletosRepo->findByPagoId($pagoExistente['id']);
+
+        $boletos = array_map(function($item) {
+            return $item['numero_boleto'];
+        }, $boletosRecord);
+        
         $cliente = [
-            'nombre' => $clienteRecord['nombre']." ".$clienteRecord['apellido'],
-            'cedula' => $clienteRecord['cedula'],
-            'numero_recibo' => $numeroRecibo,
-            'boletos' => [
-                '5510', '0024'
-            ]
+          'nombre' => $clienteRecord['nombre'] . " " . $clienteRecord['apellido'],
+          'cedula' => $clienteRecord['cedula'],
+          'numero_recibo' => $numeroRecibo,
+          'boletos' => $boletos
         ];
 
     } catch (Exception $e) {
@@ -64,7 +70,7 @@ if (isset($_GET['codigo'])) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4m0 4h.01" />
           </svg>
           <p class='text-center font-medium text-xl'>
-              El código de recibo es inválido. Por favor, comuníquese con el equipo de soporte.
+            El código de recibo es inválido. <br><br> Por favor, si el código es correcto, <br><br> escríbanos al WhatsApp.
           </p>
       </div>
     <?php else: ?>
@@ -95,7 +101,7 @@ if (isset($_GET['codigo'])) {
         <h3 class="text-2xl font-semibold text-center text-gray-900 mb-6">Boletos Comprados</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
           <?php foreach ($cliente['boletos'] as $boleto): ?>
-            <div class="bg-blue-6.00 text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110">
+            <div class="bg-blue-600 text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110">
               <p class="text-xl font-semibold">Boleto</p>
               <p class="text-4xl font-bold"><?= htmlspecialchars($boleto) ?></p>
             </div>
