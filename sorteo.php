@@ -45,7 +45,7 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
 
       <div id="animacion" class="hidden text-center">
         <div id="boletos" class="boletos">0001</div>
-        <p class="text-xl font-semibold">Eligiendo ganador...</p>
+        <p id="eligiendoGanador" class="text-xl font-semibold">Eligiendo ganador...</p>
       </div>
 
       <div id="ganador" class="mt-2 text-center"></div>
@@ -70,6 +70,7 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
     const animacionElement = document.getElementById('animacion');
     const botonSeleccionar = document.getElementById('botonSeleccionar');
     const ganadorElement = document.getElementById('ganador');
+    const eligiendoGanador = document.getElementById('eligiendoGanador');
 
     // Ocultar el botón de sortear
     botonSeleccionar.style.display = 'none';
@@ -95,7 +96,7 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
       document.body.style.backgroundImage = "url('https://juegayganaconmanolo.com/assets/images/ganador.gif')";
 
       // Ocultar la animación
-      animacionElement.classList.add('hidden');
+      eligiendoGanador.classList.add('hidden');
 
       // Mostrar los datos del ganador (esto se puede hacer si tienes los datos disponibles)
       ganadorElement.classList.remove('hidden');
@@ -103,15 +104,11 @@ $existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'
       // Aquí puedes reemplazar estos datos con los datos reales obtenidos del backend
       let nombreGanador = "Jose Vazquez"; // Simulando el ganador
       let cedulaGanador = "21159302";
-      let boletoGanador = numero;
       let premioGanador = rifa;
 
       ganadorElement.innerHTML = `
-        <h3 class="text-2xl font-semibold mb-2">¡Nuestro ganador!</h3>
         <p class="text-lg">Ganador: <strong>${nombreGanador}</strong></p>
         <p class="text-lg">Cédula: <strong>${cedulaGanador}</strong></p>
-        <p class="text-lg">Boleto: <strong>${boletoGanador}</strong></p>
-        <p class="text-lg">Premio: <strong>${premioGanador}</strong></p>
        `;
     }, 5000); // 5 segundos
   });
