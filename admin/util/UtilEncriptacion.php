@@ -1,14 +1,14 @@
 <?php
 class UtilEncriptacion {
-    
+
     /**
-     * Genera una sal aleatoria de 16 caracteres
+     * Genera una sal aleatoria de 4 bytes (8 caracteres hexadecimales)
      * 
      * @return string Sal aleatoria
      */
     private static function generarSal() {
-        // Generar una cadena aleatoria de 16 caracteres usando caracteres alfanuméricos
-        return bin2hex(random_bytes(8));  // 8 bytes = 16 caracteres hexadecimales
+        // Generar una cadena aleatoria de 4 bytes usando caracteres alfanuméricos
+        return bin2hex(random_bytes(4));  // 4 bytes = 8 caracteres hexadecimales
     }
 
     /**
@@ -18,7 +18,7 @@ class UtilEncriptacion {
      * @return string El dato encriptado de forma más compleja
      */
     public static function encriptar($dato) {
-        // Generar una sal aleatoria de 16 caracteres
+        // Generar una sal aleatoria de 8 caracteres
         $sal = self::generarSal();
         
         // Añadir la sal al dato
@@ -43,15 +43,14 @@ class UtilEncriptacion {
         // Decodificar el valor base64
         $datos = base64_decode($datoEncriptado);
         
-        // Obtener la sal (primeros 16 caracteres hexadecimales)
-        $sal = substr($datos, 0, 16);
+        // Obtener la sal (primeros 8 caracteres hexadecimales)
+        $sal = substr($datos, 0, 8);
         
         // El resto es el hash
-        $hash = substr($datos, 16);
+        $hash = substr($datos, 8);
         
-        // Desencriptar (esto solo demuestra cómo utilizamos la sal, pero no es una verdadera desencriptación)
-        $datoOriginal = str_replace($sal, '', $hash);  // Retirar la sal del hash (aunque en la práctica no es reversible)
-
-        return $datoOriginal;
+        // El proceso de desencriptado verdadero no es posible, pero podemos simularlo de la siguiente manera:
+        return str_replace($sal, '', $hash);  // Retirar la sal del hash (aunque en la práctica no es reversible)
     }
 }
+

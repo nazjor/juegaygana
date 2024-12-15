@@ -1,14 +1,14 @@
 <?php
 $title = 'Recibo - Juega y Gana';
 require_once 'admin/components/init.php';
-require_once 'components/header.php';
+require_once DIRPAGE.'components/header.php';
 require_once DIRPAGE_ADMIN.'util/UtilEncriptacion.php';
 
 // Verificar si el parámetro 'codigo' está presente en la URL
 if (isset($_GET['codigo'])) {
     // Obtener el valor encriptado desde la URL
-    $codigoEncriptado = $_GET['codigo'];
-
+    $codigoEncriptado = $_GET['codigo'] ?? "";
+    
     try {
         // Desencriptar el valor utilizando la clase UtilEncriptacion
         $codigoDesencriptado = UtilEncriptacion::desencriptar($codigoEncriptado);
@@ -83,4 +83,4 @@ if (isset($_GET['codigo'])) {
   </section>
 </main>
 
-<?php include_once 'components/footer.php'; ?>
+<?php include_once DIRPAGE.'components/footer.php'; ?>
