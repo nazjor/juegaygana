@@ -59,7 +59,6 @@ function proceedWithPurchase() {
 // Close final purchase modal
 function closeFinalModal() {
   finalModal.classList.add('hidden');
-  successModal.classList.remove('hidden');
 }
 
 function showSuccessModal() {
