@@ -120,7 +120,7 @@ try {
     $result = Mailer::send(
         $email,
         $asunto,
-        $correoHTM
+        $correoHTML
     );
 
     // Verifica si el correo fue enviado correctamente o si hubo un error
