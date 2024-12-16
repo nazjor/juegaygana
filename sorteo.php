@@ -1,132 +1,96 @@
-<?php
-session_start();
-$title = 'Seleccionar Ganador - Juega y Gana';
-require_once 'admin/components/init.php';
-require_once DIRPAGE.'components/header.php';
-require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
-$rifaRepo = new RifaRepository();
-$rifaActiva = $rifaRepo->findActiveRifa();
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?php echo $title ?? 'Juega y Gana'; ?></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-cover bg-center" style="background-image: url('https://img.myloview.com.br/quadros/modelo-suave-azul-gradiente-de-estudio-banner-fundo-de-papel-de-parede-700-125463277.jpg')" onclick="iniciarSorteo(event)">
 
-$ganador = null;
+  <!-- Contenedor principal -->
+  <div class="w-full max-w-4xl text-center px-4">    
+    <!-- Logo arriba de las tarjetas -->
+    <img src="https://juegayganaconmanolo.com/assets/images/logo.png" alt="Logo" class="mb-8">
 
-// Verifica si el usuario está logueado y tiene el rol de admin
-if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') {
-    // Solo se mostrará el botón para el usuario admin
-    $mostrarBoton = true;
-} else {
-    $mostrarBoton = false;
-}
-
-$existeGanador = $ganador == null ? "¡ Gana un <strong>". ($rifaActiva['titulo'])."<strong> !" : "Felicidades ".$ganador['nombre'];
-?>
-
-<!-- Main -->
-<main class="flex-1 max-w-4xl mx-auto px-4">
-  <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
-    <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900" id="resultado"><?php echo($existeGanador)?></h2>
-  </section>
-    
-  <!-- New Image Section -->
-  <section class="relative rounded-xl overflow-hidden mb-6">
-    <img src="<?php echo HOST_ADMIN.'assets/'.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
-  </section>
-
-  <section class="bg-white rounded-lg p-8 shadow-2xl mb-8">
-    <?php if ($ganador === null): ?>
-      <?php if ($mostrarBoton): ?>
-        <div class="text-center mb-8">
-          <button id="botonSeleccionar" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
-            Sortear
-          </button>
-        </div>
-      <?php else: ?>
-        <p class="text-center text-xl font-semibold">El ganador será seleccionado muy pronto.</p>
-      <?php endif; ?>
-
-      <div id="animacion" class="hidden text-center">
-        <div id="boletos" class="boletos">0001</div>
-        <p id="eligiendoGanador" class="text-xl font-semibold">Eligiendo ganador...</p>
+    <!-- Tarjetas de números -->
+    <div class="grid grid-cols-4 gap-4 mb-8" id="tarjetas">
+      <!-- Tarjetas visibles con borde azul y fondo blanco -->
+      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
+        <div id="numero1" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
       </div>
-
-      <div id="ganador" class="mt-2 text-center"></div>
-
-    <?php else: ?>
-      <div id="ganador" class="mt-8 text-center hidden">
-        <h3 class="text-2xl font-semibold">¡Nuestro ganador!</h3>
-        <p class="text-lg">Ganador: <strong><?php echo $ganador['nombre']; ?></strong></p>
-        <p class="text-lg">Cédula: <strong><?php echo $ganador['cedula']; ?></strong></p>
-        <p class="text-lg">Boleto: <strong><?php echo $ganador['boleto']; ?></strong></p>
-        <p class="text-lg">Premio: <strong><?php echo $ganador['premio']; ?></strong></p>
+      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
+        <div id="numero2" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
       </div>
-    <?php endif; ?>
-  </section>
-</main>
+      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
+        <div id="numero3" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
+      </div>
+      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
+        <div id="numero4" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
+      </div>
+    </div>
+  </div>
 
-<script>
-  document.getElementById('botonSeleccionar').addEventListener('click', function() {
+  <script>
+    let yaIniciado = false;
 
-    const rifa = ` <?php echo $rifaActiva['titulo'] ?> `;
-    const boletosElement = document.getElementById('boletos');
-    const animacionElement = document.getElementById('animacion');
-    const botonSeleccionar = document.getElementById('botonSeleccionar');
-    const ganadorElement = document.getElementById('ganador');
-    const eligiendoGanador = document.getElementById('eligiendoGanador');
+    // Función que se llama cuando se hace clic en cualquier parte del body
+    function iniciarSorteo(event) {
+      if (yaIniciado) return; // No hacer nada si ya se inició el sorteo
 
-    // Ocultar el botón de sortear
-    botonSeleccionar.style.display = 'none';
+      yaIniciado = true; // Marcar que el sorteo ha comenzado
 
-    // Mostrar la animación
-    animacionElement.classList.remove('hidden');
-
-    // Animación de rotación de números
-    let numero = 1;
-    const interval = setInterval(function() {
-      // Genera un número aleatorio de 0001 a 9999
-      numero = Math.floor(Math.random() * 9999) + 1;
-      boletosElement.textContent = numero.toString().padStart(4, '0');
-    }, 50); // Actualiza cada 50ms
-
-    // Detener la animación después de 5 segundos y mostrar el ganador
-    setTimeout(function() {
-      clearInterval(interval);
-      numero = Math.floor(Math.random() * 9999) + 1;
-      boletosElement.textContent = numero; // Aquí puedes poner el número ganador real si lo tienes
-
-      // Cambiar el fondo del body a un gif
-      document.body.style.backgroundImage = "url('https://juegayganaconmanolo.com/assets/images/ganador.gif')";
-
-      // Ocultar la animación
-      eligiendoGanador.classList.add('hidden');
-
-      // Mostrar los datos del ganador (esto se puede hacer si tienes los datos disponibles)
-      ganadorElement.classList.remove('hidden');
+      const tarjetas = document.querySelectorAll('.card');
       
-      // Aquí puedes reemplazar estos datos con los datos reales obtenidos del backend
-      let nombreGanador = "Jose Vazquez"; // Simulando el ganador
-      let cedulaGanador = "21159302";
-      let premioGanador = rifa;
+      // Desactivar el clic mientras se realiza el sorteo
+      document.body.style.pointerEvents = 'none';
 
-      ganadorElement.innerHTML = `
-        <p class="text-lg">Ganador: <strong>${nombreGanador}</strong></p>
-        <p class="text-lg">Cédula: <strong>${cedulaGanador}</strong></p>
-       `;
-    }, 5000); // 5 segundos
-  });
-</script>
+      // Números a mostrar en las tarjetas (4 dígitos aleatorios)
+      const numeros = Array.from({ length: 4 }, () => Math.floor(Math.random() * 9).toString().padStart(1, '0'));
 
-<?php include_once DIRPAGE.'components/footer.php'; ?>
+      // Almacenar los resultados de las tarjetas
+      const resultados = [];
 
-<style>
-  /* Estilo para el boleto que girará */
-#boletos {
-  font-size: 2rem;
-  font-family: monospace;
-  font-weight: bold;
-  padding: 30px;
-  background-color: #f3f3f3;
-  border-radius: 10px;
-  width: 150px;
-  margin: 20px auto;
-  text-align: center;
-}
-</style>
+      // Función para realizar la animación del conteo de 0 al 9
+      function animarConteo(tarjetaId, numeroRandom, callback) {
+        const numeroElement = document.getElementById(tarjetaId);
+        let conteo = 0;
+
+        // Eliminar la imagen de fondo al empezar el conteo
+        const tarjeta = numeroElement.closest('.card');
+        tarjeta.style.backgroundImage = 'none';
+
+        // Animación del conteo
+        const intervalo = setInterval(() => {
+          if (conteo <= 9) {
+            numeroElement.textContent = conteo;
+            conteo++;
+          } else {
+            clearInterval(intervalo);  // Detener el conteo
+            numeroElement.textContent = numeroRandom; // Mostrar el número aleatorio
+            resultados.push(numeroRandom);  // Guardar el resultado
+            callback();  // Llamar al siguiente paso
+          }
+        }, 100); // Mostrar cada número por 100ms (del 0 al 9)
+      }
+
+      // Función para iniciar la animación de la siguiente tarjeta
+      function iniciarSiguienteTarjeta(index) {
+        if (index < 4) {
+          setTimeout(() => animarConteo(`numero${index + 1}`, numeros[index], () => iniciarSiguienteTarjeta(index + 1)), 1000);
+        } else {
+          // Después de todas las tarjetas, mostrar el resultado final en la consola
+          console.log('Resultados finales:', resultados);
+          setTimeout(() => {
+            document.body.style.pointerEvents = 'auto'; // Rehabilitar el clic
+          }, 1000);  // 1 segundo para finalizar
+        }
+      }
+
+      // Iniciar la animación con la primera tarjeta
+      iniciarSiguienteTarjeta(0);
+    }
+  </script>
+</body>
+</html>
