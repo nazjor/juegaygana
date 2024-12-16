@@ -62,19 +62,30 @@ function closeFinalModal() {
   successModal.classList.remove('hidden');
 }
 
-// Close success modal
-function closeSuccessModal() {
-  successModal.classList.add('hidden');
+function showSuccessModal() {
+  const successModal = document.getElementById('success-modal');
+  if (successModal) {
+    successModal.classList.remove('hidden'); // Muestra el modal
+  }
 }
+
+function closeSuccessModal() {
+  const successModal = document.getElementById('success-modal');
+  if (successModal) {
+    successModal.classList.add('hidden'); // Oculta el modal
+  }
+}
+
 // Evento de submit del formulario
 document.getElementById('purchase-form').addEventListener('submit', function(event) {
-  event.preventDefault();  // Evitar que se recargue la página
+  event.preventDefault(); // Evitar que se recargue la página
 
-  const formData = new FormData(this);  // Obtener los datos del formulario
+  const formData = new FormData(this); // Obtener los datos del formulario
   formData.append("tiques", ticketCount);
   formData.append("monto", (ticketCount * pricePerTicket).toFixed(2));
   const photoInput = document.getElementById('photo');
-  const allowedFormats = ['image/jpeg', 'image/png'];  // Formatos permitidos
+  const allowedFormats = ['image/jpeg', 'image/png']; // Formatos permitidos
+  const submitButton = document.getElementById("botonComprarTique");
 
   // Verificar si se ha seleccionado una imagen
   if (!photoInput.files.length) {
@@ -99,54 +110,56 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
     return;
   }
 
-  fetch('acciones/compra.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => {
-      document.getElementById("botonComprarTique").disabled = true;
+  // Deshabilitar el botón y mostrar el estado de cargando
+  submitButton.disabled = true;
 
-      // Mostrar el estado de cargando con Swal
-      Swal.fire({
-          title: 'Procesando...',
-          text: 'Por favor, espere mientras procesamos su compra.',
-          allowOutsideClick: false,
-          didOpen: () => {
-              Swal.showLoading();
-          },
-      });
-
-      if (!response.ok) {
-          // Si la respuesta no es 200 OK, se maneja el error
-          return response.json().then(errorData => {
-              throw new Error(errorData.message || 'Hubo un error al procesar la solicitud.');
-          });
-      }
-      return response.json(); // Si la respuesta es correcta, se parsea como JSON
-  })
-  .then(data => {
-      Swal.close(); // Cerrar el modal de cargando
-      if (data.success) {
-          closeFinalModal();
-      } else {
-          Swal.fire({
-              icon: 'error',
-              title: '¡Error!',
-              text: data.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-              confirmButtonText: 'Aceptar',
-          });
-      }
-  })
-  .catch(error => {
-      Swal.close(); // Asegurarse de cerrar el modal de cargando en caso de error
-
-      Swal.fire({
-          icon: 'error',
-          title: '¡Error!',
-          text: error.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
-          confirmButtonText: 'Aceptar',
-      });
+  Swal.fire({
+    title: 'Procesando...',
+    text: 'Por favor, espere mientras procesamos su compra.',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
   });
 
-  document.getElementById("botonComprarTique").disabled = false;
+  // Realizar la solicitud
+  fetch('acciones/compra.php', {
+    method: 'POST',
+    body: formData,
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(errorData => {
+          throw new Error(errorData.message || 'Hubo un error al procesar la solicitud.');
+        });
+      }
+      return response.json(); // Si la respuesta es correcta, se parsea como JSON
+    })
+    .then(data => {
+      Swal.close(); // Cerrar el modal de cargando
+      if (data.success) {
+        // Mostrar el modal de éxito personalizado
+        showSuccessModal();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: data.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
+          confirmButtonText: 'Aceptar',
+        });
+      }
+    })
+    .catch(error => {
+      Swal.close(); // Asegurarse de cerrar el modal de cargando en caso de error
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: error.message || 'Hubo un error al realizar la compra. Por favor, intenta nuevamente más tarde.',
+        confirmButtonText: 'Aceptar',
+      });
+    })
+    .finally(() => {
+      // Asegurarse de habilitar el botón en todos los casos (éxito o error)
+      submitButton.disabled = false;
+    });
 });
