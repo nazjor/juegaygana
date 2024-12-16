@@ -8,18 +8,39 @@ $rifaRepo = new RifaRepository();
 $pagosRepo = new PagosRepository();
 $rifaActiva = $rifaRepo->findActiveRifa();
 
-// Obtener el total de boletos disponibles y el total de boletos comprados
-$totalBoletos = (int)$rifaActiva['total_boletos'];
-$totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']);
-
-// Calcular porcentaje
-$porcentaje = ($totalComprados / $totalBoletos) * 100;
-$porcentaje = round($porcentaje, 2); // Redondear a dos decimales
-
+if ($rifaActiva) {
+  // Obtener el total de boletos disponibles y el total de boletos comprados
+  $totalBoletos = (int)$rifaActiva['total_boletos'];
+  $totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']);
+  
+  // Calcular porcentaje
+  $porcentaje = ($totalComprados / $totalBoletos) * 100;
+  $porcentaje = round($porcentaje, 2); // Redondear a dos decimales
+}
 ?>
 
 <!-- Main -->
 <main class="flex-1 max-w-4xl mx-auto px-4">
+
+  <?php if (!$rifaActiva): ?>
+    <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
+      <!-- Mostrar mensaje amigable si no hay rifas activas -->
+      <div class="bg-yellow-100 text-yellow-800 p-6 rounded-lg shadow-xl mb-8 flex items-center gap-4">
+        <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+        </svg>
+        <div>
+          <p class="text-center font-semibold text-xl">
+            ¡No hay rifas activas en este momento! 🎟️
+          </p>
+          <p class="text-center mt-2 text-lg">
+            Estamos preparando nuevas sorpresas para ti. Vuelve pronto para participar y ganar increíbles premios. 🏆
+          </p>
+        </div>
+      </div>
+    </section>
+
+  <?php else: ?>
 
   <!-- Details Section -->
   <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
@@ -211,6 +232,8 @@ $porcentaje = round($porcentaje, 2); // Redondear a dos decimales
     </form>
   </div>
 </div>
+
+<?php endif; ?>
 
 <!-- Modal de éxito -->
 <div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75">
