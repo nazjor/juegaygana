@@ -55,5 +55,28 @@ class CorreoHelper {
         ";
         return $correoHTML;
     }
+
+    public static function generarCorreoCompraPendiente($nombre, $email) {
+        $logoUrl = HOST.'assets/images/logo.png';
+        $correoHTML = "
+            <html>
+            <body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>
+                <div style='width: 600px; margin: 0 auto; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>
+                    <div style='background-color:rgb(0, 23, 47); color: #fff; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;'>
+                        <img src='$logoUrl' alt='Logo' style='width: 100px;'>
+                        <h2 style='margin-top: 10px;'>Compra en proceso</h2>
+                    </div>
+                    <div style='padding: 20px;'>
+                        <p>¡Hola <strong>$nombre</strong>!</p>
+                        <p>Se ha realizado tu compra correctamente. Por favor, espera mientras confirmamos tu pago.</p>
+                        <p>Recibirás un correo con los boletos de tu compra una vez que el proceso esté completo.</p>
+                        <p style='font-size: 0.9em; color: #888;'>Si tienes alguna duda, contáctanos al correo: <a href='mailto:$email'>$email</a>.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        ";
+        return $correoHTML;
+    }    
 }
 ?>

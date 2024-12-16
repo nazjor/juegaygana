@@ -59,6 +59,7 @@ function proceedWithPurchase() {
 // Close final purchase modal
 function closeFinalModal() {
   finalModal.classList.add('hidden');
+  finalModal.classList.remove('hidden');
 }
 
 // Close success modal
@@ -103,6 +104,8 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
     body: formData
   })
   .then(response => {
+      document.getElementById("botonComprarTique").disabled = true;
+
       // Mostrar el estado de cargando con Swal
       Swal.fire({
           title: 'Procesando...',
@@ -123,15 +126,8 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   })
   .then(data => {
       Swal.close(); // Cerrar el modal de cargando
-
       if (data.success) {
-          closeFinalModal(); // Lógica adicional si existe
-          Swal.fire({
-              icon: 'success',
-              title: '¡Compra realizada!',
-              text: data.message || 'Su compra ha sido completada exitosamente.',
-              confirmButtonText: 'Aceptar',
-          });
+          closeFinalModal();
       } else {
           Swal.fire({
               icon: 'error',
@@ -151,4 +147,6 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
           confirmButtonText: 'Aceptar',
       });
   });
+
+  document.getElementById("botonComprarTique").disabled = false;
 });

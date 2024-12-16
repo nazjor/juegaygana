@@ -207,7 +207,7 @@ $porcentaje = round($porcentaje, 2); // Redondear a dos decimales
       </div>
 
       <!-- Botón de Enviar -->
-      <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">Confirmar Compra</button>
+      <button id="botonComprarTique" type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">Confirmar Compra</button>
     </form>
   </div>
 </div>

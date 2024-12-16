@@ -100,15 +100,34 @@ try {
 
     // Llamada a la función para enviar el correo
     $result = Mailer::send(
-        MAIL_SUPPORT, // Dirección del destinatario
-        $asunto,                     // Asunto
-        $correoHTML                  // Cuerpo del correo en HTML
+        MAIL_SUPPORT,
+        $asunto,
+        $correoHTML
     );
 
     // Verifica si el correo fue enviado correctamente o si hubo un error
     if ($result !== true) {
         throw new Exception("Hubo un error al enviar el email.", 500);
     }
+
+    // Llamada a la clase estática para generar el correo
+    $correoHTML = CorreoHelper::generarCorreoCompraPendiente($firstName. " ".$lastName, MAIL_SUPPORT);
+
+    // Asunto del correo
+    $asunto = 'Compra recibida: Estamos confirmando tu pago';
+
+    // Llamada a la función para enviar el correo
+    $result = Mailer::send(
+        $email,
+        $asunto,
+        $correoHTM
+    );
+
+    // Verifica si el correo fue enviado correctamente o si hubo un error
+    if ($result !== true) {
+        throw new Exception("Hubo un error al enviar el email.", 500);
+    }
+
     echo json_encode(["success" => true, "message" => "Compra realizada con éxito.", "pago_id" => $pagoId]);
 } catch (Exception $e) {
     // Manejo de excepciones y errores
