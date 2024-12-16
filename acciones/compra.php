@@ -111,7 +111,7 @@ try {
     }
 
     // Llamada a la clase estática para generar el correo
-    $correoHTML = CorreoHelper::generarCorreoCompraPendiente($firstName. " ".$lastName, MAIL_SUPPORT);
+    $correoHTML = CorreoHelper::generarCorreoCompraPendiente($firstName. " ".$lastName);
 
     // Asunto del correo
     $asunto = 'Compra recibida: Estamos confirmando tu pago';

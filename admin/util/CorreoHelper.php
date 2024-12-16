@@ -56,7 +56,7 @@ class CorreoHelper {
         return $correoHTML;
     }
 
-    public static function generarCorreoCompraPendiente($nombre, $email) {
+    public static function generarCorreoCompraPendiente($nombre) {
         $logoUrl = HOST.'assets/images/logo.png';
         $correoHTML = "
             <html>
@@ -70,7 +70,6 @@ class CorreoHelper {
                         <p>¡Hola <strong>$nombre</strong>!</p>
                         <p>Se ha realizado tu compra correctamente. Por favor, espera mientras confirmamos tu pago.</p>
                         <p>Recibirás un correo con los boletos de tu compra una vez que el proceso esté completo.</p>
-                        <p style='font-size: 0.9em; color: #888;'>Si tienes alguna duda, contáctanos al correo: <a href='mailto:$email'>$email</a>.</p>
                     </div>
                 </div>
             </body>
