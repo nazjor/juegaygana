@@ -113,7 +113,7 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   submitButton.disabled = true;
 
   closeFinalModal();
-  
+
   Swal.fire({
     title: 'Procesando...',
     text: 'Por favor, espere mientras procesamos su compra.',
@@ -163,4 +163,26 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
       // Asegurarse de habilitar el botón en todos los casos (éxito o error)
       submitButton.disabled = false;
     });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const termsModal = document.getElementById('terms-modal');
+  const acceptTermsButton = document.getElementById('accept-terms-btn');
+
+  // Verificar si ya se aceptaron los términos en el localStorage
+  const termsAccepted = localStorage.getItem('termsAccepted');
+
+  if (!termsAccepted) {
+    // Mostrar el modal
+    termsModal.classList.remove('hidden');
+  }
+
+  // Agregar evento al botón de aceptar
+  acceptTermsButton.addEventListener('click', function () {
+    // Guardar en localStorage
+    localStorage.setItem('termsAccepted', 'true');
+
+    // Ocultar el modal
+    termsModal.classList.add('hidden');
+  });
 });

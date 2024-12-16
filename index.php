@@ -221,6 +221,33 @@ $porcentaje = round($porcentaje, 2); // Redondear a dos decimales
   </div>
 </div>
 
+<!-- Modal de Términos y Condiciones -->
+<div id="terms-modal" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75">
+  <div class="relative p-6 w-full max-w-lg bg-white rounded-lg shadow-lg overflow-auto max-h-[95vh]">
+    <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Términos y Condiciones</h3>
+    <p class="text-gray-700 text-sm mb-4">
+      Bienvenido a <strong>Juega y Gana con Manolo</strong>. Por favor, lea cuidadosamente nuestros términos y condiciones antes de participar en nuestras rifas:
+    </p>
+    <ul class="text-gray-700 text-sm list-disc pl-5 mb-4 space-y-2">
+      <li>Los números para cada rifa se asignan de manera aleatoria y se detallan en tu recibo.</li>
+      <li>Solo pueden participar personas mayores de 18 años, con nacionalidad venezolana o extranjeros residentes en Venezuela.</li>
+      <li>Los sorteos se realizan en vivo a través de nuestras plataformas oficiales. Asegúrate de seguirnos para no perderte la transmisión.</li>
+      <li>La confirmación del pago puede tardar entre 1 y 8 horas. Te notificaremos una vez que esté aprobado.</li>
+      <li>Los ganadores aceptan que <strong>Juega y Gana con Manolo</strong> pueda publicar fotos y videos de la entrega de premios en sus redes sociales.</li>
+      <li>Es responsabilidad del participante asegurarse de que sus datos sean correctos al momento de registrarse.</li>
+      <li>No se permiten reembolsos una vez que los números hayan sido asignados.</li>
+      <li>La organización se reserva el derecho de modificar estos términos previo aviso.</li>
+      <li>Al aceptar estos términos, confirma que entiende y está de acuerdo con todas las condiciones descritas.</li>
+    </ul>
+    <button 
+      id="accept-terms-btn" 
+      type="button" 
+      class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">
+      Aceptar Términos y Condiciones
+    </button>
+  </div>
+</div>
+
 <script src="<?php echo HOST;?>assets/js/main.js?v1=<?php echo VERSION_JS;?>"></script>
 
 <?php include_once 'components/footer.php'; ?>
