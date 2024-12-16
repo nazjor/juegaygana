@@ -222,7 +222,7 @@ $porcentaje = round($porcentaje, 2); // Redondear a dos decimales
 </div>
 
 <!-- Modal de Términos y Condiciones -->
-<div id="terms-modal" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75">
+<div id="terms-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75">
   <div class="relative p-6 w-full max-w-lg bg-white rounded-lg shadow-lg overflow-auto max-h-[95vh]">
     <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Términos y Condiciones</h3>
     <p class="text-gray-700 text-sm mb-4">

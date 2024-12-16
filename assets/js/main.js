@@ -173,13 +173,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const termsAccepted = localStorage.getItem('termsAccepted');
 
   if (!termsAccepted) {
-    // Mostrar el modal
+    // Mostrar el modal si no se aceptaron los términos
     termsModal.classList.remove('hidden');
   }
 
   // Agregar evento al botón de aceptar
   acceptTermsButton.addEventListener('click', function () {
-    // Guardar en localStorage
+    // Guardar en localStorage que se aceptaron los términos
     localStorage.setItem('termsAccepted', 'true');
 
     // Ocultar el modal
