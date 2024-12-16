@@ -112,6 +112,8 @@ document.getElementById('purchase-form').addEventListener('submit', function(eve
   // Deshabilitar el botón y mostrar el estado de cargando
   submitButton.disabled = true;
 
+  closeFinalModal();
+  
   Swal.fire({
     title: 'Procesando...',
     text: 'Por favor, espere mientras procesamos su compra.',
