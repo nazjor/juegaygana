@@ -42,7 +42,7 @@
         
         $ganadorRepo->insertarGanador($boletoGanador['id']);
 
-        if (!Mailer::send($cliente['correo'], $asunto, $correoHTML, true)) {
+        if (!Mailer::send($cliente['correo'], $asunto, $correoHTML)) {
             throw new Exception("Error al enviar el correo.", 500);
         }
 
