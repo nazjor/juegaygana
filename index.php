@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['auth'])) {
+  $_SESSION['auth'] = bin2hex(random_bytes(16));
+  session_regenerate_id(true); 
+}
+
 $title = 'Inicio - Juega y Gana';
 include_once 'admin/components/init.php';
 include_once 'components/header.php';
@@ -271,6 +277,6 @@ if ($rifaActiva) {
   </div>
 </div>
 
-<script src="<?php echo HOST;?>assets/js/main.js?v1=<?php echo VERSION_JS;?>"></script>
+<script src="<?php echo HOST;?>assets/js/index.js?v1=<?php echo VERSION_JS;?>"></script>
 
 <?php include_once 'components/footer.php'; ?>
