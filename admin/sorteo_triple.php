@@ -37,6 +37,10 @@ while (count($numerosGanadores) < 3) {
     }
 }
 
+// Formatear los números ganadores a 4 dígitos (agregar ceros si es necesario)
+$numerosGanadoresFormateados = array_map(function($numero) {
+    return str_pad($numero, 4, '0', STR_PAD_LEFT);
+}, $numerosGanadores);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -78,7 +82,7 @@ while (count($numerosGanadores) < 3) {
             <!-- Contenedor de las tarjetas de premios -->
             <div class="flex justify-center gap-6 relative mt-12">
                 <!-- Premio 1 a la izquierda -->
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" onclick="animarConteo('numero1', <?php echo $numerosGanadores[0]; ?>)">
+                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" onclick="animarConteo('numero1', '<?php echo $numerosGanadoresFormateados[0]; ?>')">
 
                     <p class="text-8xl font-bold text-blue-500" id="numero1">
                         <span id="1num1">-</span>
@@ -88,7 +92,7 @@ while (count($numerosGanadores) < 3) {
                     </p>
                 </div>
                 <!-- Tarjeta central con el premio 2 (movida hacia arriba) -->
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" onclick="animarConteo('numero2', <?php echo $numerosGanadores[1]; ?>)">
+                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" onclick="animarConteo('numero2', '<?php echo $numerosGanadoresFormateados[1]; ?>')">
                     <p class="text-8xl font-bold text-blue-500" id="numero2">
                         <span id="2num1">-</span>
                         <span id="2num2">-</span>
@@ -98,7 +102,7 @@ while (count($numerosGanadores) < 3) {
                 </div>
 
                 <!-- Premio 3 a la derecha -->
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" onclick="animarConteo('numero3', <?php echo $numerosGanadores[2]; ?>)">
+                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" onclick="animarConteo('numero3', '<?php echo $numerosGanadoresFormateados[2]; ?>')">
                     <p class="text-8xl font-bold text-blue-500" id="numero3">
                         <span id="3num1">-</span>
                         <span id="3num2">-</span>
@@ -109,44 +113,57 @@ while (count($numerosGanadores) < 3) {
             </div>
         <?php } ?>
     </div>
-    <script>
+    <audio id="sonidoBolas" src="https://juegayganaconmanolo.com/assets/resources/bolas.mp3"></audio>
+<script>
     // Función para animar el conteo de números en las tarjetas
     function animarConteo(tarjetaId, numeroRandom) {
         const numeroElement = document.getElementById(tarjetaId);
         const digitos = numeroElement.querySelectorAll('span'); // Obtener todos los elementos <span> de cada dígito
 
-        // Aseguramos que el número tenga 4 dígitos, rellenando con ceros si es necesario
-        const numeroConCeros = String(numeroRandom).padStart(4, '0');
-        let currentNumber = [0, 0, 0, 0]; // Inicializamos los números en 0 para cada dígito
-        let intervalDuration = 200; // Intervalo de 200ms entre cada cambio de número
+        // Reproducir el sonido y mantenerlo mientras se animan los números
+        const sonido = document.getElementById('sonidoBolas');
 
-        // Separar el número en sus 4 dígitos
+        let numeroConCeros = numeroRandom.padStart(4, '0');
         let numeroArray = numeroConCeros.split('');
+        
+        let currentIndex = 0; // Índice para controlar el ciclo de 4 dígitos
 
-        // Función para actualizar cada dígito de uno en uno de forma aleatoria
-        let actualizarDigito = (index) => {
-            if (index < 4) {
-                // Cambiar aleatoriamente el dígito actual mientras se está animando
-                let intervaloAleatorio = setInterval(() => {
-                    currentNumber[index] = Math.floor(Math.random() * 10); // Asignar un número aleatorio de 0 a 9
-                    digitos[index].textContent = currentNumber[index]; // Asignar el nuevo número al <span>
+        // Función para animar un dígito
+        function animarDigito(index) {
+            let intervaloAleatorio;
+            let currentNumber = [0, 0, 0, 0]; // Inicializamos los números en 0 para cada dígito
 
-                }, intervalDuration);
+            // Reproducir el sonido para el dígito actual
+            sonido.play();
+            
+            // Intervalo de animación para el dígito actual
+            intervaloAleatorio = setInterval(() => {
+                currentNumber[index] = Math.floor(Math.random() * 10); // Asignar un número aleatorio de 0 a 9
+                digitos[index].textContent = currentNumber[index]; // Asignar el nuevo número al <span>
+            }, 100); // Intervalo de 200ms entre cada cambio de número (más lento)
 
-                // Después de 2 segundos (2000ms) detener la animación para este dígito y asignar el valor final
-                setTimeout(() => {
-                    clearInterval(intervaloAleatorio); // Detener la animación para este dígito
-                    digitos[index].textContent = numeroArray[index]; // Mostrar el número final
+            // Después de 2 segundos, detener la animación y mostrar el número final
+            setTimeout(() => {
+                clearInterval(intervaloAleatorio); // Detener la animación para este dígito
+                digitos[index].textContent = numeroArray[index]; // Mostrar el número final
+                sonido.pause(); // Detener el sonido
+                sonido.currentTime = 0; // Reiniciar el tiempo del audio a 0
 
-                    // Llamar a la función para el siguiente dígito
-                    actualizarDigito(index + 1);
-                }, 2000); // Tiempo que durará la animación para cada dígito
-            }
-        };
+                // Si hemos terminado el ciclo de un dígito, esperar 1 segundo y luego continuar
+                if (index < 3) {
+                    setTimeout(() => {
+                        animarDigito(index + 1); // Llamar recursivamente para el siguiente dígito
+                    }, 1000); // Esperar 1 segundo entre cada dígito
+                }
+            }, 2000); // Duración de la animación = 2 segundos (igual que el audio)
+        }
 
         // Iniciar la animación para el primer dígito
-        actualizarDigito(0);
+        animarDigito(currentIndex);
     }
 </script>
+
+
 </body>
+
 </html>
