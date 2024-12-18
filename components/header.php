@@ -5,19 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $title ?? 'Juega y Gana'; ?></title>
-  <link rel="icon" href="assets/images/logo.ico" type="image/x-icon">
+  <link rel="icon" href="<?php echo HOST;?>assets/images/logo.ico" type="image/x-icon">
     <!-- App css -->
-  <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo HOST;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <!-- Icons css -->
-  <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo HOST;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
+  <link href="<?php echo HOST;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
 
   <!-- JS de SweetAlert -->
-  <script src="<?php echo HOST_ADMIN;?>/assets/js/swal.js?v=<?php echo VERSION_JS;?>"></script>
+  <script src="<?php echo HOST;?>/assets/js/swal.js?v=<?php echo VERSION_JS;?>"></script>
 
 </head>
 

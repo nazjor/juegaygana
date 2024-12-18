@@ -1,19 +1,20 @@
-# Activar RewriteEngine
+# Activar el motor de reescritura
 RewriteEngine On
 
-# Redirigir URLs sin .php (ocultar la extensión .php)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+# Evitar la navegación de directorios
+Options -Indexes
 
-# Proteger archivos sensibles
-<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|bak)$">
+# Bloquear el acceso a archivos que no sean PHP
+<FilesMatch "\.(?!php$).*">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
 
-# Evitar navegación de directorios
-Options -Indexes
+# Proteger archivos sensibles (htaccess, htpasswd, ini, log, sh, etc.)
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|bak|json|lock)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
 
 # Bloquear bots maliciosos usando el archivo robots.txt
 <IfModule mod_rewrite.c>
@@ -27,5 +28,6 @@ Options -Indexes
     Allow from all
 </Files>
 
+# Configuración PHP (ajustar límites si es necesario)
 php_value upload_max_filesize 10M
 php_value post_max_size 10M
