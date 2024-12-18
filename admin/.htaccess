@@ -4,6 +4,12 @@ RewriteEngine On
 # Evitar la navegación de directorios
 Options -Indexes
 
+# Permitir el acceso a imágenes, CSS, JS y otros archivos estáticos
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|svg|ico|woff|woff2|eot|ttf|otf)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
 # Bloquear el acceso a archivos que no sean PHP
 <FilesMatch "\.(?!php$).*">
     Order Allow,Deny
