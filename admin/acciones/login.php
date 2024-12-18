@@ -1,10 +1,16 @@
 <?php
-
 session_start();
+if (!isset($_SESSION['auth'])) {
+  $_SESSION['auth'] = bin2hex(random_bytes(16));
+  session_regenerate_id(true); 
+}
 
 header('Content-Type: application/json');
 
 try {
+    if (!isset($_SESSION['auth'])) {
+        throw new Exception("No está autorizado", 401);
+    }
     require_once __DIR__ . '../../components/init.php';
     require_once DIRPAGE_ADMIN . 'repositories/UsuariosRepository.php';
 
