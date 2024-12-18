@@ -10,13 +10,13 @@ Options -Indexes
     Allow from all
 </FilesMatch>
 
-# Bloquear el acceso a archivos que no sean PHP
+# Bloquear el acceso a todos los archivos que no sean .php
 <FilesMatch "\.(?!php$).*">
-    Order Allow,Deny
+    Order Deny,Allow
     Deny from all
 </FilesMatch>
 
-# Proteger archivos sensibles (htaccess, htpasswd, ini, log, sh, etc.)
+# Proteger archivos sensibles (htaccess, htpasswd, ini, log, sh, bak, json, etc.)
 <FilesMatch "\.(htaccess|htpasswd|ini|log|sh|bak|json|lock)$">
     Order Allow,Deny
     Deny from all
