@@ -4,6 +4,7 @@
     require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
     require_once DIRPAGE_ADMIN . 'repositories/BoletosRepository.php';
     require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
+    require_once DIRPAGE_ADMIN . 'repositories/GanadoresRepository.php';
     require_once DIRPAGE_ADMIN . 'util/Mail.php';
     require_once DIRPAGE_ADMIN . 'util/CorreoHelper.php';
     require_once DIRPAGE_ADMIN . 'util/UtilEncriptacion.php';
@@ -24,6 +25,7 @@
         $rifaRepo = new RifaRepository();
         $boletoRepo = new BoletosRepository();
         $clienteRepo = new ClientesRepository();
+        $ganadorRepo = new GanadoresRepository();
         $rifaActiva = $rifaRepo->findActiveRifa();
 
         $boletoGanador = $boletoRepo->findByBoletoAndRifaId($numeroGanador, $rifaActiva['id']);
@@ -37,8 +39,10 @@
         $enlace = HOST . 'recibo/' . $codigoEncriptado;
         $fullname = $cliente['nombre'] . " " . $cliente['apellido'];
         $correoHTML = CorreoHelper::generarCorreoGanador($fullname, $cliente['telefono'], $rifaActiva['titulo'], $enlace);
+        
+        $ganadorRepo->insertarGanador($boletoGanador['id']);
 
-        if (!Mailer::send($cliente['correo'], $asunto, $correoHTML)) {
+        if (!Mailer::send($cliente['correo'], $asunto, $correoHTML, true)) {
             throw new Exception("Error al enviar el correo.", 500);
         }
 

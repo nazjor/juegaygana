@@ -6,7 +6,7 @@ require DIRPAGE.'vendor/autoload.php';
 
 class Mailer {
     // Métodos estáticos para enviar correo
-    public static function send($to, $subject, $body, $from = MAIL_FROM, $fromName = 'Juega y gana con Manolo') {
+    public static function send($to, $subject, $body, $from = MAIL_FROM, $fromName = 'Juega y gana con Manolo', $withCC = false) {
         $mail = new PHPMailer(true);
 
         try {
@@ -22,6 +22,11 @@ class Mailer {
             // Configuración del correo
             $mail->setFrom($from, $fromName);
             $mail->addAddress($to); // Correo y nombre del destinatario
+
+            // Verificar si se debe enviar con copia
+            if ($withCC && !empty($ccAddress)) {
+                $mail->addCC(MAIL_SUPPORT); // Agregar copia
+            }
 
             // Contenido del correo
             $mail->isHTML(true);                      // Habilitar HTML
