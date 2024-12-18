@@ -46,6 +46,8 @@ $numeroGanadorFormateado = str_pad($numeroGanador, 4, '0', STR_PAD_LEFT);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?? 'Juega y Gana'; ?></title>
 
+    <link rel="icon" href="<?php echo HOST; ?>assets/images/logo.ico" type="image/x-icon">
+
     <!-- Enlace a los archivos CSS y JS -->
     <link href="<?php echo HOST; ?>assets/css/output.css?v=<?php echo VERSION_JS; ?>" rel="stylesheet" type="text/css">
     <script href="<?php echo HOST_ADMIN; ?>assets/js/alpine.js?v=<?php echo VERSION_JS; ?>" defer></script>
@@ -159,7 +161,6 @@ $numeroGanadorFormateado = str_pad($numeroGanador, 4, '0', STR_PAD_LEFT);
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Respuesta del servidor:', data);
                 })
                 .catch(error => {
                     console.error('Error al enviar el número ganador:', error);
