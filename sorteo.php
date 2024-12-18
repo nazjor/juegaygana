@@ -6,8 +6,16 @@
   <title><?php echo $title ?? 'Juega y Gana'; ?></title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center bg-cover bg-center" style="background-image: url('https://img.myloview.com.br/quadros/modelo-suave-azul-gradiente-de-estudio-banner-fundo-de-papel-de-parede-700-125463277.jpg')" onclick="iniciarSorteo(event)">
+<body class="flex items-center justify-center bg-cover bg-center" style="background-image: url('https://img.myloview.com.br/quadros/modelo-suave-azul-gradiente-de-estudio-banner-fundo-de-papel-de-parede-700-125463277.jpg')" onclick="iniciarSorteo(event)">
 
   <!-- Contenedor principal -->
   <div class="w-full max-w-4xl text-center px-4">    

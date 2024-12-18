@@ -47,7 +47,7 @@ class BoletosRepository extends BaseRepository {
     public function generateUniqueBoleto(int $rifaId, int $max = 9999): int {
         $db = Database::getConnection();
         do {
-            $numeroBoleto = random_int(1, $max);
+            $numeroBoleto = random_int(0, $max);
             $query = "SELECT COUNT(*) FROM {$this->tableName} WHERE rifa_id = :rifa_id AND numero_boleto = :numero_boleto";
             $stmt = $db->prepare($query);
             $stmt->bindValue(':rifa_id', $rifaId, PDO::PARAM_INT);
