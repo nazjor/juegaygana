@@ -58,4 +58,21 @@ class BoletosRepository extends BaseRepository {
 
         return $numeroBoleto;
     }
+
+    /**
+     * Obtiene un boleto aleatorio con estado 'vendido' para una rifa específica.
+     *
+     * @param int $rifaId El ID de la rifa.
+     * @return array|null El boleto encontrado o null si no se encuentra ninguno.
+     */
+    public function findRandomVendidoByRifaId(int $rifaId): ?array {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM {$this->tableName} 
+                  WHERE rifa_id = :rifa_id AND estado = 'vendido' 
+                  ORDER BY RAND() LIMIT 1";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':rifa_id', $rifaId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
 }

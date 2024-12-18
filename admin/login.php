@@ -11,13 +11,13 @@
     <link rel="icon" href="<?php echo HOST;?>assets/images/logo.ico" type="image/x-icon">
 
     <!-- CSS de la aplicación -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/app.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST;?>assets/css/app.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <!-- CSS de iconos -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/icons.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST;?>assets/css/icons.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
     <!-- SweetAlert CSS -->
-    <link href="<?php echo HOST_ADMIN;?>assets/css/swal2.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet">
+    <link href="<?php echo HOST;?>assets/css/swal2.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet">
 
 </head>
 
@@ -32,7 +32,7 @@
                     <!-- Logo -->
                     <div class="p-9 bg-primary">
                         <a href="<?php echo HOST;?>" class="flex justify-center">
-                            <img src="<?php echo HOST_ADMIN;?>/assets/images/logo.png" alt="logo" class="w-32 block">
+                            <img src="<?php echo HOST;?>/assets/images/logo.png" alt="logo" class="w-32 block">
                         </a>
                     </div>
 

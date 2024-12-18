@@ -1,117 +1,161 @@
-<?php 
+<?php
+// Incluir archivos de configuración y bibliotecas
+require __DIR__ . '../../conf/config.php';
+require_once DIRPAGE_ADMIN . 'components/init.php';
+require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/BoletosRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
+require_once DIRPAGE_ADMIN . 'util/Mail.php';
+require_once DIRPAGE_ADMIN . 'util/CorreoHelper.php';
+require_once DIRPAGE_ADMIN . 'util/UtilEncriptacion.php';
 
-require __DIR__.'../../conf/config.php';
-require_once DIRPAGE_ADMIN.'components/init.php';
+// Iniciar sesión y validar autenticación
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
+
+// Inicializar repositorios y obtener información de la rifa activa
+$rifaRepo = new RifaRepository();
+$pagosRepo = new PagosRepository();
+$boletoRepo = new BoletosRepository();
+$rifaActiva = $rifaRepo->findActiveRifa();
+
+// Validar si hay rifas activas
+$error = $rifaActiva ? null : "¡No hay rifas activas en este momento!";
+
+// Verificar disponibilidad de boletos
+if ($error == null) {
+    $totalBoletos = (int)$rifaActiva['total_boletos']; // Aseguramos que sea un entero
+    $totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']); // Aseguramos que sea un entero
+    // if ($totalComprados !== $totalBoletos) {
+    //   $error = "Aún hay boletos disponibles.";
+    // }
+}
+
+$boletoGanador = $boletoRepo->findRandomVendidoByRifaId($rifaActiva['id']);
+
+$numeroGanador = $boletoGanador['numero_boleto'];
+$numeroGanadorFormateado = str_pad($numeroGanador, 4, '0', STR_PAD_LEFT);
+
+echo $numeroGanadorFormateado;
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo $title ?? 'Juega y Gana'; ?></title>
 
-  <link href="<?php echo HOST;?>assets/css/output.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
-  <link>
-  <script href="<?php echo HOST_ADMIN;?>assets/js/alpine.js?v=<?php echo VERSION_JS;?>" defer></script>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-  </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $title ?? 'Juega y Gana'; ?></title>
+
+    <!-- Enlace a los archivos CSS y JS -->
+    <link href="<?php echo HOST; ?>assets/css/output.css?v=<?php echo VERSION_JS; ?>" rel="stylesheet" type="text/css">
+    <script href="<?php echo HOST_ADMIN; ?>assets/js/alpine.js?v=<?php echo VERSION_JS; ?>" defer></script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+    </style>
 </head>
+
 <body class="flex items-center justify-center bg-cover bg-center" style="background-image: url('https://img.myloview.com.br/quadros/modelo-suave-azul-gradiente-de-estudio-banner-fundo-de-papel-de-parede-700-125463277.jpg')" onclick="iniciarSorteo(event)">
 
-  <!-- Contenedor principal -->
-  <div class="w-full max-w-4xl text-center px-4">    
-    <!-- Logo arriba de las tarjetas -->
-    <img src="<?php echo HOST;?>assets/images/logo.png" alt="Logo" class="mb-8">
+    <?php if ($error) { ?>
+        <!-- Mostrar mensaje de error si no hay rifas activas o aún hay boletos disponibles -->
+        <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
+            <div class="bg-yellow-100 text-yellow-800 p-6 rounded-lg shadow-xl mb-8 flex items-center gap-4">
+                <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                </svg>
+                <div>
+                    <p class="text-center font-semibold text-xl">
+                        <?php echo $error; ?> 🎟️
+                    </p>
+                    <p class="text-center mt-2 text-lg">
+                        El sorteo no empezará hasta que no se cumplan todas las condiciones 🏆
+                    </p>
+                </div>
+            </div>
+        </section>
 
-    <!-- Tarjetas de números -->
-    <div class="grid grid-cols-4 gap-4 mb-8" id="tarjetas">
-      <!-- Tarjetas visibles con borde azul y fondo blanco -->
-      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
-        <div id="numero1" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
-      </div>
-      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
-        <div id="numero2" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
-      </div>
-      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
-        <div id="numero3" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
-      </div>
-      <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
-        <div id="numero4" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
-      </div>
-    </div>
-  </div>
+    <?php } else { ?>
+        <!-- Contenedor principal para el sorteo -->
+        <div class="w-full max-w-4xl text-center px-4">
+            <img src="<?php echo HOST; ?>assets/images/logo.png" alt="Logo" class="mb-8">
 
-  <script>
-    let yaIniciado = false;
+            <!-- Tarjetas de números -->
+            <div class="grid grid-cols-4 gap-4 mb-8" id="tarjetas">
+                <?php for ($i = 1; $i <= 4; $i++) { ?>
+                    <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 flex items-center justify-center h-60">
+                        <div id="numero<?php echo $i; ?>" class="text-9xl font-bold text-blue-500 w-full h-full flex items-center justify-center">-</div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
 
-    // Función que se llama cuando se hace clic en cualquier parte del body
-    function iniciarSorteo(event) {
-      if (yaIniciado) return; // No hacer nada si ya se inició el sorteo
+    <script>
+        let yaIniciado = false;
 
-      yaIniciado = true; // Marcar que el sorteo ha comenzado
+        // Función para iniciar el sorteo
+        function iniciarSorteo(event) {
+            if (yaIniciado) return; // No hacer nada si ya se inició el sorteo
 
-      const tarjetas = document.querySelectorAll('.card');
-      
-      // Desactivar el clic mientras se realiza el sorteo
-      document.body.style.pointerEvents = 'none';
+            yaIniciado = true; // Marcar que el sorteo ha comenzado
 
-      // Números a mostrar en las tarjetas (4 dígitos aleatorios)
-      const numeros = Array.from({ length: 4 }, () => Math.floor(Math.random() * 9).toString().padStart(1, '0'));
+            const tarjetas = document.querySelectorAll('.card');
+            
+            // Desactivar el clic mientras se realiza el sorteo
+            document.body.style.pointerEvents = 'none';
 
-      // Almacenar los resultados de las tarjetas
-      const resultados = [];
+            // Números a mostrar en las tarjetas (4 dígitos aleatorios)
+            const numeros = Array.from({ length: 4 }, () => Math.floor(Math.random() * 9).toString().padStart(1, '0'));
 
-      // Función para realizar la animación del conteo de 0 al 9
-      function animarConteo(tarjetaId, numeroRandom, callback) {
-        const numeroElement = document.getElementById(tarjetaId);
-        let conteo = 0;
+            const resultados = [];
 
-        // Eliminar la imagen de fondo al empezar el conteo
-        const tarjeta = numeroElement.closest('.card');
-        tarjeta.style.backgroundImage = 'none';
+            // Función para animar el conteo de números en las tarjetas
+            function animarConteo(tarjetaId, numeroRandom, callback) {
+                const numeroElement = document.getElementById(tarjetaId);
+                let conteo = 0;
+                const tarjeta = numeroElement.closest('.card');
+                tarjeta.style.backgroundImage = 'none'; // Eliminar imagen de fondo
 
-        // Animación del conteo
-        const intervalo = setInterval(() => {
-          if (conteo <= 9) {
-            numeroElement.textContent = conteo;
-            conteo++;
-          } else {
-            clearInterval(intervalo);  // Detener el conteo
-            numeroElement.textContent = numeroRandom; // Mostrar el número aleatorio
-            resultados.push(numeroRandom);  // Guardar el resultado
-            callback();  // Llamar al siguiente paso
-          }
-        }, 100); // Mostrar cada número por 100ms (del 0 al 9)
-      }
+                // Animación del conteo
+                const intervalo = setInterval(() => {
+                    if (conteo <= 9) {
+                        numeroElement.textContent = conteo;
+                        conteo++;
+                    } else {
+                        clearInterval(intervalo);
+                        numeroElement.textContent = numeroRandom; // Mostrar número aleatorio
+                        resultados.push(numeroRandom); // Guardar el resultado
+                        callback();
+                    }
+                }, 100); // Mostrar cada número por 100ms
+            }
 
-      // Función para iniciar la animación de la siguiente tarjeta
-      function iniciarSiguienteTarjeta(index) {
-        if (index < 4) {
-          setTimeout(() => animarConteo(`numero${index + 1}`, numeros[index], () => iniciarSiguienteTarjeta(index + 1)), 1000);
-        } else {
-          // Después de todas las tarjetas, mostrar el resultado final en la consola
-          console.log('Resultados finales:', resultados);
-          setTimeout(() => {
-            document.body.style.pointerEvents = 'auto'; // Rehabilitar el clic
-          }, 1000);  // 1 segundo para finalizar
+            // Función para manejar el siguiente número de tarjeta
+            function iniciarSiguienteTarjeta(index) {
+                if (index < 4) {
+                    setTimeout(() => animarConteo(`numero${index + 1}`, numeros[index], () => iniciarSiguienteTarjeta(index + 1)), 1000);
+                } else {
+                    setTimeout(() => {
+                        document.body.style.pointerEvents = 'auto'; // Habilitar clic nuevamente
+                    }, 1000);
+                }
+            }
+
+            // Iniciar el conteo con la primera tarjeta
+            iniciarSiguienteTarjeta(0);
         }
-      }
-
-      // Iniciar la animación con la primera tarjeta
-      iniciarSiguienteTarjeta(0);
-    }
-  </script>
+    </script>
 </body>
+
 </html>
