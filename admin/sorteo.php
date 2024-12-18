@@ -40,7 +40,6 @@ $boletoGanador = $boletoRepo->findRandomVendidoByRifaId($rifaActiva['id']);
 $numeroGanador = $boletoGanador['numero_boleto'];
 $numeroGanadorFormateado = str_pad($numeroGanador, 4, '0', STR_PAD_LEFT);
 
-echo $numeroGanadorFormateado;
 ?>
 
 <!DOCTYPE html>
@@ -102,6 +101,9 @@ echo $numeroGanadorFormateado;
     <?php } ?>
 
     <script>
+        // Obtener el número ganador formateado desde PHP
+        const numeroGanador = <?php echo json_encode($numeroGanadorFormateado); ?>;
+
         let yaIniciado = false;
 
         // Función para iniciar el sorteo
@@ -115,10 +117,8 @@ echo $numeroGanadorFormateado;
             // Desactivar el clic mientras se realiza el sorteo
             document.body.style.pointerEvents = 'none';
 
-            // Números a mostrar en las tarjetas (4 dígitos aleatorios)
-            const numeros = Array.from({ length: 4 }, () => Math.floor(Math.random() * 9).toString().padStart(1, '0'));
-
-            const resultados = [];
+            // Convertimos el número ganador a un array de dígitos
+            const numerosGanadores = numeroGanador.split('');
 
             // Función para animar el conteo de números en las tarjetas
             function animarConteo(tarjetaId, numeroRandom, callback) {
@@ -134,8 +134,7 @@ echo $numeroGanadorFormateado;
                         conteo++;
                     } else {
                         clearInterval(intervalo);
-                        numeroElement.textContent = numeroRandom; // Mostrar número aleatorio
-                        resultados.push(numeroRandom); // Guardar el resultado
+                        numeroElement.textContent = numeroRandom; // Mostrar número ganador
                         callback();
                     }
                 }, 100); // Mostrar cada número por 100ms
@@ -144,7 +143,7 @@ echo $numeroGanadorFormateado;
             // Función para manejar el siguiente número de tarjeta
             function iniciarSiguienteTarjeta(index) {
                 if (index < 4) {
-                    setTimeout(() => animarConteo(`numero${index + 1}`, numeros[index], () => iniciarSiguienteTarjeta(index + 1)), 1000);
+                    setTimeout(() => animarConteo(`numero${index + 1}`, numerosGanadores[index], () => iniciarSiguienteTarjeta(index + 1)), 1000);
                 } else {
                     setTimeout(() => {
                         document.body.style.pointerEvents = 'auto'; // Habilitar clic nuevamente
