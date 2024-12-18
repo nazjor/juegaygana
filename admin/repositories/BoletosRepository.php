@@ -75,4 +75,16 @@ class BoletosRepository extends BaseRepository {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
+
+    // Método para encontrar un boleto por numero_boleto y rifa_id
+    public function findByBoletoAndRifaId(int $numeroBoleto, int $rifaId): ?array {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM {$this->tableName} 
+                WHERE numero_boleto = :numero_boleto AND rifa_id = :rifa_id";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':numero_boleto', $numeroBoleto, PDO::PARAM_INT);
+        $stmt->bindValue(':rifa_id', $rifaId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
 }

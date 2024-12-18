@@ -3,12 +3,8 @@
 require __DIR__ . '../../conf/config.php';
 require_once DIRPAGE_ADMIN . 'components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
-require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/BoletosRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
-require_once DIRPAGE_ADMIN . 'util/Mail.php';
-require_once DIRPAGE_ADMIN . 'util/CorreoHelper.php';
-require_once DIRPAGE_ADMIN . 'util/UtilEncriptacion.php';
 
 // Iniciar sesión y validar autenticación
 session_start();
@@ -145,14 +141,30 @@ $numeroGanadorFormateado = str_pad($numeroGanador, 4, '0', STR_PAD_LEFT);
                 if (index < 4) {
                     setTimeout(() => animarConteo(`numero${index + 1}`, numerosGanadores[index], () => iniciarSiguienteTarjeta(index + 1)), 1000);
                 } else {
-                    setTimeout(() => {
-                        document.body.style.pointerEvents = 'auto'; // Habilitar clic nuevamente
-                    }, 1000);
+                  enviarNumeroGanador(numeroGanador);
                 }
             }
 
             // Iniciar el conteo con la primera tarjeta
             iniciarSiguienteTarjeta(0);
+
+            // Función para enviar el número ganador a PHP
+            function enviarNumeroGanador(numeroGanador) {
+                fetch('acciones/sorteo.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ numeroGanador: numeroGanador })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Respuesta del servidor:', data);
+                })
+                .catch(error => {
+                    console.error('Error al enviar el número ganador:', error);
+                });
+            }
         }
     </script>
 </body>

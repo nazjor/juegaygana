@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '../../components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 
@@ -6,6 +7,10 @@ $rifaRepo = new RifaRepository();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        if (!isset($_SESSION['usuario'])) {
+            throw new Exception("No autorizado.", 401);
+        }
+        
         // Verificar si se envió la foto y el campo de boletos
         if (isset($_FILES['imagen_rifa']) && $_FILES['imagen_rifa']['error'] === UPLOAD_ERR_OK) {
             // Validar foto

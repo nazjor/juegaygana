@@ -1,9 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['auth'])) {
-  $_SESSION['auth'] = bin2hex(random_bytes(16));
-  session_regenerate_id(true); 
-}
 
 header('Content-Type: application/json');
 

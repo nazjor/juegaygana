@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once __DIR__ . '../../components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
@@ -15,6 +17,10 @@ $rifaRepo = new RifaRepository();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        if (!isset($_SESSION['usuario'])) {
+            throw new Exception("No autorizado.", 401);
+        }
+        
         // Validar que el ID de la rifa esté presente
         if (empty($_POST['id'])) {
             throw new Exception("No se proporcionó el ID del pago a editar.");

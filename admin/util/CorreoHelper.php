@@ -56,6 +56,38 @@ class CorreoHelper {
         return $correoHTML;
     }
 
+    public static function generarCorreoGanador($nombre, $telefono, $premio, $enlaceRecibo) {
+        $logoUrl = HOST.'assets/images/logo.png';
+        $correoHTML = "
+            <html>
+            <body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>
+                <div style='width: 600px; margin: 0 auto; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>
+                    <div style='background-color:rgb(0, 23, 47); color: #fff; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;'>
+                        <img src='$logoUrl' alt='Logo' style='width: 100px;'>
+                        <h2 style='margin-top: 10px;'>¡Felicidades, tenemos un ganador!</h2>
+                    </div>
+                    <div style='padding: 20px;'>
+                        <p>¡Felicidades <strong>$nombre</strong>!</p>
+                        <p>Tu número ha salido ganador en nuestra rifa.</p>
+                        <p><strong>Datos del ganador:</strong></p>
+                        <ul>
+                            <li><strong>Nombre:</strong> $nombre</li>
+                            <li><strong>Teléfono:</strong> $telefono</li>
+                            <li><strong>Premio:</strong> $premio</li>
+                        </ul>
+                        <p>Puedes consultar el detalle de tu recibo en el siguiente enlace:</p>
+                        <p style='text-align: center; margin: 20px 0;'>
+                            <a href='$enlaceRecibo' style='display: inline-block; background-color: rgb(14, 122, 0); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Ver recibo</a>
+                        </p>
+                        <p style='font-size: 0.9em; color: #888;'>Si tienes alguna pregunta, no dudes en contactarnos. ¡Gracias por participar!</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        ";
+        return $correoHTML;
+    }    
+
     public static function generarCorreoCompraPendiente($nombre) {
         $logoUrl = HOST.'assets/images/logo.png';
         $correoHTML = "

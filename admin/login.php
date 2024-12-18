@@ -1,4 +1,11 @@
-<?php require __DIR__.'../../conf/config.php';?>
+<?php 
+    session_start();
+    require __DIR__.'../../conf/config.php';
+    if (!isset($_SESSION['auth'])) {
+        $_SESSION['auth'] = bin2hex(random_bytes(16));
+        session_regenerate_id(true); 
+    }    
+?>
 <!DOCTYPE html>
 <html lang="es">
 

@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once __DIR__ . '../../components/init.php';
     require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 
@@ -6,6 +7,10 @@ $rifaRepo = new RifaRepository();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        if (!isset($_SESSION['usuario'])) {
+            throw new Exception("No autorizado.", 401);
+        }
+
         // Verificar si es una edición (ID presente en la solicitud)
         if (!isset($_POST['id']) || empty($_POST['id'])) {
             throw new Exception("No se proporcionó el ID de la rifa a editar.");
