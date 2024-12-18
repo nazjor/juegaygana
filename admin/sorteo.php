@@ -1,11 +1,24 @@
+<?php 
+
+require __DIR__.'../../conf/config.php';
+require_once DIRPAGE_ADMIN.'components/init.php';
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $title ?? 'Juega y Gana'; ?></title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+
+  <link href="<?php echo HOST;?>assets/css/output.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+  <link>
+  <script href="<?php echo HOST_ADMIN;?>assets/js/alpine.js?v=<?php echo VERSION_JS;?>" defer></script>
   <style>
     body, html {
       margin: 0;
@@ -20,7 +33,7 @@
   <!-- Contenedor principal -->
   <div class="w-full max-w-4xl text-center px-4">    
     <!-- Logo arriba de las tarjetas -->
-    <img src="https://juegayganaconmanolo.com/assets/images/logo.png" alt="Logo" class="mb-8">
+    <img src="<?php echo HOST;?>assets/images/logo.png" alt="Logo" class="mb-8">
 
     <!-- Tarjetas de números -->
     <div class="grid grid-cols-4 gap-4 mb-8" id="tarjetas">
