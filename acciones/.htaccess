@@ -1,4 +1,0 @@
-<FilesMatch "\.(php|phtml|cgi|pl|py)$">
-    Order Allow,Deny
-    Deny from all
-</FilesMatch>
