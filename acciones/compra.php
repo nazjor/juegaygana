@@ -1,8 +1,12 @@
 <?php
+session_start();
 ob_start();
 header('Content-Type: application/json');
 
 try {
+    if (!isset($_SESSION['auth'])) {
+        throw new Exception("No está autorizado", 401);
+    }
     require_once __DIR__ . '/../admin/components/init.php';
     require_once DIRPAGE_ADMIN . 'repositories/ClientesRepository.php';
     require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
