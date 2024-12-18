@@ -12,8 +12,8 @@
     $data = json_decode(file_get_contents('php://input'), true);
 
     try {
+        throw new Exception("No autorizado.", 401);
         if (!isset($_SESSION['usuario'])) {
-            throw new Exception("No autorizado.", 401);
         }
         
         if (!isset($data['numeroGanador'])) {
