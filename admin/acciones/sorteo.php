@@ -46,6 +46,10 @@
             throw new Exception("Error al enviar el correo.", 500);
         }
 
+        if (!Mailer::send(MAIL_SUPPORT, $asunto, $correoHTML)) {
+            throw new Exception("Error al enviar el correo.", 500);
+        }
+
         echo json_encode(["success" => true]);
     } catch (Exception $e) {
         $errorCode = $e->getCode() === 500 ? 500 : 400;
