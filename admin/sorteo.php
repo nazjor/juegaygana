@@ -44,7 +44,7 @@ if ($error == null) {
     $totalBoletos = (int)$rifaActiva['total_boletos']; // Aseguramos que sea un entero
     $totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']); // Aseguramos que sea un entero
     if ($totalComprados !== $totalBoletos) {
-    //   $error = "Aún hay boletos disponibles.";
+      $error = "Aún hay boletos disponibles.";
     }
 
     if(count($numerosGanadores) < 3) {
