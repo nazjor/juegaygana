@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['usuario'])) throw new Exception("No tiene permiso", 401);
 require_once __DIR__ . '../../components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
+require_once DIRPAGE_ADMIN . 'util/UtilFecha.php';
 
 $rifaRepo = new RifaRepository();
 
@@ -46,7 +47,7 @@ foreach ($todasLasRifas as $rifa) {
                     <ul class="text-sm text-gray-600 space-y-2 mt-3">
                         <li class="flex items-center">
                             <i class="ri-calendar-todo-line text-lg text-primary me-2"></i> 
-                            <span><?php echo date('l, j F Y', strtotime($rifa['fecha_inicio'])); ?></span>
+                            <span><?php echo  UtilFecha::formatearFecha($rifa['fecha_inicio']); ?></span>
                         </li>
                         <li class="flex items-center">
                             <i class="ri-list-check-3 text-lg text-primary me-2"></i>
