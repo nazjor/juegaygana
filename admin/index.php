@@ -77,7 +77,7 @@ $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 
 <!-- Modal para editar -->
 <div id="modalEditar" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-    <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative p-4 w-full max-w-lg max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->

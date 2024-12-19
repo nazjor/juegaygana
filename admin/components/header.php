@@ -20,7 +20,9 @@
     <!-- Icons css -->
     <link href="<?php echo HOST;?>assets/css/icons.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
-    <link href="<?php echo HOST;?>assets/css/output.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo HOST_ADMIN;?>assets/css/tailwind.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet"> -->
 
     <link href="<?php echo HOST;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
 
@@ -75,6 +77,20 @@
                         <a href="<?php echo HOST_ADMIN;?>pagos" class="menu-link">
                             <span class="menu-icon"><i class="ri-share-line"></i></span>
                             <span class="menu-text"> Pagos </span>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="<?php echo HOST_ADMIN;?>sorteo" class="menu-link">
+                            <span class="menu-icon"><i class="ri-gift-line"></i></span>
+                            <span class="menu-text"> Sorteo </span>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="<?php echo HOST_ADMIN;?>ganadores" class="menu-link">
+                            <span class="menu-icon"><i class="ri-trophy-line"></i></span>
+                            <span class="menu-text"> Ganadores </span>
                         </a>
                     </li>
 

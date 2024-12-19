@@ -5,33 +5,72 @@ class PagosRepository extends BaseRepository {
         parent::__construct('pagos'); // Nombre de la tabla en la base de datos
     }
 
-    public function findPagosConPaginacion($limite, $offset) {
+    public function findPagosConPaginacion($limite, $offset, $filtros = []) {
         $db = Database::getConnection(); // Obtener la conexión a la base de datos
-    
-        // Realizamos el JOIN entre las tablas pagos, clientes y rifas
+        
+        // Definir la base de la consulta
         $query = "
             SELECT 
-                p.*,
+                p.*, 
                 c.correo, 
                 r.titulo
             FROM 
-                {$this->tableName} p 
+                {$this->tableName} p
             LEFT JOIN 
-                clientes c ON p.cliente_id = c.id 
+                clientes c ON p.cliente_id = c.id
             LEFT JOIN 
-                rifas r ON p.rifa_id = r.id 
-            ORDER BY 
-                p.id DESC 
-            LIMIT :limite OFFSET :offset
-        ";
+                rifas r ON p.rifa_id = r.id
+            WHERE 1=1"; // Agregar WHERE 1=1 para permitir agregar condiciones dinámicamente
     
+        // Agregar filtros si se reciben
+        if (!empty($filtros['estado'])) {
+            $query .= " AND p.estado = :estado";
+        }
+        if (!empty($filtros['correo'])) {
+            $query .= " AND c.correo LIKE :correo";
+        }
+        if (!empty($filtros['fechaInicio'])) {
+            $query .= " AND p.fecha_pago >= :fechaInicio";
+        }
+        if (!empty($filtros['fechaFin'])) {
+            $query .= " AND p.fecha_pago <= :fechaFin";
+        }
+    
+        // Ordenar por ID y aplicar paginación
+        $query .= " ORDER BY p.id DESC LIMIT :limite OFFSET :offset";
+        
+        // Preparar la consulta
         $stmt = $db->prepare($query);
+    
+        // Vincular los parámetros de filtro si se proporcionan
+        if (!empty($filtros['estado'])) {
+            $stmt->bindParam(':estado', $filtros['estado'], PDO::PARAM_STR);
+        }
+        if (!empty($filtros['correo'])) {
+            $correo = '%' . $filtros['correo'] . '%';
+            $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
+        }
+        if (!empty($filtros['titulo'])) {
+            $titulo = '%' . $filtros['titulo'] . '%';
+            $stmt->bindParam(':titulo', $titulo, PDO::PARAM_STR);
+        }
+        if (!empty($filtros['fechaInicio'])) {
+            $stmt->bindParam(':fechaInicio', $filtros['fechaInicio'], PDO::PARAM_STR);
+        }
+        if (!empty($filtros['fechaFin'])) {
+            $stmt->bindParam(':fechaFin', $filtros['fechaFin'], PDO::PARAM_STR);
+        }
+    
+        // Vincular los parámetros de paginación
         $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        
+        // Ejecutar la consulta
         $stmt->execute();
-    
+        
+        // Retornar los resultados
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    }       
     
     public function contarTotalPagos() {
         $db = Database::getConnection(); // Obtener la conexión a la base de datos

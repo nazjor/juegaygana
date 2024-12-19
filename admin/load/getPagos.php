@@ -11,19 +11,62 @@ $pagosPorPagina = 10;
 
 // Obtener el número de la página actual
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
 $offset = ($paginaActual - 1) * $pagosPorPagina;
 
-// Obtener todos los pagos con paginación
-$todosLosPagos = $pagoRepo->findPagosConPaginacion($pagosPorPagina, $offset);
+// Recibir los filtros desde los parámetros GET
+$filtros = [
+    'estado' => isset($_GET['estado']) ? $_GET['estado'] : '',
+    'correo' => isset($_GET['email']) ? $_GET['email'] : '',
+    'fechaInicio' => isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : '',
+    'fechaFin' => isset($_GET['fechaFin']) ? $_GET['fechaFin'] : ''
+];
+
+// Validar fechas
+if (!empty($filtros['fechaInicio']) || !empty($filtros['fechaFin'])) {
+    if (empty($filtros['fechaInicio']) || empty($filtros['fechaFin'])) {
+        echo '<div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">Debe proporcionar tanto la fecha de inicio como la fecha de fin.</div>';
+        return;
+    }
+
+    // Convertir las fechas a formato datetime
+    $fechaInicio = new DateTime($filtros['fechaInicio']);
+    $fechaFin = new DateTime($filtros['fechaFin']);
+
+    if ($fechaInicio >= $fechaFin) {
+        echo '<div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">>La fecha de inicio debe ser menor a la fecha de fin.</div>';
+        return;
+    }
+
+    // Ajustar las fechas
+    $filtros['fechaInicio'] = $fechaInicio->format('Y-m-d 00:00:00');
+    $filtros['fechaFin'] = $fechaFin->format('Y-m-d 23:59:59');
+} else {
+    // Si ambas están vacías, establecer `fechaInicio` con la fecha actual
+    $filtros['fechaInicio'] = date('Y-m-d 00:00:00');
+    $filtros['fechaFin'] = date('Y-m-d 23:59:59');
+}
+
+// Obtener todos los pagos con paginación y filtros
+$todosLosPagos = $pagoRepo->findPagosConPaginacion($pagosPorPagina, $offset, $filtros);
 $totalPagos = $pagoRepo->contarTotalPagos();
 $totalPaginas = ceil($totalPagos / $pagosPorPagina);
 ?>
 
 <?php if (empty($todosLosPagos)): ?>
-    <tr>
-        <td colspan="4" class="text-center text-gray-500">No hay pagos disponibles</td>
-    </tr>
+        <!-- Mostrar filtros y sus valores -->
+    <div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+        <?php if ($filtros['estado']) echo '<p><strong>Criterios de búsqueda:</strong></p> '; ?>
+        <ul>
+            <?php if ($filtros['estado']) echo '<li><strong>Estado:</strong> ' . htmlspecialchars($filtros['estado']) . '</li>'; ?>
+            <?php if ($filtros['correo']) echo '<li><strong>Correo:</strong> ' . htmlspecialchars($filtros['correo']) . '</li>'; ?>
+            <?php if ($filtros['fechaInicio']) echo '<li><strong>Fecha inicio:</strong> ' . htmlspecialchars($filtros['fechaInicio']) . '</li>'; ?>
+            <?php if ($filtros['fechaFin']) echo '<li><strong>Fecha fin:</strong> ' . htmlspecialchars($filtros['fechaFin']) . '</li>'; ?>
+        </ul>
+    </div>
+
+    <div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+        No hay registros disponibles con los criterios de búsqueda seleccionados.
+    </div>
 <?php else: ?>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php foreach ($todosLosPagos as $pago): ?>
@@ -113,5 +156,4 @@ $totalPaginas = ceil($totalPagos / $pagosPorPagina);
             <?php endif; ?>
         </ul>
     </nav>
-
 <?php endif; ?>
