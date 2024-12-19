@@ -64,7 +64,7 @@ if ($rifaActiva) {
           ];
           ?>
 
-          <span class="font-medium text-gray-800">Sorteo: <?php 
+          <span class="font-medium text-gray-800"><?php 
               // Suponiendo que 'fecha_inicio' es un string con formato YYYY-MM-DD
               $fecha = new DateTime($rifaActiva['fecha_inicio']);
               $dia = $fecha->format('d');
@@ -86,7 +86,7 @@ if ($rifaActiva) {
 
   <!-- New Image Section -->
   <section class="relative rounded-xl overflow-hidden mb-6">
-    <img src="<?php echo HOST_ADMIN.'assets/'.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full h-72 object-cover rounded-lg shadow-lg">
+    <img src="<?php echo HOST_ADMIN.'assets/'.$rifaActiva['imagen_rifa']?>" alt="Imagen de promoción" class="w-full object-cover rounded-lg shadow-lg">
   </section>
 
   <!-- Progress Bar -->
