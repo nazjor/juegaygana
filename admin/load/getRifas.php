@@ -17,6 +17,15 @@ $offset = ($paginaActual - 1) * $rifasPorPagina;
 $todasLasRifas = $rifaRepo->findRifasConPaginacion($rifasPorPagina, $offset);
 $totalRifas = $rifaRepo->contarTotalRifas();
 $totalPaginas = ceil($totalRifas / $rifasPorPagina);
+
+// Verificar si hay rifas activas
+$hayRifasActivas = false;
+foreach ($todasLasRifas as $rifa) {
+    if ($rifa['estado'] == 'activa') {
+        $hayRifasActivas = true;
+        break;
+    }
+}
 ?>
 
 <?php if (empty($todasLasRifas)): ?>
@@ -48,7 +57,7 @@ $totalPaginas = ceil($totalRifas / $rifasPorPagina);
                             <span><?php echo $rifa['precio_boleto']; ?> Bs </span>
                         </li>
                         <li class="flex items-center">
-                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-<?php echo ($rifa['estado'] == 'activa') ? 'green' : ($rifa['estado'] == 'finalizada' ? 'gray' : 'red'); ?>-200 text-<?php echo ($rifa['estado'] == 'activa') ? 'green' : ($rifa['estado'] == 'finalizada' ? 'gray' : 'red'); ?>-800"><?php echo ucfirst($rifa['estado']); ?></span>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-<?php echo ($rifa['estado'] == 'activa') ? 'green' : ($rifa['estado'] == 'finalizada' ? 'yellow' : 'red'); ?>-200 text-<?php echo ($rifa['estado'] == 'activa') ? 'green' : ($rifa['estado'] == 'finalizada' ? 'yellow' : 'red'); ?>-800"><?php echo ucfirst($rifa['estado']); ?></span>
                         </li>
                         <li class="flex items-center">
                             <i class="ri-file-text-line text-lg text-primary me-2"></i>
@@ -58,9 +67,23 @@ $totalPaginas = ceil($totalRifas / $rifasPorPagina);
                 </div>
 
                 <div class="flex justify-between p-4 bg-gray-100">
-                    <button onclick="editarRifa(<?php echo htmlspecialchars(json_encode($rifa)); ?>)" class="text-blue-500 hover:text-blue-700 focus:outline-none text-sm">
+                    <button onclick="editarRifa(<?php echo htmlspecialchars(json_encode($rifa)); ?>)" class="text-yellow-500 hover:text-yellow-700 focus:outline-none text-sm">
                         <i class="ri-edit-line me-2"></i> Editar
                     </button>
+
+                    <!-- Mostrar el botón "Activar Rifa" solo si el estado es "pendiente" -->
+                    <?php if ($rifa['estado'] == 'pendiente' && !$hayRifasActivas): ?>
+                        <button onclick="activarRifa(<?php echo htmlspecialchars(json_encode($rifa)); ?>)" class="text-white text-blue-500 hover:text-blue-700 focus:outline-none text-sm">
+                            <i class="ri-check-line me-2"></i> Activar Rifa
+                        </button>
+                    <?php endif; ?>
+
+                    <!-- Mostrar el botón "Finalizar" solo si el estado es "activa" -->
+                    <?php if ($rifa['estado'] == 'activa'): ?>
+                        <button onclick="terminarRifa(<?php echo htmlspecialchars(json_encode($rifa)); ?>)" class="text-white text-green-500 hover:text-green-700 focus:outline-none text-sm">
+                            <i class="ri-checkbox-circle-line me-2"></i> Finalizar
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -268,6 +268,69 @@ function editarRifa(rifa) {
     document.getElementById('descripcion').value = rifa.descripcion;
 }
 
+function terminarRifa(rifa) {
+    let idRifa = rifa.id;
+
+    $.ajax({
+        url: 'acciones/terminarRifa.php',  // URL donde se procesa el formulario
+        type: 'POST',
+        data: { id: idRifa },  // Enviar el id de la rifa en los datos
+        success: function(response) {
+            Swal.fire({
+                title: '¡Éxito!',
+                text: 'La rifa se ha finalizado correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();  // Recargar la página después de confirmar
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            const errorResponse = JSON.parse(xhr.responseText);
+            Swal.fire({
+                title: 'Error',
+                text: errorResponse.error,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    });
+}
+
+function activarRifa(rifa) {
+    let idRifa = rifa.id;
+
+    $.ajax({
+        url: 'acciones/activarRifa.php',  // URL donde se procesa el formulario
+        type: 'POST',
+        data: { id: idRifa },  // Enviar el id de la rifa en los datos
+        success: function(response) {
+            Swal.fire({
+                title: '¡Éxito!',
+                text: 'La rifa se ha activado correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();  // Recargar la página después de confirmar
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            const errorResponse = JSON.parse(xhr.responseText);
+            Swal.fire({
+                title: 'Error',
+                text: errorResponse.error,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    });
+}
+
+
 </script>
 
 <?php
