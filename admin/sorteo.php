@@ -39,21 +39,24 @@ if ($error == null) {
       $error = "Aún hay boletos disponibles.";
     }
 
-    $toltaBoletosComprados = $boletoRepo->countBoletosVendidosByRifaId($rifaActiva['id']);
-
-    if ($toltaBoletosComprados < 3) {
-        $error = "!No hay boletos confirmados suficientes para hacer el sorteo";
-    } else {
-        // Obtener tres números ganadores aleatorios, sin repeticiones
-        $numerosGanadoresFormateados = [];
-        while (count($numerosGanadoresFormateados) < 3) {
-            $numeroAleatorio = $boletoRepo->findRandomVendidoByRifaId($rifaActiva['id']);
-            if(!$numeroAleatorio) continue;
-            if (!in_array($numeroAleatorio['numero_boleto'], $numerosGanadoresFormateados)) {
-                $numerosGanadoresFormateados[] = str_pad($numeroAleatorio['numero_boleto'], 4, '0', STR_PAD_LEFT);
+    if($error == null) {
+        $toltaBoletosComprados = $boletoRepo->countBoletosVendidosByRifaId($rifaActiva['id']);
+    
+        if ($toltaBoletosComprados < 3) {
+            $error = "!No hay boletos confirmados suficientes para hacer el sorteo";
+        } else {
+            // Obtener tres números ganadores aleatorios, sin repeticiones
+            $numerosGanadoresFormateados = [];
+            while (count($numerosGanadoresFormateados) < 3) {
+                $numeroAleatorio = $boletoRepo->findRandomVendidoByRifaId($rifaActiva['id']);
+                if(!$numeroAleatorio) continue;
+                if (!in_array($numeroAleatorio['numero_boleto'], $numerosGanadoresFormateados)) {
+                    $numerosGanadoresFormateados[] = str_pad($numeroAleatorio['numero_boleto'], 4, '0', STR_PAD_LEFT);
+                }
             }
         }
     }
+
 }
 ?>
 <!DOCTYPE html>
