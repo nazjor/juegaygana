@@ -10,6 +10,7 @@ include_once 'admin/components/init.php';
 include_once 'components/header.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
+require_once DIRPAGE_ADMIN . 'util/UtilFecha.php';
 $rifaRepo = new RifaRepository();
 $pagosRepo = new PagosRepository();
 $rifaActiva = $rifaRepo->findActiveRifa();
@@ -56,22 +57,9 @@ if ($rifaActiva) {
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
         </svg>
-
-        <?php
-          $meses = [
-              1 => 'Enero', '2' => 'Febrero', '3' => 'Marzo', '4' => 'Abril', '5' => 'Mayo', '6' => 'Junio',
-              '7' => 'Julio', '8' => 'Agosto', '9' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
-          ];
-          ?>
-
-          <span class="font-medium text-gray-800"><?php 
-              // Suponiendo que 'fecha_inicio' es un string con formato YYYY-MM-DD
-              $fecha = new DateTime($rifaActiva['fecha_inicio']);
-              $dia = $fecha->format('d');
-              $mes = $meses[(int)$fecha->format('m')];
-              $año = $fecha->format('Y');
-              echo "$dia de $mes, $año";
-          ?></span>
+          <span class="font-medium text-gray-800">
+            <?php echo UtilFecha::formatearFecha($rifaActiva['fecha_inicio']); ?>
+          </span>
       </div>
 
       <!-- Precio del Boleto -->

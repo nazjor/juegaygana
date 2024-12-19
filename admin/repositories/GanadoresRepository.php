@@ -89,5 +89,24 @@ class GanadoresRepository extends BaseRepository {
             return null;
         }
     }
+
+    public function obtenerUltimos15Ganadores(): array {
+        $db = Database::getConnection();
+        $query = "
+            SELECT ganadores.*, clientes.cedula, clientes.correo, clientes.nombre, rifas.titulo , boletos.numero_boleto
+            FROM ganadores
+            LEFT JOIN boletos ON ganadores.boleto_id = boletos.id
+            LEFT JOIN clientes ON clientes.id = boletos.cliente_id
+            LEFT JOIN rifas ON boletos.rifa_id = rifas.id
+            WHERE ganadores.imagen_ganador != ''
+            ORDER BY ganadores.creado_en DESC
+            LIMIT 15
+        ";
+        
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }
 ?>
