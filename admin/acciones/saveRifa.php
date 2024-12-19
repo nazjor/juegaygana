@@ -67,12 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Recoger el nombre del formulario
         $nombre = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'] ?? "";
 
         // Guardar el nombre de la imagen
         $fotoName = "images/products/" . $fotoName;
 
         // Usar el método del repositorio para guardar la rifa
-        $resultado = $rifaRepo->insertRifa($nombre, $fotoName, $boletosMaximos, $fechaInicioFormatted, $precioBoleto);
+        $resultado = $rifaRepo->insertRifa($nombre, $fotoName, $boletosMaximos, $fechaInicioFormatted, $precioBoleto, $descripcion);
 
         if ($resultado) {
             echo "Rifa guardada correctamente.";

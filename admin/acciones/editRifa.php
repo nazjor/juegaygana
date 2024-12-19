@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("El precio del boleto es requerido y debe ser un valor numérico.");
         }
         $precioBoleto = (float)$_POST['precio_boleto'];
+        $descripcion = $_POST['descripcion'] ?? "";
 
         // Manejo de la imagen (opcional)
    
@@ -90,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Usar el método del repositorio para actualizar la rifa
-        $resultado = $rifaRepo->updateRifa($id, $nombre, $fotoName, $boletosMaximos, $fechaInicioFormatted, $precioBoleto);
+        $resultado = $rifaRepo->updateRifa($id, $nombre, $fotoName, $boletosMaximos, $fechaInicioFormatted, $precioBoleto, $descripcion);
 
         if ($resultado) {
             echo json_encode(["success" => true, "message" => "Rifa actualizada correctamente."]);

@@ -85,18 +85,19 @@ class RifaRepository extends BaseRepository {
     }
 
     // Método para insertar una nueva rifa
-    public function insertRifa(string $nombre, string $foto, int $boletosMaximos, string $fechaInicio, float $precioBoleto): bool {
+    public function insertRifa(string $nombre, string $foto, int $boletosMaximos, string $fechaInicio, float $precioBoleto, string $descripcion): bool {
         $db = Database::getConnection();
-        $query = "INSERT INTO {$this->tableName} (titulo, imagen_rifa, total_boletos, fecha_inicio, precio_boleto) 
-                VALUES (:titulo, :imagen_rifa, :total_boletos, :fecha_inicio, :precio_boleto)";
+        $query = "INSERT INTO {$this->tableName} (titulo, imagen_rifa, total_boletos, fecha_inicio, precio_boleto, descripcion) 
+                  VALUES (:titulo, :imagen_rifa, :total_boletos, :fecha_inicio, :precio_boleto, :descripcion)";
         $stmt = $db->prepare($query);
         $stmt->bindValue(':titulo', $nombre, PDO::PARAM_STR);
         $stmt->bindValue(':imagen_rifa', $foto, PDO::PARAM_STR);
         $stmt->bindValue(':total_boletos', $boletosMaximos, PDO::PARAM_INT);
         $stmt->bindValue(':fecha_inicio', $fechaInicio, PDO::PARAM_STR);
         $stmt->bindValue(':precio_boleto', $precioBoleto, PDO::PARAM_STR);
+        $stmt->bindValue(':descripcion', $descripcion, PDO::PARAM_STR); // Bind de la descripción
         return $stmt->execute();
-    }
+    }    
 
     /**
      * Busca una rifa por su ID.
@@ -114,17 +115,18 @@ class RifaRepository extends BaseRepository {
     }
 
 
-    public function updateRifa($id, $nombre, $fotoName, $boletosMaximos, $fechaInicioFormatted, $precioBoleto) {
+    public function updateRifa($id, $nombre, $fotoName, $boletosMaximos, $fechaInicioFormatted, $precioBoleto, $descripcion) {
         $db = Database::getConnection();
         
         $query = "UPDATE rifas SET 
-                titulo = :titulo, 
-                imagen_rifa = :imagen_rifa, 
-                total_boletos = :total_boletos, 
-                fecha_inicio = :fecha_inicio, 
-                precio_boleto = :precio_boleto 
-                WHERE id = :id";
-    
+                  titulo = :titulo, 
+                  imagen_rifa = :imagen_rifa, 
+                  total_boletos = :total_boletos, 
+                  fecha_inicio = :fecha_inicio, 
+                  precio_boleto = :precio_boleto, 
+                  descripcion = :descripcion
+                  WHERE id = :id";
+        
         $stmt = $db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':titulo', $nombre, PDO::PARAM_STR);
@@ -132,7 +134,8 @@ class RifaRepository extends BaseRepository {
         $stmt->bindParam(':total_boletos', $boletosMaximos, PDO::PARAM_INT);
         $stmt->bindParam(':fecha_inicio', $fechaInicioFormatted, PDO::PARAM_STR);
         $stmt->bindParam(':precio_boleto', $precioBoleto, PDO::PARAM_STR);
-    
+        $stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR); // Bind de la descripción
+        
         return $stmt->execute();
-    }
+    }    
 }

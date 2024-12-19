@@ -81,7 +81,7 @@ if ($rifaActiva) {
       </div>
     </div>
 
-    <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900">¡Gana un <strong> <?php echo($rifaActiva['titulo'])?> </strong>!</h2>
+    <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-900">¡Gana un <strong> <?php echo($rifaActiva['titulo'])?> </strong>!</h1>
   </section>
 
   <!-- New Image Section -->
@@ -123,6 +123,14 @@ if ($rifaActiva) {
       </button>
     </div>
   </section>
+
+  <?php if ($rifaActiva["descripcion"]) { ?>
+    <section class="bg-white rounded-lg p-6 mb-6 shadow-lg text-lg sm:text-xl">
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900"><strong> Detalles de la rifa: </strong></h2>
+      <hr>
+      <?php echo ($rifaActiva["descripcion"]); ?>
+    </section>
+  <?php } ?>
 </main>
 
 <script>
@@ -258,6 +266,7 @@ if ($rifaActiva) {
       Bienvenido a <strong>Juega y Gana con Manolo</strong>. Por favor, lea cuidadosamente nuestros términos y condiciones antes de participar en nuestras rifas:
     </p>
     <ul class="text-gray-700 text-sm list-disc pl-5 mb-4 space-y-2">
+      <li>El sorteo se realiza una vez se haya vendido el 100% de los boletos.</li>
       <li>Los números para cada rifa se asignan de manera aleatoria y se detallan en tu recibo.</li>
       <li>Solo pueden participar personas mayores de 18 años, con nacionalidad venezolana o extranjeros residentes en Venezuela.</li>
       <li>Los sorteos se realizan en vivo a través de nuestras plataformas oficiales. Asegúrate de seguirnos para no perderte la transmisión.</li>
@@ -265,7 +274,6 @@ if ($rifaActiva) {
       <li>Los ganadores aceptan que <strong>Juega y Gana con Manolo</strong> pueda publicar fotos y videos de la entrega de premios en sus redes sociales.</li>
       <li>Es responsabilidad del participante asegurarse de que sus datos sean correctos al momento de registrarse.</li>
       <li>No se permiten reembolsos una vez que los números hayan sido asignados.</li>
-      <li>La organización se reserva el derecho de modificar estos términos previo aviso.</li>
       <li>Al aceptar estos términos, confirma que entiende y está de acuerdo con todas las condiciones descritas.</li>
     </ul>
     <button 

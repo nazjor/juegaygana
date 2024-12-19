@@ -50,6 +50,10 @@ $totalPaginas = ceil($totalRifas / $rifasPorPagina);
                         <li class="flex items-center">
                             <span class="px-2 py-1 text-xs font-medium rounded-full bg-<?php echo ($rifa['estado'] == 'activa') ? 'green' : ($rifa['estado'] == 'finalizada' ? 'gray' : 'red'); ?>-200 text-<?php echo ($rifa['estado'] == 'activa') ? 'green' : ($rifa['estado'] == 'finalizada' ? 'gray' : 'red'); ?>-800"><?php echo ucfirst($rifa['estado']); ?></span>
                         </li>
+                        <li class="flex items-center">
+                            <i class="ri-file-text-line text-lg text-primary me-2"></i>
+                            <span><?php echo htmlspecialchars($rifa['descripcion']); ?></span>
+                        </li>
                     </ul>
                 </div>
 
