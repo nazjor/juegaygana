@@ -87,12 +87,12 @@
                         </a>
                     </li>
 
-                    <li class="menu-item">
+                    <!-- <li class="menu-item">
                         <a href="<?php echo HOST_ADMIN;?>ganadores" class="menu-link">
                             <span class="menu-icon"><i class="ri-trophy-line"></i></span>
                             <span class="menu-text"> Ganadores </span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="menu-item">
                         <a href="<?php echo HOST_ADMIN;?>logout" id="logout" class="menu-link">
