@@ -6,7 +6,7 @@ require_once DIRPAGE_ADMIN . 'repositories/GanadoresRepository.php';
 
 // Obtener los ganadores desde el repositorio
 $ganadoresRepo = new GanadoresRepository();
-$ganadores = $ganadoresRepo->obtenerGanadores();
+$ganadores = $ganadoresRepo->ob();
 ?>
 
 <!-- Main -->
