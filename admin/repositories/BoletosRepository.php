@@ -15,6 +15,19 @@ class BoletosRepository extends BaseRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: null;
     }
 
+    // Método para contar el total de boletos vendidos por rifa_id
+    public function countBoletosVendidosByRifaId(int $rifaId): int {
+        $db = Database::getConnection();
+        $query = "SELECT COUNT(*) FROM {$this->tableName} WHERE rifa_id = :rifa_id AND estado = 'vendido'";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':rifa_id', $rifaId, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        // Devuelve el total de boletos vendidos
+        return (int) $stmt->fetchColumn();
+    }
+
+
     // Método para insertar un boleto
     public function insert(array $data): int {
         $db = Database::getConnection();

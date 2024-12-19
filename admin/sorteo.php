@@ -5,6 +5,7 @@ require_once DIRPAGE_ADMIN . 'components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/BoletosRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
+require_once DIRPAGE_ADMIN . 'repositories/GanadoresRepository.php';
 
 // Iniciar sesión y validar autenticación
 session_start();
@@ -17,43 +18,41 @@ if (!isset($_SESSION['usuario'])) {
 $rifaRepo = new RifaRepository();
 $pagosRepo = new PagosRepository();
 $boletoRepo = new BoletosRepository();
+$ganadorRepo = new GanadoresRepository();
 $rifaActiva = $rifaRepo->findActiveRifa();
 
 // Validar si hay rifas activas
 $error = $rifaActiva ? null : "¡No hay rifas activas en este momento!";
 
-// Verificar disponibilidad de boletos
 if ($error == null) {
-    $totalBoletos = (int)$rifaActiva['total_boletos']; // Aseguramos que sea un entero
-    $totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']); // Aseguramos que sea un entero
-}
-
-// Obtener tres números ganadores aleatorios, sin repeticiones
-$numerosGanadores = [];
-$numerosGanadoresFormateados = [];
-while (count($numerosGanadores) < 3) {
-    $numeroAleatorio = $boletoRepo->findRandomVendidoByRifaId($rifaActiva['id']);
-    if(!$numeroAleatorio) continue;
-    if (!in_array($numeroAleatorio, $numerosGanadores)) {
-        $numerosGanadores[] = $numeroAleatorio['numero_boleto'];
-    }
+    $ganadores = $ganadorRepo->countGanadoresByRifaId($rifaActiva['id']); 
+    $error = $ganadores ?  "¡Ya se han seleccionado ganadores para la rifa activa!" : null;
 }
 
 // Verificar disponibilidad de boletos
 if ($error == null) {
     $totalBoletos = (int)$rifaActiva['total_boletos']; // Aseguramos que sea un entero
     $totalComprados = (int)$pagosRepo->getTotalBoletosByRifaId($rifaActiva['id']); // Aseguramos que sea un entero
-    if ($totalComprados !== $totalBoletos) {
+
+    $porcentaje = $totalComprados / $totalBoletos;
+    if ($porcentaje != 1) {
       $error = "Aún hay boletos disponibles.";
     }
 
-    if(count($numerosGanadores) < 3) {
-        $error = $rifaActiva ? null : "¡No hay boletos suficientes!";
+    $toltaBoletosComprados = $boletoRepo->countBoletosVendidosByRifaId($rifaActiva['id']);
+
+    if ($toltaBoletosComprados < 3) {
+        $error = "!No hay boletos confirmados suficientes para hacer el sorteo";
     } else {
-        // Formatear los números ganadores a 4 dígitos (agregar ceros si es necesario)
-        $numerosGanadoresFormateados = array_map(function ($numero) {
-            return str_pad($numero, 4, '0', STR_PAD_LEFT);
-        }, $numerosGanadores);
+        // Obtener tres números ganadores aleatorios, sin repeticiones
+        $numerosGanadoresFormateados = [];
+        while (count($numerosGanadoresFormateados) < 3) {
+            $numeroAleatorio = $boletoRepo->findRandomVendidoByRifaId($rifaActiva['id']);
+            if(!$numeroAleatorio) continue;
+            if (!in_array($numeroAleatorio['numero_boleto'], $numerosGanadoresFormateados)) {
+                $numerosGanadoresFormateados[] = str_pad($numeroAleatorio['numero_boleto'], 4, '0', STR_PAD_LEFT);
+            }
+        }
     }
 }
 ?>
@@ -127,73 +126,78 @@ if ($error == null) {
     <audio id="sonidoBolas" src="https://juegayganaconmanolo.com/assets/resources/bolas.mp3"></audio>
 
     <script>
-        let clickCount = 0;
-        const numerosGanadores = ["<?php echo $numerosGanadoresFormateados[2]; ?>", "<?php echo $numerosGanadoresFormateados[1]; ?>", "<?php echo $numerosGanadoresFormateados[0]; ?>"];
 
-        function handleBodyClick() {
-            if (clickCount < 3) {
-                const targetCard = `card${3 - clickCount}`;
-                const numeroId = `numero${3 - clickCount}`;
-                animarConteo(numeroId, numerosGanadores[clickCount]);
-                clickCount++;
+    let clickCount = 0;
+    let animacionEnCurso = false; // Control de animación en curso
+    const numerosGanadores = ["<?php echo $numerosGanadoresFormateados[2]; ?>", "<?php echo $numerosGanadoresFormateados[1]; ?>", "<?php echo $numerosGanadoresFormateados[0]; ?>"];
 
-                if (clickCount === 3) {
-                    setTimeout(() => {
-                        enviarNumeroGanador(numerosGanadores);
-                    }, 3000);
-                }
-            }
-        }
+    function handleBodyClick() {
+        if (clickCount < 3 && !animacionEnCurso) { // Verifica si no hay animación en curso
+            const numeroId = `numero${3 - clickCount}`;
+            animarConteo(numeroId, numerosGanadores[clickCount]);
+            clickCount++;
 
-        function animarConteo(tarjetaId, numeroRandom) {
-            const numeroElement = document.getElementById(tarjetaId);
-            const digitos = numeroElement.querySelectorAll('span');
-            const sonido = document.getElementById('sonidoBolas');
-
-            let numeroArray = numeroRandom.split('');
-            let currentIndex = 0;
-
-            function animarDigito(index) {
-                let intervaloAleatorio;
-                sonido.play();
-
-                intervaloAleatorio = setInterval(() => {
-                    digitos[index].textContent = Math.floor(Math.random() * 10);
-                }, 100);
-
+            if (clickCount === 3) {
                 setTimeout(() => {
-                    clearInterval(intervaloAleatorio);
-                    digitos[index].textContent = numeroArray[index];
-                    sonido.pause();
-                    sonido.currentTime = 0;
-
-                    if (index < 3) {
-                        setTimeout(() => {
-                            animarDigito(index + 1);
-                        }, 500);
-                    }
-                }, 1500);
+                    enviarNumeroGanador(numerosGanadores);
+                }, 3000);
             }
+        }
+    }
 
-            animarDigito(currentIndex);
+    function animarConteo(tarjetaId, numeroRandom) {
+        animacionEnCurso = true; // Marca que la animación ha comenzado
+
+        const numeroElement = document.getElementById(tarjetaId);
+        const digitos = numeroElement.querySelectorAll('span');
+        const sonido = document.getElementById('sonidoBolas');
+
+        let numeroArray = numeroRandom.split('');
+        let currentIndex = 0;
+
+        function animarDigito(index) {
+            let intervaloAleatorio;
+            sonido.play();
+
+            intervaloAleatorio = setInterval(() => {
+                digitos[index].textContent = Math.floor(Math.random() * 10);
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(intervaloAleatorio);
+                digitos[index].textContent = numeroArray[index];
+                sonido.pause();
+                sonido.currentTime = 0;
+
+                if (index < 3) {
+                    setTimeout(() => {
+                        animarDigito(index + 1);
+                    }, 500);
+                } else if (index === 3) { // Al finalizar la animación del último dígito
+                    animacionEnCurso = false; // Marca que la animación ha terminado
+                }
+            }, 1500);
         }
 
-        function enviarNumeroGanador(numerosGanadores) {
-            fetch('acciones/sorteo.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ numerosGanadores })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Números enviados:', data);
-            })
-            .catch(error => {
-                console.error('Error al enviar los números ganadores:', error);
-            });
-        }
+        animarDigito(currentIndex);
+    }
+
+    function enviarNumeroGanador(numerosGanadores) {
+        fetch('acciones/sorteo.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ numerosGanadores })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Números enviados:', data);
+        })
+        .catch(error => {
+            console.error('Error al enviar los números ganadores:', error);
+        });
+    }
     </script>
 
 </body>
