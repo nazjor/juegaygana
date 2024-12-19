@@ -265,6 +265,7 @@ function editarRifa(rifa) {
     document.getElementById('fechaInicio').value = rifa.fecha_inicio;
     document.getElementById('totalBoletos').value = rifa.total_boletos;
     document.getElementById('precioBoleto').value = rifa.precio_boleto;
+    document.getElementById('descripcion').value = rifa.descripcion;
 }
 
 </script>
