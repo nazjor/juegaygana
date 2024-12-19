@@ -18,6 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $id = (int)$_POST['id'];
 
+        $rifaActiva = $rifaRepo->findActiveRifa();
+
+        if ($rifaActiva) {
+            throw new Exception("hay rifas activas en este momento");
+        }
+
         // Verificar si la rifa existe
         $rifaExistente = $rifaRepo->findRifaById($id);
         if (!$rifaExistente) {
