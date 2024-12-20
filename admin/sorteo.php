@@ -91,6 +91,26 @@ if ($error == null) {
             visibility: hidden;
         }
 
+        .floating-label {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-35%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            scale: 1.4;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-label.first-prize {
+            top: -55px; /* Ajusta más arriba */
+        }
+
     </style>
 </head>
 
@@ -120,31 +140,40 @@ if ($error == null) {
         <?php } else { ?>
             <div class="flex justify-center gap-6 relative mt-12">
 
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card2">
-                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero2">
-                        <span>-</span>
-                        <span>-</span>
-                        <span>-</span>
-                        <span>-</span>
-                    </p>
-                </div>
-              
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" id="card1">
-                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero1">
-                        <span>-</span>
-                        <span>-</span>
-                        <span>-</span>
-                        <span>-</span>
-                    </p>
+                <div class="card-container relative">
+                    <div class="floating-label">Segundo premio</div>
+                    <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card2">
+                        <p class="text-8xl font-bold text-blue-500 hidden" id="numero2">
+                            <span>-</span>
+                            <span>-</span>
+                            <span>-</span>
+                            <span>-</span>
+                        </p>
+                    </div>
                 </div>
 
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card3">
-                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero3">
-                        <span>-</span>
-                        <span>-</span>
-                        <span>-</span>
-                        <span>-</span>
-                    </p>
+                <div class="card-container relative">
+                    <div class="floating-label first-prize">Primer premio</div>
+                    <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" id="card1">
+                        <p class="text-8xl font-bold text-blue-500 hidden" id="numero1">
+                            <span>-</span>
+                            <span>-</span>
+                            <span>-</span>
+                            <span>-</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card-container relative">
+                    <div class="floating-label">Tercer premio</div>
+                    <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card3">
+                        <p class="text-8xl font-bold text-blue-500 hidden" id="numero3">
+                            <span>-</span>
+                            <span>-</span>
+                            <span>-</span>
+                            <span>-</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         <?php } ?>

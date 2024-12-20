@@ -88,6 +88,13 @@
                     </li>
 
                     <li class="menu-item">
+                        <a href="<?php echo HOST_ADMIN; ?>simulacion" class="menu-link">
+                            <span class="menu-icon"><i class="ri-test-tube-line"></i></span>
+                            <span class="menu-text"> Simulación </span>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
                         <a href="<?php echo HOST_ADMIN;?>ganadores" class="menu-link">
                             <span class="menu-icon"><i class="ri-trophy-line"></i></span>
                             <span class="menu-text"> Ganadores </span>
