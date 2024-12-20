@@ -24,6 +24,19 @@ if ($rifaActiva) {
 }
 ?>
 
+<meta name="description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡Juega y gana!">
+<meta name="keywords" content="rifas, premios, boletos, sorteos, ganar, participar, juegos, sorteos online">
+<meta name="author" content="Juega y Gana">
+<meta property="og:title" content="Juega y Gana - Participa en rifas y gana premios">
+<meta property="og:description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡Juega y gana!">
+<meta property="og:image" content="<?php echo HOST;?>assets/images/logo.png">
+<meta property="og:url" content="<?php echo HOST;?>">
+<meta name="twitter:title" content="Juega y Gana - Participa en rifas y gana premios">
+<meta name="twitter:description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡Juega y gana!">
+<meta name="twitter:image" content="<?php echo HOST;?>assets/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<title><?php echo $title ?? 'Juega y Gana'; ?></title>
+
 <!-- Main -->
 <main class="flex-1 max-w-4xl mx-auto px-4">
 
