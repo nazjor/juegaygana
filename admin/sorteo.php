@@ -36,7 +36,7 @@ if ($error == null) {
 
     $porcentaje = $totalComprados / $totalBoletos;
     if ($porcentaje != 1) {
-    //   $error = "Aún hay boletos disponibles.";
+      $error = "Aún hay boletos disponibles.";
     }
 
     if($error == null) {
