@@ -1,13 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['auth'])) {
-  $_SESSION['auth'] = bin2hex(random_bytes(16));
-  session_regenerate_id(true); 
-}
-
 $title = 'Inicio - Juega y Gana';
 include_once 'admin/components/init.php';
 include_once 'components/header.php';
+
+iniciarSesion();
+
 require_once DIRPAGE_ADMIN . 'repositories/RifaRepository.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
 require_once DIRPAGE_ADMIN . 'util/UtilFecha.php';

@@ -37,76 +37,45 @@ function subirArchivo($file, $dir)
     }
 }
 
-function enviarCorreo($to, $subject, $message) {
-    $headers = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-    $headers .= 'From: ' . MAIL_FROM . "\r\n";
-    $headers .= 'Reply-To: ' . MAIL_FROM . "\r\n";
-    
-    // Configuración del correo SMTP para Hostinger
-    $smtp_server = 'smtp.hostinger.com';
-    $smtp_port = 465; // Puerto SSL
-    $username = MAIL_FROM; // El correo desde el que envías
-    $password = MAIL_PASSWORD; // La contraseña de ese correo
+/**
+ * Verificar si el visitante es un bot
+ * 
+ * @return bool Devuelve true si es un bot, de lo contrario false
+ */
+function esBot()
+{
+    // Lista de bots conocidos
+    $bots = [
+        'Googlebot', 'Bingbot', 'Slurp', 'DuckDuckBot', 'Yahoo!', 'Baiduspider',
+        'YandexBot', 'Sogou', 'Exabot', 'FacebookExternalHit', 'Facebot', 'Twitterbot', 
+        'Pinterestbot', 'Googlebot-Image', 'Googlebot-News', 'Googlebot-Video', 
+        'Googlebot-Mobile', 'MJ12bot', 'AhrefsBot', 'SEOkicks-Robot', 'SemrushBot', 
+        'BingPreview', 'LinkedInBot', 'CriteoBot', 'TelegramBot', 'Discordbot', 
+        'Slackbot', 'Raven', 'Applebot', 'SitemapFetcher', 'Sosospider', 'Wget', 'curl', 
+        'Crawler', 'spider', 'bot'
+    ];
 
-    // Establecer la conexión con el servidor SMTP
-    $smtp_conn = fsockopen($smtp_server, $smtp_port, $errno, $errstr, 30);
-    if (!$smtp_conn) {
-        throw new Exception("No se pudo conectar al servidor SMTP: $errstr ($errno)", 500);
+    // Obtener el User-Agent del visitante
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+    // Verificar si el User-Agent pertenece a un bot
+    foreach ($bots as $bot) {
+        if (strpos($userAgent, $bot) !== false) {
+            return true; // Es un bot
+        }
     }
 
-    // Respuesta del servidor después de la conexión
-    $response = fgets($smtp_conn, 1024);
-    if (substr($response, 0, 3) != '220') {
-        throw new Exception("Error de conexión: $response");
+    return false; // No es un bot
+}
+
+/**
+ * Crear una sesión de autenticación para el usuario
+ */
+function iniciarSesion()
+{
+    // Verificar si no es un bot antes de iniciar la sesión
+    if (!esBot() && !isset($_SESSION['auth'])) {
+        $_SESSION['auth'] = bin2hex(random_bytes(16));
+        session_regenerate_id(true);
     }
-
-    // Enviar el comando EHLO
-    fputs($smtp_conn, "EHLO $smtp_server\r\n");
-    $response = fgets($smtp_conn, 1024);
-    if (substr($response, 0, 3) != '250') {
-        throw new Exception("Error en EHLO: $response");
-    }
-
-    // Autenticación con AUTH LOGIN
-    fputs($smtp_conn, "AUTH LOGIN\r\n");
-    $response = fgets($smtp_conn, 1024);
-    if (substr($response, 0, 3) != '334') {
-        throw new Exception("Error en AUTH LOGIN: $response");
-    }
-
-    // Enviar el usuario y la contraseña codificados en base64
-    fputs($smtp_conn, base64_encode($username) . "\r\n");
-    $response = fgets($smtp_conn, 1024);
-    fputs($smtp_conn, base64_encode($password) . "\r\n");
-    $response = fgets($smtp_conn, 1024);
-
-    // Comando MAIL FROM (remitente)
-    fputs($smtp_conn, "MAIL FROM:<$username>\r\n");
-    $response = fgets($smtp_conn, 1024);
-
-    // Comando RCPT TO (destinatario)
-    fputs($smtp_conn, "RCPT TO:<$to>\r\n");
-    $response = fgets($smtp_conn, 1024);
-
-    // Comando DATA (cuerpo del mensaje)
-    fputs($smtp_conn, "DATA\r\n");
-    $response = fgets($smtp_conn, 1024);
-
-    // Enviar el encabezado del correo
-    fputs($smtp_conn, "Subject: $subject\r\n");
-    fputs($smtp_conn, $headers . "\r\n");
-    fputs($smtp_conn, "\r\n$message\r\n.\r\n");
-
-    // Finalizar la conexión
-    $response = fgets($smtp_conn, 1024);
-    fputs($smtp_conn, "QUIT\r\n");
-    fclose($smtp_conn);
-
-    // Verificar si se recibió una respuesta exitosa
-    if (substr($response, 0, 3) != '250') {
-        throw new Exception("Error al enviar el correo: $response");
-    }
-
-    echo "Correo enviado exitosamente.";
 }
