@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $title ?? 'Juega y Gana'; ?></title>
-  <link rel="icon" href="assets/images/logo.ico" type="image/x-icon">
+  <link rel="icon" href="<?php echo HOST;?>assets/images/logo.ico" type="image/x-icon">
     <!-- App css -->
   <link href="<?php echo HOST;?>assets/css/app.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
