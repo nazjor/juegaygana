@@ -36,7 +36,7 @@ if ($error == null) {
 
     $porcentaje = $totalComprados / $totalBoletos;
     if ($porcentaje != 1) {
-      $error = "Aún hay boletos disponibles.";
+    //   $error = "Aún hay boletos disponibles.";
     }
 
     if($error == null) {
@@ -69,6 +69,29 @@ if ($error == null) {
     <link rel="icon" href="<?php echo HOST; ?>assets/images/logo.ico" type="image/x-icon">
     <script href="<?php echo HOST_ADMIN; ?>assets/js/alpine.js?v=<?php echo VERSION_JS; ?>" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .card {
+            background-size: 300px;
+            background-position: center;
+        }
+        #card1 {
+            background-image: url('https://juegayganaconmanolo.com/admin/assets/images/premio1.png');
+        }
+        #card2 {
+            background-image: url('https://juegayganaconmanolo.com/admin/assets/images/premio2.png');
+        }
+        #card3 {
+            background-image: url('https://juegayganaconmanolo.com/admin/assets/images/premio3.png');
+        }
+        .no-bg {
+            background-image: none !important;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+
+    </style>
 </head>
 
 <body class="flex items-center justify-center bg-cover bg-center" 
@@ -97,8 +120,8 @@ if ($error == null) {
         <?php } else { ?>
             <div class="flex justify-center gap-6 relative mt-12">
 
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center">
-                    <p class="text-8xl font-bold text-blue-500" id="numero2">
+                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card2">
+                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero2">
                         <span>-</span>
                         <span>-</span>
                         <span>-</span>
@@ -106,8 +129,8 @@ if ($error == null) {
                     </p>
                 </div>
               
-                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" id="card2">
-                    <p class="text-8xl font-bold text-blue-500" id="numero1">
+                <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" id="card1">
+                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero1">
                         <span>-</span>
                         <span>-</span>
                         <span>-</span>
@@ -116,7 +139,7 @@ if ($error == null) {
                 </div>
 
                 <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card3">
-                    <p class="text-8xl font-bold text-blue-500" id="numero3">
+                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero3">
                         <span>-</span>
                         <span>-</span>
                         <span>-</span>
@@ -136,7 +159,19 @@ if ($error == null) {
 
     function handleBodyClick() {
         if (clickCount < 3 && !animacionEnCurso) { // Verifica si no hay animación en curso
+
+            const tarjetaId = `card${3 - clickCount}`; // Identifica la tarjeta que se está procesando
             const numeroId = `numero${3 - clickCount}`;
+
+            // Ocultar el fondo de la tarjeta actual
+            const tarjetaActual = document.getElementById(tarjetaId);
+            tarjetaActual.classList.add('no-bg');
+      
+             // Mostrar el <p> con los números
+            const tarjetaConSpan = document.getElementById(numeroId);
+            tarjetaConSpan.classList.remove('hidden');
+
+            
             animarConteo(numeroId, numerosGanadores[clickCount]);
             clickCount++;
 
