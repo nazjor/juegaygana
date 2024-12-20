@@ -21,29 +21,33 @@ $filtros = [
     'fechaFin' => isset($_GET['fechaFin']) ? $_GET['fechaFin'] : ''
 ];
 
-// Validar fechas
+// Si hay fechas en los filtros
 if (!empty($filtros['fechaInicio']) || !empty($filtros['fechaFin'])) {
-    if (empty($filtros['fechaInicio']) || empty($filtros['fechaFin'])) {
-        echo '<div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">Debe proporcionar tanto la fecha de inicio como la fecha de fin.</div>';
-        return;
+    // Si solo está definida fechaFin
+    if (!empty($filtros['fechaFin']) && empty($filtros['fechaInicio'])) {
+        $filtros['fechaInicio'] = $filtros['fechaFin']; // Usar fechaFin como fechaInicio
+    }
+    // Si solo está definida fechaInicio
+    if (!empty($filtros['fechaInicio']) && empty($filtros['fechaFin'])) {
+        $filtros['fechaFin'] = date('Y-m-d'); // Usar el día actual como fechaFin
     }
 
-    // Convertir las fechas a formato datetime
+    // Convertir las fechas a formato DateTime
     $fechaInicio = new DateTime($filtros['fechaInicio']);
     $fechaFin = new DateTime($filtros['fechaFin']);
 
-    if ($fechaInicio >= $fechaFin) {
-        echo '<div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">>La fecha de inicio debe ser menor a la fecha de fin.</div>';
+    // Validar que fechaInicio sea menor que fechaFin
+    if ($fechaInicio > $fechaFin) {
+        echo '<div class="alert alert-warning bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">La fecha de inicio no puede ser posterior a la fecha de fin. Si no se especifica una fecha de fin, se tomará el día de hoy por defecto.</div>';
         return;
     }
 
-    // Ajustar las fechas
+    // Ajustar las fechas al inicio y fin del día
     $filtros['fechaInicio'] = $fechaInicio->format('Y-m-d 00:00:00');
     $filtros['fechaFin'] = $fechaFin->format('Y-m-d 23:59:59');
 } else {
-    // Si ambas están vacías, establecer `fechaInicio` con la fecha actual
-    $filtros['fechaInicio'] = date('Y-m-d 00:00:00');
-    $filtros['fechaFin'] = date('Y-m-d 23:59:59');
+    // Si no se proporcionan fechas, no aplicar filtros
+    unset($filtros['fechaInicio'], $filtros['fechaFin']);
 }
 
 // Obtener todos los pagos con paginación y filtros
