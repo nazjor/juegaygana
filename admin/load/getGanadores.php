@@ -55,6 +55,14 @@ $totalPaginas = ceil($totalGanadores / $ganadorPorPagina);
                             <i class="ri-ticket-line text-lg text-primary me-2"></i>
                             <span><?php echo str_pad($ganador['numero_boleto'], 4, '0', STR_PAD_LEFT); ?></span>
                         </li>
+                        <li class="flex items-center">
+                            <i class="ri-phone-line text-lg text-primary me-2"></i>
+                            <span><?php echo htmlspecialchars($ganador['telefono']); ?></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ri-map-pin-line text-lg text-primary me-2"></i>
+                            <span><?php echo htmlspecialchars($ganador['direccion']); ?></span>
+                        </li>
                     </ul>
                 </div>
 

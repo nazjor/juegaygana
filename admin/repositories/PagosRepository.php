@@ -12,7 +12,9 @@ class PagosRepository extends BaseRepository {
         $query = "
             SELECT 
                 p.*, 
-                c.correo, 
+                c.correo,
+                c.telefono,
+                c.direccion,
                 r.titulo
             FROM 
                 {$this->tableName} p

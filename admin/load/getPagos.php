@@ -74,46 +74,55 @@ $totalPaginas = ceil($totalPagos / $pagosPorPagina);
     </div>
 <?php else: ?>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <?php foreach ($todosLosPagos as $pago): ?>
-            <?php $rowClass = $pago['id'] % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'; ?>
-            <div class="card rounded-lg shadow-md <?php echo $rowClass; ?> transition transform hover:scale-105 overflow-hidden">
-                <div class="relative w-full h-48">
-                    <img class="w-full h-full object-cover" src="<?php echo HOST_ADMIN; ?>assets/<?php echo $pago['imagen_pago']; ?>" alt="Imagen del pago">
-                </div>
+    <?php foreach ($todosLosPagos as $pago): ?>
+        <?php $rowClass = $pago['id'] % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'; ?>
+        <div class="card rounded-lg shadow-md <?php echo $rowClass; ?> transition transform hover:scale-105 overflow-hidden">
+            <div class="relative w-full h-48">
+                <img class="w-full h-full object-cover" src="<?php echo HOST_ADMIN; ?>assets/<?php echo $pago['imagen_pago']; ?>" alt="Imagen del pago">
+            </div>
 
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-700"><?php echo htmlspecialchars($pago['correo']); ?></h3>
-                    <ul class="text-sm text-gray-600 space-y-2 mt-3">
-                        <li class="flex items-center">
-                            <i class="ri-file-text-line text-lg text-primary me-2"></i> 
-                            <span><?php echo $pago['titulo']; ?> </span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="ri-calendar-check-line text-lg text-primary me-2"></i> 
-                            <span><?php echo  UtilFecha::formatearFecha($pago['fecha_pago']); ?></span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="ri-price-tag-3-line text-lg text-primary me-2"></i>
-                            <span><?php echo $pago['monto']; ?> Bs </span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="ri-price-tag-2-line text-lg text-primary me-2"></i>
-                            <span><?php echo $pago['tiques']; ?> </span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-<?php echo ($pago['estado'] == 'aprobado') ? 'green' : ($pago['estado'] == 'anulado' ? 'red' : 'yellow'); ?>-200 text-<?php echo ($pago['estado'] == 'aprobado') ? 'green' : ($pago['estado'] == 'anulado' ? 'red' : 'yellow'); ?>-800"><?php echo ucfirst($pago['estado']); ?></span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="p-6">
+                <h3 class="text-lg font-semibold text-gray-700"><?php echo htmlspecialchars($pago['correo']); ?></h3>
+                <ul class="text-sm text-gray-600 space-y-2 mt-3">
+                    <li class="flex items-center">
+                        <i class="ri-file-text-line text-lg text-primary me-2"></i> 
+                        <span><?php echo $pago['titulo']; ?> </span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="ri-calendar-check-line text-lg text-primary me-2"></i> 
+                        <span><?php echo  UtilFecha::formatearFecha($pago['fecha_pago']); ?></span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="ri-price-tag-3-line text-lg text-primary me-2"></i>
+                        <span><?php echo $pago['monto']; ?> Bs </span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="ri-price-tag-2-line text-lg text-primary me-2"></i>
+                        <span><?php echo $pago['tiques']; ?> </span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="ri-phone-line text-lg text-primary me-2"></i>
+                        <span><?php echo htmlspecialchars($pago['telefono']); ?></span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="ri-map-pin-line text-lg text-primary me-2"></i>
+                        <span><?php echo htmlspecialchars($pago['direccion']); ?></span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full bg-<?php echo ($pago['estado'] == 'aprobado') ? 'green' : ($pago['estado'] == 'anulado' ? 'red' : 'yellow'); ?>-200 text-<?php echo ($pago['estado'] == 'aprobado') ? 'green' : ($pago['estado'] == 'anulado' ? 'red' : 'yellow'); ?>-800"><?php echo ucfirst($pago['estado']); ?></span>
+                    </li>
+                </ul>
+            </div>
 
-                <div class="flex justify-between p-4 bg-gray-100">
-                    <button onclick="editarPago(<?php echo htmlspecialchars(json_encode($pago)); ?>)" class="text-blue-500 hover:text-blue-700 focus:outline-none text-sm">
-                        <i class="ri-edit-line me-2"></i> Editar
-                    </button>
+            <div class="flex justify-between p-4 bg-gray-100">
+                <button onclick="editarPago(<?php echo htmlspecialchars(json_encode($pago)); ?>)" class="text-blue-500 hover:text-blue-700 focus:outline-none text-sm">
+                    <i class="ri-edit-line me-2"></i> Editar
+                </button>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+
     <nav aria-label="Pagination" class="mt-8 flex justify-center mb-8">
         <ul class="inline-flex items-center -space-x-px">
             <!-- Botón de página anterior -->

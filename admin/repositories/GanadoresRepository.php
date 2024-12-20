@@ -44,7 +44,7 @@ class GanadoresRepository extends BaseRepository {
     public function getGanadoresConPaginacion($limite, $offset) {
         $db = Database::getConnection(); // Obtener la conexión a la base de datos
         $query = "
-            SELECT ganadores.*, clientes.cedula, clientes.correo, rifas.titulo , boletos.numero_boleto
+            SELECT ganadores.*, clientes.cedula, clientes.correo, rifas.titulo , boletos.numero_boleto, clientes.telefono, clientes.direccion
             FROM ganadores
             LEFT JOIN boletos ON ganadores.boleto_id = boletos.id
             LEFT JOIN clientes ON clientes.id = boletos.cliente_id
