@@ -57,6 +57,19 @@ if (isset($_GET['codigo'])) {
 }
 ?>
 
+<!-- Meta SEO -->
+<meta name="description" content="Consulta el recibo de compra de boletos en Juega y Gana. Obtén detalles sobre tu compra y los boletos adquiridos fácilmente.">
+<meta name="keywords" content="recibo, boletos, compra, juego, Juega y Gana, pago, recibo boleto">
+<meta name="author" content="Juega y Gana">
+<meta property="og:title" content="Recibo de Compra - Juega y Gana">
+<meta property="og:description" content="Consulta los detalles de tu recibo y los boletos comprados en Juega y Gana. Recibe tus boletos adquiridos y detalles de compra.">
+<meta property="og:image" content="URL-de-la-imagen-aqui.jpg">
+<meta property="og:url" content="URL-de-tu-pagina-recipro-aqui">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Recibo de Compra - Juega y Gana">
+<meta name="twitter:description" content="Consulta los detalles de tu recibo y los boletos comprados en Juega y Gana. Obtén acceso rápido a la información de tu compra.">
+<meta name="twitter:image" content="<?php echo HOST;?>assets/images/logo.png">
+
 <!-- Main -->
 <main class="flex-1 max-w-4xl mx-auto px-4">
 
@@ -74,26 +87,26 @@ if (isset($_GET['codigo'])) {
           </p>
       </div>
     <?php else: ?>
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-4">Detalles del Recibo</h2>
+        <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-4">Detalles del Recibo</h1>
         <!-- Información del Cliente -->
         <div class="bg-blue-800 p-6 rounded-lg text-white mb-8">
           <div class="flex items-center gap-6">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
             </svg>
-            <span class="font-medium text-xl">Cliente: <strong><?= htmlspecialchars($cliente['nombre']) ?></strong></span>
+            <h2 class="font-medium text-xl">Cliente: <strong><?= htmlspecialchars($cliente['nombre']) ?></strong></h2>
           </div>
           <div class="flex items-center gap-6 mt-6">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path d="M5 3h14c1.1 0 1.99.9 1.99 2L21 19c0 1.1-.9 2-1.99 2H5c-1.1 0-1.99-.9-1.99-2L3 5c0-1.1.9-2 1.99-2zM12 14l4-4-4-4v3H8v2h4v3z" />
             </svg>
-            <span class="font-medium text-xl">Cédula: <strong><?= htmlspecialchars($cliente['cedula']) ?></strong></span>
+            <h2 class="font-medium text-xl">Cédula: <strong><?= htmlspecialchars($cliente['cedula']) ?></strong></h2>
           </div>
           <div class="flex items-center gap-6 mt-6">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path d="M5 3h14c1.1 0 1.99.9 1.99 2L21 19c0 1.1-.9 2-1.99 2H5c-1.1 0-1.99-.9-1.99-2L3 5c0-1.1.9-2 1.99-2zM12 14l4-4-4-4v3H8v2h4v3z" />
             </svg>
-            <span class="font-medium text-xl">Número de Recibo: <strong><?= htmlspecialchars($cliente['numero_recibo']) ?></strong></span>
+            <h2 class="font-medium text-xl">Número de Recibo: <strong><?= htmlspecialchars($cliente['numero_recibo']) ?></strong></h2>
           </div>
         </div>
 
@@ -111,6 +124,5 @@ if (isset($_GET['codigo'])) {
     
   </section>
 </main>
-
 
 <?php include_once DIRPAGE.'components/footer.php'; ?>
