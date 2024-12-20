@@ -24,14 +24,17 @@ class ClientesRepository extends BaseRepository {
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
     
-    // Método para insertar un cliente
+   // Método para insertar un cliente
     public function insert(array $data): int {
         $db = Database::getConnection();
-        
+
+        // Obtener las fechas actuales en formato compatible con MySQL
+        $currentDate = date('Y-m-d H:i:s');
+
         // Crear la consulta SQL para insertar
         $query = "INSERT INTO {$this->tableName} 
             (cedula, nombre, apellido, telefono, correo, direccion, creado_en, actualizado_en)
-            VALUES (:cedula, :nombre, :apellido, :telefono, :correo, :direccion, NOW(), NOW())";
+            VALUES (:cedula, :nombre, :apellido, :telefono, :correo, :direccion, :creado_en, :actualizado_en)";
 
         $stmt = $db->prepare($query);
 
@@ -42,6 +45,8 @@ class ClientesRepository extends BaseRepository {
         $stmt->bindValue(':telefono', $data['telefono'] ?? null, PDO::PARAM_STR);
         $stmt->bindValue(':correo', $data['correo'] ?? null, PDO::PARAM_STR);
         $stmt->bindValue(':direccion', $data['direccion'], PDO::PARAM_STR);
+        $stmt->bindValue(':creado_en', $currentDate, PDO::PARAM_STR);
+        $stmt->bindValue(':actualizado_en', $currentDate, PDO::PARAM_STR);
 
         // Ejecutar y verificar si se realizó correctamente
         if ($stmt->execute()) {

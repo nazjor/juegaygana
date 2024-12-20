@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['usuario'])) throw new Exception("No tiene permiso", 401);
 require_once __DIR__ . '../../components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
+require_once DIRPAGE_ADMIN . 'util/UtilFecha.php';
 
 $pagoRepo = new PagosRepository();
 
@@ -89,7 +90,7 @@ $totalPaginas = ceil($totalPagos / $pagosPorPagina);
                         </li>
                         <li class="flex items-center">
                             <i class="ri-calendar-check-line text-lg text-primary me-2"></i> 
-                            <span><?php echo date('l, j F Y', strtotime($pago['fecha_pago'])); ?></span>
+                            <span><?php echo  UtilFecha::formatearFecha($pago['fecha_pago']); ?></span>
                         </li>
                         <li class="flex items-center">
                             <i class="ri-price-tag-3-line text-lg text-primary me-2"></i>

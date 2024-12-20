@@ -78,15 +78,24 @@ class GanadoresRepository extends BaseRepository {
     // Método para insertar un nuevo ganador con el campo `premio`
     public function insertarGanador(int $boleto_id, string $premio): ?int {
         $db = Database::getConnection();
-        $query = "INSERT INTO {$this->tableName} (boleto_id, premio, creado_en) VALUES (:boleto_id, :premio, NOW())";
+
+        // Obtener la fecha actual en formato compatible con MySQL
+        $currentDate = date('Y-m-d H:i:s');
+
+        // Crear la consulta SQL para insertar
+        $query = "INSERT INTO {$this->tableName} (boleto_id, premio, creado_en) VALUES (:boleto_id, :premio, :creado_en)";
         $stmt = $db->prepare($query);
+
+        // Vincular los valores al statement
         $stmt->bindValue(':boleto_id', $boleto_id, PDO::PARAM_INT);
         $stmt->bindValue(':premio', $premio, PDO::PARAM_STR);
-        
+        $stmt->bindValue(':creado_en', $currentDate, PDO::PARAM_STR);
+
+        // Ejecutar y verificar si se realizó correctamente
         if ($stmt->execute()) {
-            return $db->lastInsertId();
+            return (int)$db->lastInsertId(); // Devolver el ID del ganador insertado
         } else {
-            return null;
+            return null; // Retornar null si falla
         }
     }
 

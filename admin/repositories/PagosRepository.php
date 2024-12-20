@@ -82,14 +82,17 @@ class PagosRepository extends BaseRepository {
     // Método para insertar un nuevo pago
     public function insert(array $data): int {
         $db = Database::getConnection();
-
-        // Crear la consulta SQL para insertar
+    
+        // Obtener la fecha actual en formato compatible con MySQL
+        $currentDate = date('Y-m-d H:i:s');
+    
+        // Crear la consulta SQL para insertar, incluyendo el campo fecha_pago
         $query = "INSERT INTO {$this->tableName} 
-            (cliente_id, rifa_id, metodo_pago, imagen_pago, monto, tiques, creado_en)
-            VALUES (:cliente_id, :rifa_id, :metodo_pago, :imagen_pago, :monto, :tiques, NOW())";
-
+            (cliente_id, rifa_id, metodo_pago, imagen_pago, monto, tiques, creado_en, fecha_pago)
+            VALUES (:cliente_id, :rifa_id, :metodo_pago, :imagen_pago, :monto, :tiques, :creado_en, :fecha_pago)";
+    
         $stmt = $db->prepare($query);
-
+    
         // Vincular los valores al statement
         $stmt->bindValue(':cliente_id', $data['cliente_id'], PDO::PARAM_INT);
         $stmt->bindValue(':rifa_id', $data['rifa_id'], PDO::PARAM_INT);
@@ -97,14 +100,16 @@ class PagosRepository extends BaseRepository {
         $stmt->bindValue(':monto', $data['monto'], PDO::PARAM_STR);
         $stmt->bindValue(':metodo_pago', $data['metodo_pago'], PDO::PARAM_STR);
         $stmt->bindValue(':imagen_pago', $data['imagen_pago'], PDO::PARAM_STR);
-
+        $stmt->bindValue(':creado_en', $currentDate, PDO::PARAM_STR);
+        $stmt->bindValue(':fecha_pago', $currentDate, PDO::PARAM_STR);
+    
         // Ejecutar y verificar si se realizó correctamente
         if ($stmt->execute()) {
             return (int)$db->lastInsertId(); // Devolver el ID del pago insertado
         } else {
             throw new Exception("Error al insertar el pago: " . implode(", ", $stmt->errorInfo()));
         }
-    }
+    }    
 
     // Método para obtener el total de boletos comprados por rifa_id
     public function getTotalBoletosByRifaId(int $rifa_id): int {
