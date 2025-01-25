@@ -58,16 +58,16 @@ if (isset($_GET['codigo'])) {
 ?>
 
 <!-- Meta SEO -->
-<meta name="description" content="Consulta el recibo de compra de boletos en Juega y Gana. Obtén detalles sobre tu compra y los boletos adquiridos fácilmente.">
-<meta name="keywords" content="recibo, boletos, compra, juego, Juega y Gana, pago, recibo boleto">
-<meta name="author" content="Juega y Gana">
-<meta property="og:title" content="Recibo de Compra - Juega y Gana">
-<meta property="og:description" content="Consulta los detalles de tu recibo y los boletos comprados en Juega y Gana. Recibe tus boletos adquiridos y detalles de compra.">
-<meta property="og:image" content="URL-de-la-imagen-aqui.jpg">
-<meta property="og:url" content="URL-de-tu-pagina-recipro-aqui">
+<meta name="description" content="Consulta el recibo de compra de boletos en Lagema. Obtén detalles sobre tu compra y los boletos adquiridos fácilmente.">
+<meta name="keywords" content="recibo, boletos, compra, juego, Lagema, pago, recibo boleto">
+<meta name="author" content="Lagema">
+<meta property="og:title" content="Recibo de Compra - Lagema">
+<meta property="og:description" content="Consulta los detalles de tu recibo y los boletos comprados en Lagema. Recibe tus boletos adquiridos y detalles de compra.">
+<meta property="og:image" content="<?php echo HOST;?>assets/images/logo.png">
+<meta property="og:url" content="<?php echo HOST;?>recibo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Recibo de Compra - Juega y Gana">
-<meta name="twitter:description" content="Consulta los detalles de tu recibo y los boletos comprados en Juega y Gana. Obtén acceso rápido a la información de tu compra.">
+<meta name="twitter:title" content="Recibo de Compra - Lagema">
+<meta name="twitter:description" content="Consulta los detalles de tu recibo y los boletos comprados en Lagema. Obtén acceso rápido a la información de tu compra.">
 <meta name="twitter:image" content="<?php echo HOST;?>assets/images/logo.png">
 
 <!-- Main -->
