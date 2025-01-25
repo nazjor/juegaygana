@@ -45,7 +45,7 @@ class CorreoHelper {
                         <p>Tu compra <strong>[$codigoCompra]</strong> ha sido aprobada.</p>
                         <p>Puedes consultar tus boletos en el siguiente enlace. Asegúrate de no compartirlo con nadie:</p>
                         <p style='text-align: center; margin: 20px 0;'>
-                            <a href='$enlaceRecibo' style='display: inline-block; background-color: rgb(14, 122, 0);; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Ver boletos</a>
+                            <a href='$enlaceRecibo' style='display: inline-block; background-color: #002A40; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Ver boletos</a>
                         </p>
                         <p style='font-size: 0.9em; color: #888;'>Si tienes alguna pregunta, no dudes en contactarnos.</p>
                     </div>
@@ -77,7 +77,7 @@ class CorreoHelper {
                         </ul>
                         <p>Puedes consultar el detalle de tu recibo en el siguiente enlace:</p>
                         <p style='text-align: center; margin: 20px 0;'>
-                            <a href='$enlaceRecibo' style='display: inline-block; background-color: rgb(14, 122, 0); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Ver recibo</a>
+                            <a href='$enlaceRecibo' style='display: inline-block; background-color: #002A40; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Ver recibo</a>
                         </p>
                         <p style='font-size: 0.9em; color: #888;'>Si tienes alguna pregunta, no dudes en contactarnos. ¡Gracias por participar!</p>
                     </div>
