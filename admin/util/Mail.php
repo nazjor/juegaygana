@@ -6,7 +6,7 @@ require DIRPAGE.'vendor/autoload.php';
 
 class Mailer {
     // Métodos estáticos para enviar correo
-    public static function send($to, $subject, $body, $from = MAIL_FROM, $fromName = 'Juega y gana con Manolo') {
+    public static function send($to, $subject, $body, $from = MAIL_FROM, $fromName = 'La Gema') {
 
         // todo para cuando este en pruebas no enviar correo
         if (DB_PASSWORD == "") return true;

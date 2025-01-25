@@ -12,7 +12,7 @@
       </a>
     </div>
     <!-- Derechos reservados -->
-    <p class="text-xs mt-4 mb-4">&copy; 2024 Juega y Gana con Manolo. Todos los derechos reservados.</p>
+    <p class="text-xs mt-4 mb-4">&copy; 2024 La Gema. Todos los derechos reservados.</p>
   </div>
 </footer>
 

@@ -20,7 +20,7 @@ $numerosGanadoresFormateados[2] = "3001";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?? 'Juega y Gana'; ?></title>
+    <title><?php echo $title ?? 'La Gema'; ?></title>
     <link rel="icon" href="<?php echo HOST; ?>assets/images/logo.ico" type="image/x-icon">
     <script href="<?php echo HOST_ADMIN; ?>assets/js/alpine.js?v=<?php echo VERSION_JS; ?>" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">

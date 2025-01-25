@@ -1,5 +1,5 @@
 <?php
-$title = 'Ganadores - Juega y Gana';
+$title = 'Ganadores - La Gema';
 require_once 'admin/components/init.php';
 require_once DIRPAGE . 'components/header.php';
 require_once DIRPAGE_ADMIN . 'repositories/GanadoresRepository.php';

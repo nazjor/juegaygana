@@ -1,5 +1,5 @@
 <?php
-$title = 'Ganadores - Juega y Gana';
+$title = 'Ganadores - La Gema';
 include_once 'components/header.php';
 // Obtener el parámetro 'pagina' con un valor predeterminado
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
