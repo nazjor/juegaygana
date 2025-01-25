@@ -56,8 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $codigoEncriptado = UtilEncriptacion::encriptar($codigoCompra);
         $enlace = HOST . 'recibo/' . $codigoEncriptado;
         $correoHTML = CorreoHelper::generarCorreoCompraAprobada($fullname, $codigoCompra, $enlace);
-        //$cliente['correo']
-        if (!Mailer::send("jrvazquezantelo@gmail.com", $asunto, $correoHTML)) {
+        if (!Mailer::send($cliente['correo'], $asunto, $correoHTML)) {
             throw new Exception("Error al enviar el correo.", 500);
         }
 
