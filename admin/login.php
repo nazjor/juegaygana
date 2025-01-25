@@ -26,6 +26,8 @@
     <!-- SweetAlert CSS -->
     <link href="<?php echo HOST;?>assets/css/swal2.min.css?v1=<?php echo VERSION_JS;?>" rel="stylesheet">
 
+    <link href="<?php echo HOST;?>assets/css/output.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="relative flex flex-col">

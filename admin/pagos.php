@@ -48,7 +48,7 @@ $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 
                 <!-- Botón Filtrar -->
                 <div class="flex justify-end">
-                    <button type="submit" class="px-6 py-2 bg-blue-500 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    <button type="submit" class="px-6 py-2 text-white bg-blue-500 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                         Filtrar
                     </button>
                 </div>
@@ -194,6 +194,32 @@ $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
         document.getElementById('idPago').value = pago.id;
         document.getElementById('estadoPago').value = pago.estado;
     }
+
+    function reenviarBoleto(pago) {
+        $.ajax({
+                url: 'acciones/reenviarBoleto.php', // URL donde se procesa el formulario
+                type: 'POST',
+                data: { id: pago.id },
+                success: function(response) {
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: 'El boleto se ha reenviado correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    });
+                },
+                error: function(xhr, status, error) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    Swal.fire({
+                        title: 'Error',
+                        text: errorResponse.error,
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            });
+    }
+
 </script>
 
 <?php

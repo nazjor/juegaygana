@@ -4,6 +4,7 @@ if (!isset($_SESSION['usuario'])) throw new Exception("No tiene permiso", 401);
 require_once __DIR__ . '../../components/init.php';
 require_once DIRPAGE_ADMIN . 'repositories/PagosRepository.php';
 require_once DIRPAGE_ADMIN . 'util/UtilFecha.php';
+require_once DIRPAGE_ADMIN . 'util/UtilEncriptacion.php';
 
 $pagoRepo = new PagosRepository();
 
@@ -118,8 +119,20 @@ $totalPaginas = ceil($totalPagos / $pagosPorPagina);
                 <button onclick="editarPago(<?php echo htmlspecialchars(json_encode($pago)); ?>)" class="text-blue-500 hover:text-blue-700 focus:outline-none text-sm">
                     <i class="ri-edit-line me-2"></i> Editar
                 </button>
-                </div>
+                <button onclick="reenviarBoleto(<?php echo htmlspecialchars(json_encode($pago)); ?>)" class="text-yellow-500 hover:text-blue-700 focus:outline-none text-sm">
+                    <i class="ri-mail-line me-2"></i> Reenviar
+                </button>
+                <?php 
+                    $codigoCompra = str_pad($pago['id'], 8, '0', STR_PAD_LEFT);
+                    $codigoEncriptado = UtilEncriptacion::encriptar($codigoCompra);
+                ?>
+                <a href="<?php echo HOST."/recibo/".$codigoEncriptado; ?>" class="text-green-500 hover:text-green-700 focus:outline-none text-sm">
+                    <i class="ri-eye-line me-2"></i> Recibo
+                </a>
+               
+
             </div>
+        </div>
         <?php endforeach; ?>
     </div>
 

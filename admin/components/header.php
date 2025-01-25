@@ -22,8 +22,6 @@
 
     <link href="<?php echo HOST_ADMIN;?>assets/css/tailwind.css?v=<?php echo VERSION_JS;?>" rel="stylesheet" type="text/css">
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet"> -->
-
     <link href="<?php echo HOST;?>assets/css/swal2.min.css?v=<?php echo VERSION_JS;?>" rel="stylesheet">
 
     <!-- JS de SweetAlert -->
@@ -47,12 +45,12 @@
             <a href="<?php echo HOST_ADMIN;?>" class="logo-box">
                 <!-- Light Logo -->
                 <div class="logo-light">
-                    <img src="<?php echo HOST;?>assets/images/logo.png" width="150px" alt="Light logo">
+                    <img src="<?php echo HOST;?>assets/images/logo.png" width="50px" alt="Light logo">
                 </div>
 
                 <!-- Dark Logo -->
                 <div class="logo-dark">
-                    <img src="<?php echo HOST;?>assets/images/logo.png" width="150px" alt="Dark logo">
+                    <img src="<?php echo HOST;?>assets/images/logo.png" width="50px" alt="Dark logo">
                 </div>
             </a>
 

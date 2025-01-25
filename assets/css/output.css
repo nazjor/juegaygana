@@ -3731,3 +3731,20 @@ video {
     }
   }
 }
+
+.text-primary {
+  color: #002A40 !important;
+}
+.bg-primary {
+  background-color: #002A40 !important; 
+}
+.bg-secundary {
+  background-color:  #43D3DC !important;
+}
+.bg-alert {
+  background-color:  #FCCB16 !important;
+}
+
+body {
+  font-family:'Times New Roman', Times, serif;
+}

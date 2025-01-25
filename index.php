@@ -1,6 +1,6 @@
 <?php
 session_start();
-$title = 'Inicio - Juega y Gana';
+$title = 'Inicio - La Gema';
 include_once 'admin/components/init.php';
 include_once 'components/header.php';
 
@@ -24,18 +24,18 @@ if ($rifaActiva) {
 }
 ?>
 
-<meta name="description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡Juega y gana!">
+<meta name="description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡La Gema!">
 <meta name="keywords" content="rifas, premios, boletos, sorteos, ganar, participar, juegos, sorteos online">
-<meta name="author" content="Juega y Gana">
-<meta property="og:title" content="Juega y Gana - Participa en rifas y gana premios">
-<meta property="og:description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡Juega y gana!">
+<meta name="author" content="La Gema">
+<meta property="og:title" content="La Gema - Participa en rifas y gana premios">
+<meta property="og:description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡La Gema!">
 <meta property="og:image" content="<?php echo HOST;?>assets/images/logo.png">
 <meta property="og:url" content="<?php echo HOST;?>">
-<meta name="twitter:title" content="Juega y Gana - Participa en rifas y gana premios">
-<meta name="twitter:description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡Juega y gana!">
+<meta name="twitter:title" content="La Gema - Participa en rifas y gana premios">
+<meta name="twitter:description" content="Participa en nuestras rifas y gana premios increíbles. Compra boletos y vive la emoción del sorteo. ¡La Gema!">
 <meta name="twitter:image" content="<?php echo HOST;?>assets/images/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<title><?php echo $title ?? 'Juega y Gana'; ?></title>
+<title><?php echo $title ?? 'La Gema'; ?></title>
 
 <!-- Main -->
 <main class="flex-1 max-w-4xl mx-auto px-4">
@@ -61,26 +61,26 @@ if ($rifaActiva) {
   <?php else: ?>
 
   <!-- Details Section -->
-  <section class="bg-white rounded-lg p-6 mb-6 shadow-lg">
+  <section class="bg-primary rounded-lg p-6 mb-6 shadow-lg">
     <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
       <!-- Información del Sorteo -->
-      <div class="flex items-center gap-3 bg-yellow-400 p-2 rounded-lg text-gray-800">
+      <div class="flex items-center gap-3 bg-alert p-2 rounded-lg">
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
         </svg>
-          <span class="font-medium text-gray-800">
+          <span class="font-medium">
             <?php echo UtilFecha::formatearFecha($rifaActiva['fecha_inicio']); ?>
           </span>
       </div>
 
       <!-- Precio del Boleto -->
       <div class="text-center sm:text-right mt-4 sm:mt-0">
-        <p class="text-sm text-gray-600">Precio del boleto</p>
-        <p class="text-xl font-bold">Bs. <?php echo($rifaActiva['precio_boleto'])?></p>
+        <p class="text-sm text-white">Precio del boleto</p>
+        <p class="text-xl font-bold text-white">Bs. <?php echo($rifaActiva['precio_boleto'])?></p>
       </div>
     </div>
 
-    <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-900">¡Gana un <strong> <?php echo($rifaActiva['titulo'])?> </strong>!</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold text-center text-white">¡Gana un <strong> <?php echo($rifaActiva['titulo'])?> </strong>!</h1>
   </section>
 
   <!-- New Image Section -->
@@ -90,11 +90,11 @@ if ($rifaActiva) {
 
   <!-- Progress Bar -->
   <section class="bg-white rounded-xl p-4 mb-6 shadow-lg">
-    <div class="w-full bg-green-500 rounded-full h-4 relative">
+    <div class="w-full bg-primary rounded-full h-4 relative">
       <div class="absolute inset-0 flex justify-center items-center">
         <span class="text-xs font-medium text-white">Progreso: <?= $porcentaje ?>%</span>
       </div>
-      <div class="bg-green-800 h-4 rounded-full" style="width: <?= $porcentaje ?>%;"></div>
+      <div class="bg-secundary h-4 rounded-full" style="width: 10%;"></div>
     </div>
   </section>
 
@@ -103,9 +103,9 @@ if ($rifaActiva) {
   <section class="bg-white rounded-xl p-6 mb-6 shadow-lg">
     <h3 class="text-xl font-semibold text-center mb-4 text-gray-900">¡Elige la cantidad de boletos!</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-4">
-      <button class="bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-600 text-xl" onclick="updateTicketCount(2)">🎫 2</button>
-      <button class="bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 text-xl" onclick="updateTicketCount(5)">🎉 5 <span class="text-xs block text-gray-300">¡Recomendado!</span></button>
-      <button class="bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-600 text-xl" onclick="updateTicketCount(10)">🎫 10</button>
+      <button class="bg-primary text-white px-8 py-4 rounded-lg text-xl" onclick="updateTicketCount(2)">🎫 2</button>
+      <button class="bg-secundary text-white px-8 py-4 rounded-lg text-xl" onclick="updateTicketCount(5)">🎉 5 <span class="text-md lg:text-xl block text-white">¡Recomendado!</span></button>
+      <button class="bg-primary text-white px-8 py-4 rounded-lg text-xl" onclick="updateTicketCount(10)">🎫 10</button>
     </div>
 
     <!-- Ticket Quantity Adjustment -->
@@ -117,7 +117,7 @@ if ($rifaActiva) {
 
     <!-- Purchase Button -->
     <div class="flex justify-center">
-      <button class="bg-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-700 font-semibold text-lg" id="purchaseBtn">
+      <button class="bg-primary text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-700 font-semibold text-lg" id="purchaseBtn">
         ¡Compra tu boleto ahora!
       </button>
     </div>
@@ -152,10 +152,10 @@ if ($rifaActiva) {
     <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">¡Estás a punto de hacer tu compra!</h3>
     
     <!-- Modal Body -->
-    <p class="text-gray-700 text-center text-lg mb-6">Has seleccionado <span id="modalTicketCount" class="font-bold text-green-600">2</span> boletos. <br> El precio total es: <span id="modalTotalPrice" class="font-bold text-green-600">Bs. 560.0</span></p>
+    <p class="text-primary text-center text-lg mb-6">Has seleccionado <span id="modalTicketCount" class="font-bold text-primary">2</span> boletos. <br> El precio total es: <span id="modalTotalPrice" class="font-bold text-primary">Bs. 560.0</span></p>
 
     <!-- Modal Footer -->
-    <button class="mt-4 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200" onclick="proceedWithPurchase()">¡Comprar ahora!</button>
+    <button class="mt-4 w-full bg-primary text-white py-3 rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200" onclick="proceedWithPurchase()">¡Comprar ahora!</button>
   </div>
 </div>
 
@@ -241,7 +241,7 @@ if ($rifaActiva) {
       </div>
 
       <!-- Botón de Enviar -->
-      <button id="botonComprarTique" type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">Confirmar Compra</button>
+      <button id="botonComprarTique" type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">Confirmar Compra</button>
     </form>
   </div>
 </div>
@@ -253,7 +253,7 @@ if ($rifaActiva) {
   <div class="relative p-6 w-full max-w-md bg-white rounded-lg shadow-lg overflow-auto max-h-[95vh]">
     <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Compra Realizada</h3>
     <p class="text-gray-700 mb-4 text-center">¡Gracias por tu compra! Una vez confirmado el pago, se enviarán tus boletos.</p>
-    <button type="button" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200" onclick="closeSuccessModal()">Cerrar</button>
+    <button type="button" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200" onclick="closeSuccessModal()">Cerrar</button>
   </div>
 </div>
 
@@ -278,7 +278,7 @@ if ($rifaActiva) {
     <button 
       id="accept-terms-btn" 
       type="button" 
-      class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">
+      class="w-full bg-primary text-white py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-200">
       Aceptar Términos y Condiciones
     </button>
   </div>

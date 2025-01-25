@@ -74,18 +74,18 @@ $numerosGanadoresFormateados[2] = "3001";
 </head>
 
 <body class="flex items-center justify-center bg-cover bg-center"
-    style="background: linear-gradient(to right,rgb(80, 191, 255), #ffffff,rgb(80, 150, 255));" onclick="handleBodyClick()">
+    style="background: rgb(0, 42, 65)" onclick="handleBodyClick()">
 
     <div class="flex flex-col items-center">
         <h1 style="background-color: red; padding: 0px 20px; color:white;">Simulación</h1>
-        <img src="<?php echo HOST; ?>assets/images/logo.png" alt="Logo" class="mb-8 h-64">
+        <img src="<?php echo HOST; ?>assets/images/logo.png" height="220px" alt="Logo" class="mb-12 mt-8" style="height: 220px;">
 
         <div class="flex justify-center gap-6 relative mt-12">
 
             <div class="card-container relative">
                 <div class="floating-label">Segundo premio</div>
                 <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card2">
-                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero2">
+                    <p class="text-8xl font-bold  hidden" id="numero2">
                         <span>-</span>
                         <span>-</span>
                         <span>-</span>
@@ -97,7 +97,7 @@ $numerosGanadoresFormateados[2] = "3001";
             <div class="card-container relative">
                 <div class="floating-label first-prize">Primer premio</div>
                 <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center transform -translate-y-8" id="card1">
-                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero1">
+                    <p class="text-8xl font-bold  hidden" id="numero1">
                         <span>-</span>
                         <span>-</span>
                         <span>-</span>
@@ -109,7 +109,7 @@ $numerosGanadoresFormateados[2] = "3001";
             <div class="card-container relative">
                 <div class="floating-label">Tercer premio</div>
                 <div class="card bg-white border-4 border-blue-500 rounded-lg p-8 w-96 h-60 flex items-center justify-center" id="card3">
-                    <p class="text-8xl font-bold text-blue-500 hidden" id="numero3">
+                    <p class="text-8xl font-bold  hidden" id="numero3">
                         <span>-</span>
                         <span>-</span>
                         <span>-</span>

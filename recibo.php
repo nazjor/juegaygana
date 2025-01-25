@@ -89,7 +89,7 @@ if (isset($_GET['codigo'])) {
     <?php else: ?>
         <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-4">Detalles del Recibo</h1>
         <!-- Información del Cliente -->
-        <div class="bg-blue-800 p-6 rounded-lg text-white mb-8">
+        <div class="bg-primary p-6 rounded-lg text-white mb-8">
           <div class="flex items-center gap-6">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
@@ -114,7 +114,7 @@ if (isset($_GET['codigo'])) {
         <h3 class="text-2xl font-semibold text-center text-gray-900 mb-6">Boletos Comprados</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
           <?php foreach ($cliente['boletos'] as $boleto): ?>
-            <div class="text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110" style="background-color: rgb(51,181,249)">
+            <div class="text-white text-center p-8 rounded-lg shadow-xl transition-transform transform hover:scale-110 bg-secundary">
               <p class="text-xl font-semibold">Boleto</p>
               <p class="text-4xl font-bold"><?= htmlspecialchars(str_pad($boleto, 4, '0', STR_PAD_LEFT)) ?></p>
             </div>
