@@ -94,7 +94,7 @@ if ($rifaActiva) {
       <div class="absolute inset-0 flex justify-center items-center">
         <span class="text-xs font-medium text-white">Progreso: <?= $porcentaje ?>%</span>
       </div>
-      <div class="bg-secundary h-4 rounded-full" style="width: 10%;"></div>
+      <div class="bg-green-800 h-4 rounded-full" style="width: <?= $porcentaje ?>%;"></div>
     </div>
   </section>
 
