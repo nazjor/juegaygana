@@ -3,12 +3,12 @@
   <div class="container mx-auto text-center">
     <p class="text-sm">Síguenos en nuestras redes:</p>
     <div class="flex justify-center gap-4 mt-2">
-      <a href="https://www.instagram.com/juegayganaconmanolo?igsh=MTRkZmRvN2VpMDJtdA==" class="text-gray-800 hover:text-green-600">
+      <a href="https://www.instagram.com/lagema.oficial/" class="text-gray-800 hover:text-green-600">
         <img src="<?php echo HOST;?>assets/images/instagram.png" alt="Instagram" class="w-10 h-10">
       </a>
 
-      <a href="https://www.facebook.com/profile.php?id=61570185031848&mibextid=ZbWKwL" class="text-gray-800 hover:text-green-600">
-        <img src="<?php echo HOST;?>assets/images/facebook.png" alt="Facebook" class="w-10 h-10">
+      <a href="https://www.tiktok.com/@lagema.oficial" class="text-gray-800 hover:text-green-600">
+        <img src="<?php echo HOST;?>assets/images/tiktok.jpg" alt="tiktok" class="w-10 h-10">
       </a>
     </div>
     <!-- Derechos reservados -->
