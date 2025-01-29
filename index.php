@@ -124,7 +124,7 @@ if ($rifaActiva) {
   </section>
 
   <?php if ($rifaActiva["descripcion"]) { ?>
-    <section class="bg-white rounded-lg p-6 mb-6 shadow-lg text-lg sm:text-xl">
+    <section class="bg-white rounded-lg p-6 mb-6 shadow-lg text-lg sm:text-xl" style="white-space: pre-line;">
       <h2 class="text-xl sm:text-2xl font-bold text-gray-900"><strong> Detalles de la rifa: </strong></h2>
       <hr>
       <?php echo ($rifaActiva["descripcion"]); ?>
