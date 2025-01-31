@@ -3,11 +3,11 @@
   <div class="container mx-auto text-center">
     <p class="text-sm">Síguenos en nuestras redes:</p>
     <div class="flex justify-center gap-4 mt-2">
-      <a href="https://www.instagram.com/lagemaoficial_?igsh=dmgzY3ByZGlrOXlw" class="text-gray-800 hover:text-green-600">
+      <a href="https://www.instagram.com/lagemaoficial_?igsh=dmgzY3ByZGlrOXlw" target="_blank" class="text-gray-800 hover:text-green-600">
         <img src="<?php echo HOST;?>assets/images/instagram.png" alt="Instagram" class="w-10 h-10">
       </a>
 
-      <a href="https://www.tiktok.com/@lagema.oficial" class="text-gray-800 hover:text-green-600">
+      <a href="https://www.tiktok.com/@lagema.oficial" target="_blank" class="text-gray-800 hover:text-green-600">
         <img src="<?php echo HOST;?>assets/images/tiktok.jpg" alt="tiktok" class="w-10 h-10">
       </a>
     </div>
