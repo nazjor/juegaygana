@@ -1,4 +1,6 @@
 <?php
+header("Location: mantenimiento.php");
+exit();
 $title = 'Ganadores - La Gema';
 require_once 'admin/components/init.php';
 require_once DIRPAGE . 'components/header.php';

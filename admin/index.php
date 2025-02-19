@@ -1,4 +1,6 @@
 <?php
+header("Location: mantenimiento.php");
+exit();
 $title = 'Rifa - La Gema';
 include_once 'components/header.php';
 // Obtener el parámetro 'pagina' con un valor predeterminado

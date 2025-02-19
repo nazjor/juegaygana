@@ -1,4 +1,7 @@
 <?php
+header("Location: mantenimiento.php");
+exit();
+
 session_start();
 $title = 'Inicio - La Gema';
 include_once 'admin/components/init.php';
