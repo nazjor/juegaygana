@@ -1,7 +1,4 @@
 <?php
-header("Location: mantenimiento.php");
-exit();
-
 session_start();
 $title = 'Inicio - La Gema';
 include_once 'admin/components/init.php';
@@ -67,14 +64,14 @@ if ($rifaActiva) {
   <section class="bg-primary rounded-lg p-6 mb-6 shadow-lg">
     <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
       <!-- Información del Sorteo -->
-      <div class="flex items-center gap-3 bg-alert p-2 rounded-lg">
+      <!-- <div class="flex items-center gap-3 bg-alert p-2 rounded-lg">
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M19 4H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM16 2v4M8 2v4M3 10h18" />
         </svg>
           <span class="font-medium">
             <?php echo UtilFecha::formatearFecha($rifaActiva['fecha_inicio']); ?>
           </span>
-      </div>
+      </div> -->
 
       <!-- Precio del Boleto -->
       <div class="text-center sm:text-right mt-4 sm:mt-0">
